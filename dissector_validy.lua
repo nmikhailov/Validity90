@@ -4,7 +4,6 @@ local f = validy90_proto.fields
 f.f_magic_header = ProtoField.uint24("validy90.magic", "Magic Header", base.HEX)
 f.f_length = ProtoField.uint16("validy90.length", "Packet length bytes", base.DEC)
 f.f_iv = ProtoField.bytes("validy90.iv", "Encryption AES IV")
-f.f_magic1 = ProtoField.bytes("validy90.magic1", "Magic1")
 f.f_data = ProtoField.bytes("validy90.data", "data")
 f.f_particial = ProtoField.bool("validy90.partial", "Is partial", base.NONE, {[0] = "no", [1] = "yes"})
 
@@ -62,11 +61,6 @@ function validy90_proto.dissector(buffer, pinfo, tree)
             offset = offset + 16
             t_validy90:add(f.f_iv, iv)
 
-            -- iv
-            local magic1 = buf(offset, 1)
-            offset = offset + 1
-            t_validy90:add(f.f_magic1, magic1)
-
             -- Raw Data
             local data = buf(offset)
             t_validy90:add(f.f_data, data)
@@ -81,6 +75,11 @@ function validy90_proto.dissector(buffer, pinfo, tree)
 
     packetDb[pinfo.number].buf = buf:bytes()
 end
+
+
+-- preferences
+validy90_proto.prefs["aes_in"] = Pref.string("IN AES Key", "", "")
+validy90_proto.prefs["aes_out"] = Pref.string("OUT AES Key", "", "")
 
 
 usb_table = DissectorTable.get("usb.bulk")
