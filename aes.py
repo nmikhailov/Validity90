@@ -39,4 +39,7 @@ key = bytes(k1)
 iv = bytes(data[:16])
 
 cypher = AES.new(key, AES.MODE_CBC, iv)
+
+print("key", key.hex())
+print("data", data.hex())
 print(cypher.decrypt(bytes(data[16:])).hex())

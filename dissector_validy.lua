@@ -1,3 +1,18 @@
+package.path = package.path .. ";./lockbox/?.lua"
+
+local String = require("string");
+
+local Array = require("lockbox.util.array");
+local Stream = require("lockbox.util.stream");
+
+local CBCMode = require("lockbox.cipher.mode.cbc");
+
+local PKCS7Padding = require("lockbox.padding.pkcs7");
+local ZeroPadding = require("lockbox.padding.zero");
+
+local AES256Cipher = require("lockbox.cipher.aes256");
+
+
 validy90_proto = Proto("validy90", "Validy 90 fingerprint reader protocol")
 
 local f = validy90_proto.fields
@@ -11,6 +26,27 @@ local CONST_MAGIC_HEADER = ByteArray.new("170303")
 
 local packetDb = {}
 local partialBuffer = nil
+
+local function decode_aes(ivStr, dataStr)
+    -- body
+    local decipher = CBCMode.Decipher()
+    local key = Array.fromHex("0bdcf6803edb566a053e1f392ab4d674c7c8db31da601af5683cf199a4d440be")
+    local iv = Array.fromHex(ivStr)
+    local ciphertext = Array.fromHex(dataStr)
+    decipher
+            .setKey(key)
+            .setBlockCipher(AES256Cipher)
+            .setPadding(ZeroPadding);
+
+    local plainOutput = decipher
+                        .init()
+                        .update(Stream.fromArray(iv))
+                        .update(Stream.fromArray(ciphertext))
+                        .finish()
+                        .asHex();
+
+    return plainOutput
+end
 
 function validy90_proto.dissector(buffer, pinfo, tree)
     local buf = nil
@@ -64,6 +100,9 @@ function validy90_proto.dissector(buffer, pinfo, tree)
             -- Raw Data
             local data = buf(offset)
             t_validy90:add(f.f_data, data)
+
+            -- Decode
+            ByteArray.new(decode_aes(iv:bytes():tohex(), data:bytes():tohex())):tvb("Decrypted")
         else
             pinfo.cols["info"]:append(string.format(" INVALID", len:uint() - buf:len() + 5))
         end

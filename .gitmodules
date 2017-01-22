@@ -1,0 +1,3 @@
+[submodule "lockbox"]
+	path = lockbox
+	url = https://github.com/somesocks/lua-lockbox.git
