@@ -19,8 +19,11 @@ local f = validy90_proto.fields
 f.f_magic_header = ProtoField.uint24("validy90.magic", "Magic Header", base.HEX)
 f.f_length = ProtoField.uint16("validy90.length", "Packet length bytes", base.DEC)
 f.f_iv = ProtoField.bytes("validy90.iv", "Encryption AES IV")
-f.f_data = ProtoField.bytes("validy90.data", "data")
+f.f_data = ProtoField.bytes("validy90.data", "Encrypted data")
+f.f_dec_data = ProtoField.bytes("validy90.dec_data", "Decrypted data")
 f.f_particial = ProtoField.bool("validy90.partial", "Is partial", base.NONE, {[0] = "no", [1] = "yes"})
+
+local f_direction = Field.new("usb.endpoint_number.direction")
 
 local CONST_MAGIC_HEADER = ByteArray.new("170303")
 
@@ -30,13 +33,22 @@ local partialBuffer = nil
 local function decode_aes(ivStr, dataStr)
     -- body
     local decipher = CBCMode.Decipher()
-    local key = Array.fromHex("0bdcf6803edb566a053e1f392ab4d674c7c8db31da601af5683cf199a4d440be")
+    
+    local key = nil
+    local dir = f_direction()
+    
+    if tostring(f_direction()) == "1" then
+        key = Array.fromHex(validy90_proto.prefs["aes_in"])
+    else
+        key = Array.fromHex(validy90_proto.prefs["aes_out"])
+    end
+
     local iv = Array.fromHex(ivStr)
     local ciphertext = Array.fromHex(dataStr)
     decipher
             .setKey(key)
             .setBlockCipher(AES256Cipher)
-            .setPadding(ZeroPadding);
+            .setPadding(PKCS7Padding);
 
     local plainOutput = decipher
                         .init()
@@ -51,7 +63,7 @@ end
 function validy90_proto.dissector(buffer, pinfo, tree)
     local buf = nil
 
-    if packetDb[pinfo.number] == nil then
+    if packetDb[pinfo.number] == nil or packetDb[pinfo.number].buf == nil then
         packetDb[pinfo.number] = {};
 
         if partialBuffer == nil then
@@ -102,7 +114,8 @@ function validy90_proto.dissector(buffer, pinfo, tree)
             t_validy90:add(f.f_data, data)
 
             -- Decode
-            ByteArray.new(decode_aes(iv:bytes():tohex(), data:bytes():tohex())):tvb("Decrypted")
+            local dec_data = ByteArray.new(decode_aes(iv:bytes():tohex(), data:bytes():tohex())):tvb("Decrypted")
+            t_validy90:add(f.f_dec_data, dec_data())
         else
             pinfo.cols["info"]:append(string.format(" INVALID", len:uint() - buf:len() + 5))
         end
