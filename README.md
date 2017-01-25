@@ -5,7 +5,8 @@ Stuff for reverse engineering protocol for Validity 138a:0090 fingerprint reader
 ## Status
 | Task | Status  |
 |---|---|
-| Inital Key Exchange  | Not started  |
-| Packets encryption  | Done  |
-| Analyze packets  | Not started  |
-| Start libfprint driver  | Not started  |
+| RE of Inital Key Exchange  | Started  |
+| RE of Packets encryption  | Done  |
+| RE of packet purposes  | Started  |
+| RE of image format  | Not started  |
+| libfprint driver  | Not started  |
