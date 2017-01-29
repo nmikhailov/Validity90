@@ -1,0 +1,96 @@
+
+SESSION_AES_KEY_DECRYPT
+
+e5 53 fb 2c ac aa c1 a1 ce 45 81 4d fc 15 ec 2f 
+89 b7 5f 33 c0 7e ca f4 a0 8f b6 b1 3b 14 a3 07 
+
+
+SESSION_AES_KEY_ENCRYPT
+
+3e 8a 94 a0 37 35 7c b2 06 dc 7f 94 2c 43 ba 55 
+70 f2 33 6f 37 f6 f7 87 db 53 9e 8d 97 ca b0 87 
+
+
+RANDU
+0000 fa 9d ac 59 ed 74 d9 6a 0d 92 3e 96 b2 f8 03 30
+0010 b6 62 21 02 48 04 c5 50 9b be c1 6a 55 db 88 2e 
+
+8.
+
+9.
+packet 130
+
+0000   16 03 03 00 3d 02 00 00 2d 03 03 
+
+00 42 be 80 93
+0010   3e 25 2a ee 33 6a ee aa 77 55 ea 99 94 2b 3b 40
+0020   e8 cf c5 3a e4 0e 36 66 58 f7 0f
+
+
+
+PRIVATE KEY
+							 65 d7 f7 6f f2 94 e4 e9 
+0010 d8 ae c5 79 8d 77 3b b1 ad d4 e7 f2 bd 09 64 a7 
+0020 d9 9c eb 50 33 56 bb 3e cb 1c 62 fc 40 60 bf d2 
+0030 d8 7b c9 3f dc 4c c7 ab b3 fe 3a 25 8c 35 a1 2f 
+0040 8e 67 e3 89 c7 6a 32 f4 
+
+fd 01 93 3c d8 18 9d 65 
+0050 9c 41 d3 be 6e cb 8b 08 58 0a ae 80 b4 2d d0 b5 
+0060 54 81 89 91 d0 68 b0 26 
+
+SESSION_RC2
+0000 f7 76 0a 70 a9 88 13 76 ef 67 db 9d 5d f8 28 d0 
+0010 98 0c 47 8f 01 8b d3 c1 e1 9d c2 4e 19 37 68 a4 
+0020 75 2b 93 58 0f 41 c2 67 c5 c6 87 fe 36 21 80 b5 
+
+
+
+
+
+
+0010   00 00 b8 ed 74 17 00 00 00 20 00 00 00 ab 9d fd
+
+00d0   41 04 
+
+			 65 d7 f7 6f f2 94 e4 e9 d8 ae c5 79 8d 77
+00e0   3b b1 ad d4 e7 f2 bd 09 64 a7 d9 9c eb 50 33 56
+00f0   bb 3e cb 1c 62 fc 40 60 bf d2 d8 7b c9 3f dc 4c
+0100   c7 ab b3 fe 3a 25 8c 35 a1 2f 8e 67 e3 89 c7 6a
+0110   32 f4 
+
+			 0f 00 00 48 30 46 02 21 00 82 0e 78 a9 e5
+0120   21 c3 19 d4 e9 1a a9 26 9f 05 f7 8c 9d 08 75 27
+0130   eb 25 63 f9 13 d8 2a 68 cb be 6f 02 21 00 f9 a3
+0140   a5 35 d2 0e 3e 0e 99 bf 61 f3 ea e4 69 4a 97 f7
+0150   47 29 7a 89 dd 83 3b 85 a5 19 7d 5d fe 84 14 03
+0160   03 00 01 01 16 03 03 00 50 04 9a ce 1c 92 ee f7
+0170   a2 89 62 40 42 c7 69 a8 ed 
+
+0179-01b8	Encrypt with SESSION_AES_ENCRYPT
+	0000 14 00 00 0c 89 18 b7 87 5b 0f 25 60 e9 e9 b1 0e = PP1
+	0010-002f  HMAC (UNKNOWN_SESSION_KEY, 16 03 03 00 10 + PP1)	
+	0030 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 
+
+
+
+```
+0010   00 00 b8 [12 86] 17 00 00 00 20 00 00 00 ab 9d fd
+
+	00d0-0111 SESSION_ECDH_PRIV1 X[] + Y[]
+
+				 0f 00 00 48 30 46 02 21 00 a3 ad aa 61 00
+	0120   e6 9d bd cf 48 73 b7 a6 ed e3 62 0a 79 e4 f8 14
+	0130   27 4d eb 73 91 01 0c ae 08 b9 43 02 21 00 d3 28
+	0140   a4 86 cf 8b af 35 c9 04 f7 1f e2 56 22 f7 5d df
+	0150   53 13 4f c6 db 6b c0 0d 57 90 c4 23 fe 06 14 03
+	0160   03 00 01 01 16 03 03 00 50 4b 77 62 ff a9 03 c1
+	0170   1e 6f d8 35 93 17 2d 54 ef 
+
+	0179-01b8	Encrypt with SESSION_AES_ENCRYPT
+		0000 14 00 00 0c da 04 57 9a 5d 22 ef 43 f2 b6 20 57 
+		0010 6f a4 32 d7 7b b7 75 ca 55 a2 fc af 7d a0 b5 fa 
+		0020 35 c0 3e 7e e2 6e d3 f2 5b ee 99 ed 1b 9c 31 29 
+		0030 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f
+
+	```

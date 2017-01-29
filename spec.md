@@ -14,20 +14,16 @@
 8. Send packet // 140
  
 	```
-	0000   		c0 66 8d 0e 06 88 ff ff 53 03 01 29 01 00 2d 00
-	0010   		44 b5 8d 58 00 00 00 00 5d 78 06 00 8d ff ff ff
-	0020   		4c 00 00 00 4c 00 00 00 00 00 00 00 00 00 00 00
-	0030   		00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-	0040   		44 00 00 00 16 03 03 00 43 01 00 00 3f 03 03 
-
-	004f-0052   'RND1
-	0052-006e	RND2
-	006f   		07
-	0070   		00 00 00 00 00 00 00 00 04 c0 05 00 3d 00 00 0a
-	0080   		00 04 00 02 00 17 00 0b 00 02 01 00
+	0000   		44 00 00 00 16 03 03 00 43 01 00 00 3f 03 03 
+	000f-0012   'RND1
+	0012-002e	RND2
+	002f   		07
+	0030   		00 00 00 00 00 00 00 00 04 c0 05 00 3d 00 00 0a
+	0040   		00 04 00 02 00 17 00 0b 00 02 01 00
 	```
 
 9. Receive Packet 130 as P002
+	Stable header: `16 03 03 00 3d 02 00 00 2d 03 03`
 10. Copy 0020 bytes offset 000b-002a from P002 as P002_DATA1
 11. Gen EC P256 KeyPair as SESSION_ECDH_PUB1 and SESSION_ECDH_PRIV1
 12. Derive shared key from (SESSION_ECDH_PRIV1, KEY_ECDH_DRV_PUB) as SESSION_KEY_RC2
@@ -72,7 +68,7 @@
 
 	```
 	0000   44 00 00 00 16 03 03 01 55 0b 00 00 c0 00 00 b8
-	0010   00 00 b8 12 86 17 00 00 00 20 00 00 00 ab 9d fd
+	0010   00 00 b8 [12 86???] 17 00 00 00 20 00 00 00 ab 9d fd
 	0020   ba 74 25 29 93 9d 2d 5d f4 77 ec 90 2e 13 b8 21
 	0030   1a 19 70 1e 50 2f f5 6e 6e 25 ae 8c 00 00 00 00
 	0040   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
@@ -84,8 +80,8 @@
 	00a0   00 00 00 00 00 00 00 00 00 00 00 00 00 a5 58 ed
 	00b0   0f 31 33 45 63 c8 8a d5 53 d9 e4 6e 20 5d 54 3b
 	00c0   83 99 cf 9b ef 9e a8 aa c5 eb fb 20 a2 10 00 00
-
-	00d0-0111 SESSION_ECDH_PRIV1 X[] + Y[]
+	00d0   41 04 
+	00d2-0112 SESSION_ECDH_PRIV1 X[] + Y[]
 
 				 0f 00 00 48 30 46 02 21 00 a3 ad aa 61 00
 	0120   e6 9d bd cf 48 73 b7 a6 ed e3 62 0a 79 e4 f8 14
@@ -96,10 +92,9 @@
 	0170   1e 6f d8 35 93 17 2d 54 ef 
 
 	0179-01b8	Encrypt with SESSION_AES_ENCRYPT
-		0000 14 00 00 0c da 04 57 9a 5d 22 ef 43 f2 b6 20 57 
-		0010 6f a4 32 d7 7b b7 75 ca 55 a2 fc af 7d a0 b5 fa 
-		0020 35 c0 3e 7e e2 6e d3 f2 5b ee 99 ed 1b 9c 31 29 
-		0030 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f
+		0000 14 00 00 0c da 04 57 9a 5d 22 ef 43 f2 b6 20 57 - unknown as PP1
+		0010-002f  HMAC (UNKNOWN_SESSION_KEY, 16 03 03 00 10 + PP1)	
+		0030 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f  
 
 	```
 
