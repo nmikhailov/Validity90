@@ -1,0 +1,348 @@
+Database file: C:\Users\Test\Desktop\release\x64\db\WUDFHost.exe.dd64
+Process Started: 00007FF63D240000 C:\Windows\System32\WUDFHost.exe
+Loading database from C:\Users\Test\Desktop\release\x64\db\WUDFHost.exe.dd64 735ms
+DLL Loaded: 00007FFD0BFF0000 C:\Windows\System32\ntdll.dll
+Thread 1250 created, Entry: <ntdll.DbgUiRemoteBreakin>
+DLL Loaded: 00007FFD0B730000 C:\Windows\System32\kernel32.dll
+DLL Loaded: 00007FFD084E0000 C:\Windows\System32\KernelBase.dll
+DLL Loaded: 00007FFD09CA0000 C:\Windows\System32\rpcrt4.dll
+DLL Loaded: 00007FFD0B2E0000 C:\Windows\System32\combase.dll
+DLL Loaded: 00007FFD090C0000 C:\Windows\System32\ucrtbase.dll
+DLL Loaded: 00007FFD08700000 C:\Windows\System32\bcryptprimitives.dll
+DLL Loaded: 00007FFD0B7E0000 C:\Windows\System32\sechost.dll
+DLL Loaded: 00007FFD07060000 C:\Windows\System32\devobj.dll
+DLL Loaded: 00007FFD09510000 C:\Windows\System32\cfgmgr32.dll
+DLL Loaded: 00007FFCFE7D0000 C:\Windows\System32\WUDFPlatform.dll
+DLL Loaded: 00007FFD09740000 C:\Windows\System32\advapi32.dll
+DLL Loaded: 00007FFD0B5B0000 C:\Windows\System32\msvcrt.dll
+DLL Loaded: 00007FFD080C0000 C:\Windows\System32\sspicli.dll
+Attach breakpoint reached!
+Thread 1250 exit
+Thread 454 created, Entry: ntdll.00007FFD0C022DC0
+DLL Loaded: 00007FFD08450000 C:\Windows\System32\kernel.appcore.dll
+Thread 143C created, Entry: ntdll.00007FFD0C022DC0
+Thread ECC created, Entry: ntdll.00007FFD0C022DC0
+Thread 560 created, Entry: ntdll.00007FFD0C022DC0
+Thread 17D8 created, Entry: ntdll.00007FFD0C022DC0
+DLL Loaded: 00007FFD068E0000 C:\Windows\System32\winusb.dll
+MemRead failed on breakpoint address00007FFCF6546154!
+DLL Loaded: 00007FFCED220000 C:\Windows\System32\drivers\UMDF\synaWudfBioUsb.dll
+DLL Loaded: 00007FFD0B840000 C:\Windows\System32\ole32.dll
+DLL Loaded: 00007FFD09580000 C:\Windows\System32\gdi32.dll
+DLL Loaded: 00007FFD091C0000 C:\Windows\System32\gdi32full.dll
+DLL Loaded: 00007FFD095C0000 C:\Windows\System32\user32.dll
+DLL Loaded: 00007FFD09560000 C:\Windows\System32\win32u.dll
+DLL Loaded: 00007FFD09DD0000 C:\Windows\System32\shell32.dll
+DLL Loaded: 00007FFD089E0000 C:\Windows\System32\windows.storage.dll
+DLL Loaded: 00007FFD08470000 C:\Windows\System32\powrprof.dll
+DLL Loaded: 00007FFD0B6D0000 C:\Windows\System32\shlwapi.dll
+DLL Loaded: 00007FFD093B0000 C:\Windows\System32\SHCore.dll
+DLL Loaded: 00007FFD084C0000 C:\Windows\System32\profapi.dll
+DLL Loaded: 00007FFD08810000 C:\Windows\System32\crypt32.dll
+DLL Loaded: 00007FFD08460000 C:\Windows\System32\msasn1.dll
+DLL Loaded: 00007FFD0B980000 C:\Windows\System32\setupapi.dll
+DLL Loaded: 00007FFD08390000 C:\Windows\System32\bcrypt.dll
+DLL Loaded: 00007FFCF6090000 C:\Windows\System32\WUDFx.dll
+DLL Loaded: 00007FFD09970000 C:\Windows\System32\oleaut32.dll
+DLL Loaded: 00007FFD08770000 C:\Windows\System32\msvcp_win.dll
+DLL Loaded: 00007FFD07EC0000 C:\Windows\System32\cryptsp.dll
+DLL Loaded: 00007FFD07930000 C:\Windows\System32\rsaenh.dll
+DLL Loaded: 00007FFD07BA0000 C:\Windows\System32\userenv.dll
+BCryptOpenAlgorithmProvider Algo: L"MD5" Ptr: 0000000000000000
+DLL Loaded: 00007FFD07EE0000 C:\Windows\System32\cryptbase.dll
+DLL Loaded: 00007FFD07970000 C:\Windows\System32\dpapi.dll
+Thread 1168 created, Entry: <synawudfbiousb.$LN9_1>
+Thread 374 created, Entry: <synawudfbiousb.StartAddress>
+Thread A70 created, Entry: ntdll.00007FFD0C022DC0
+
+readFromPipe
+Thread BAC created, Entry: synawudfbiousb.00007FFCED239534
+readFromPipe
+readFromPipe
+readFromPipe
+readFromPipe
+readFromPipe
+readFromPipe
+BCryptOpenAlgorithmProvider Algo: L"SHA256" Ptr: 0000000000000000
+BCryptOpenAlgorithmProvider Algo: L"ECDH_P256" Ptr: 0000000000000000
+BCryptOpenAlgorithmProvider Algo: L"ECDSA_P256" Ptr: 0000000000000000
+BCryptOpenAlgorithmProvider Algo: L"ECDH_P256" Ptr: 0000000000000000
+BCryptOpenAlgorithmProvider Algo: L"ECDSA_P256" Ptr: 0000000000000000
+
+
+BCryptImportKeyPair \\\
+Type: L"ECCPUBLICBLOB" \\\
+Data len: AA598FB0hex
+[rsp+28]
+KEY_EC_DEV_PUB 
+
+
+CryptDecodeObject struct type ???
+0000 30 46 02 21 00 92 a1 f8 3a d4 45 57 cb 82 0f 2f 
+0010 07 0f af 87 e5 1c 82 9d 85 29 28 ab 9e aa 0d 23 
+0020 31 9e a8 25 5e 02 21 00 8d 98 5c ba 0c 62 39 a5 
+0030 31 cf 20 c0 14 a9 57 29 b7 62 d7 75 5a d6 8c f8 
+0040 20 dd 93 f6 45 a0 59 53 
+Decoded
+0000 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0050 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+BCryptVerfySignature
+0000 5d 6c 0e 35 e8 3e 4d 4d 10 65 af d5 44 67 f7 c4 
+0010 f3 9f 7e 34 2b 58 a1 57 ec cf 68 18 ad 89 6c 2d 
+
+
+BCryptOpenAlgorithmProvider Algo: L"RC2" Ptr: 0000000000000000
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 48 78 02 70 
+0010 5e 5a c4 a9 93 1c 44 aa 4d 32 25 22 39 e0 bf 8f 
+0020 0c 85 4d de 49 0c cc f6 87 ef ad 9c 
+BCryptOpenAlgorithmProvider Algo: L"AES" Ptr: 0000000000000000
+CryptDecrypt: len - 112
+0000 33 5c ed 15 55 3c f5 f4 de 14 a0 f2 59 68 00 a2 
+0010 a0 98 58 c2 06 67 d5 c1 06 e3 bf e6 6a ec 6a c0 
+0020 2d b2 d8 77 d9 0e c4 12 e3 ab 48 ab aa b4 b9 56 
+0030 75 30 69 9d 0a c3 d9 bb ff de 42 11 bd 34 03 21 
+0040 cf a2 8d 3c 1b e4 ba f0 1f f4 40 69 6f b4 78 18 
+0050 f3 2d 6b 22 80 86 64 31 14 34 2a 81 2c cc d7 c6 
+0060 62 f3 9e 5f 78 a6 39 d3 db 57 c3 30 d4 dd 12 8f 
+Decrypted:
+0000 ab 9d fd ba 74 25 29 93 9d 2d 5d f4 77 ec 90 2e 
+0010 13 b8 21 1a 19 70 1e 50 2f f5 6e 6e 25 ae 8c 00 
+0020 dd f4 04 74 f0 7a e4 e0 79 d1 f1 9f ae bd a8 ef 
+0030 1e fa 18 c2 6a 76 ae a5 aa bf c3 4f 12 94 8c 8f 
+0040 94 f5 52 49 8e de 72 ff fa 1f 04 b9 68 23 72 09 
+0050 20 6c 86 b7 2f f9 99 dc ce d1 2d b8 06 4c 87 d6 
+0060 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 
+
+
+readFromPipe
+BCryptGenerateKeyPair ptr: 5555555100000130
+BCryptExportKey L"ECCPRIVATEBLOB"
+BCryptExportKey L"ECCPRIVATEBLOB"
+
+
+BCryptImportKeyPair \\\
+Type: L"ECCPRIVATEBLOB" \\\
+Data len: AA59CBF0hex
+[rsp+28]
+0000 45 43 4b 32 20 00 00 00 19 17 e2 7f bd 49 05 84 
+0010 8d 86 5a d9 45 db 3b 7f 93 52 d5 06 26 09 cf 33 
+0020 15 e3 ab 32 f8 8b 3f 48 b6 fe 73 00 cc a7 47 80 
+0030 e8 eb 55 71 b1 71 d9 25 e9 ce ba 99 3c 2f c1 c8 
+0040 12 98 09 52 e3 21 14 99 42 ba a2 7b 8e ac 69 66 
+0050 66 e9 78 59 42 8a 01 2c d3 b6 ea f3 c1 0b 1d 5f 
+0060 ab d6 0c 88 02 f8 8e 0d 
+
+
+BCryptImportKeyPair \\\
+Type: L"ECCPUBLICBLOB" \\\
+Data len: AA59CA30hex
+[rsp+28]
+KEY_EC_DRV_PUB
+
+
+BCryptSecretAgreement
+
+
+BCryptDeriveKey
+
+
+BCryptImportKeyPair \\\
+Type: L"ECCPRIVATEBLOB" \\\
+Data len: AA59AF30hex
+[rsp+28]
+KEY_EC_DRV_PRIV
+
+
+BCryptSignHash
+
+
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 63 c1 a6 e7 
+0010 37 96 b3 5a 56 af 25 a8 b7 1c 97 a6 d9 36 52 7c 
+0020 dd ff 8d 54 c7 88 20 8a 2d 93 46 2d 
+CryptEncrypt: len - 64
+readFromPipe
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 4c 2c 6d 95 
+0010 68 42 86 65 9f 65 d6 b8 aa 27 dc 00 d0 1f 9c 13 
+0020 65 9f d7 35 ce 17 54 68 1d 13 f5 93 
+CryptDecrypt: len - 64
+0000 97 30 f3 61 73 bc 94 e6 6a ae 77 95 9b 82 7b 19 
+0010 00 7a c9 ad 9e 54 e1 f3 0f 6f eb cb 1a eb 96 72 
+0020 54 03 f0 15 5f 64 db 74 07 9d aa d9 f3 37 63 08 
+0030 aa 28 ab 86 bd f9 f2 2a 40 81 a9 a1 9a ae 23 96 
+Decrypted:
+0000 14 00 00 0c c4 87 6e a0 ae bd 8f ce 01 21 41 07 
+0010 d7 22 1e 3e fa 04 ec 81 29 3d fb b9 78 38 47 69 
+0020 94 f3 43 90 7e 5c 44 e9 5d fd 9d 05 18 6b 4b 0d 
+0030 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 63 c1 a6 e7 
+0010 37 96 b3 5a 56 af 25 a8 b7 1c 97 a6 d9 36 52 7c 
+0020 dd ff 8d 54 c7 88 20 8a 2d 93 46 2d 
+CryptEncrypt: len - 48
+readFromPipe
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 4c 2c 6d 95 
+0010 68 42 86 65 9f 65 d6 b8 aa 27 dc 00 d0 1f 9c 13 
+0020 65 9f d7 35 ce 17 54 68 1d 13 f5 93 
+CryptDecrypt: len - 48
+0000 67 2d aa 1d 2e 94 82 df 97 cd 6a 4f 46 c2 6f a4 
+0010 b5 34 f2 49 98 2a ab b6 4c bf 4d 9a 1a 26 ea 10 
+0020 f1 5d 9a 7c 89 25 bb 94 d0 c3 7d 95 39 09 0d 16 
+Decrypted:
+0000 00 00 7d 56 ed eb 6c 4b de 1f 5e c3 01 99 a2 de 
+0010 00 c9 3d a3 68 9b a0 a8 de 55 e2 a0 30 e6 c8 bf 
+0020 5a 77 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 63 c1 a6 e7 
+0010 37 96 b3 5a 56 af 25 a8 b7 1c 97 a6 d9 36 52 7c 
+0020 dd ff 8d 54 c7 88 20 8a 2d 93 46 2d 
+CryptEncrypt: len - 48
+readFromPipe
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 4c 2c 6d 95 
+0010 68 42 86 65 9f 65 d6 b8 aa 27 dc 00 d0 1f 9c 13 
+0020 65 9f d7 35 ce 17 54 68 1d 13 f5 93 
+CryptDecrypt: len - 48
+0000 4d bb ce 4d 09 48 77 29 79 0c aa cc 9d a3 e5 f7 
+0010 93 c4 25 b0 34 df 1f 2e 0b 5d 2b f0 a0 e0 3e fd 
+0020 63 9e 18 9f f8 3b c9 0b b6 a5 a2 73 d5 e9 d7 c7 
+Decrypted:
+0000 00 00 02 00 00 00 3a 52 25 e7 37 19 80 fb 00 42 
+0010 d0 b1 2e 69 48 6b e5 88 d3 07 1b 05 16 09 00 7d 
+0020 8e 6f c7 9a a5 e4 09 09 09 09 09 09 09 09 09 09 
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 63 c1 a6 e7 
+0010 37 96 b3 5a 56 af 25 a8 b7 1c 97 a6 d9 36 52 7c 
+0020 dd ff 8d 54 c7 88 20 8a 2d 93 46 2d 
+CryptEncrypt: len - 48
+readFromPipe
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 4c 2c 6d 95 
+0010 68 42 86 65 9f 65 d6 b8 aa 27 dc 00 d0 1f 9c 13 
+0020 65 9f d7 35 ce 17 54 68 1d 13 f5 93 
+CryptDecrypt: len - 48
+0000 8a a0 ba c7 3d af f4 85 7e ef d4 e4 d7 8f 9e f3 
+0010 eb 04 ec 86 24 fd ed 06 69 5d 24 3e 2a cb a6 c9 
+0020 e5 51 42 c9 b4 0c 98 cf 4d ea 49 2f 29 a3 b3 cb 
+Decrypted:
+0000 00 00 00 00 00 00 02 00 71 00 ed 9f 74 eb 91 6c 
+0010 a4 35 4d 0e 65 fd 5e d9 42 ef 00 8a 36 d5 8d 1c 
+0020 48 78 af d9 bb c3 85 6c a8 a8 05 05 05 05 05 05 
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 63 c1 a6 e7 
+0010 37 96 b3 5a 56 af 25 a8 b7 1c 97 a6 d9 36 52 7c 
+0020 dd ff 8d 54 c7 88 20 8a 2d 93 46 2d 
+CryptEncrypt: len - 48
+readFromPipe
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 4c 2c 6d 95 
+0010 68 42 86 65 9f 65 d6 b8 aa 27 dc 00 d0 1f 9c 13 
+0020 65 9f d7 35 ce 17 54 68 1d 13 f5 93 
+CryptDecrypt: len - 48
+0000 41 ee c6 85 9d bd c9 af a5 ec 0a 33 38 18 ad 80 
+0010 7e a7 21 f8 cf 92 ab d8 4f 62 76 25 e7 de 31 b7 
+0020 fe 5b 10 4d a8 3c cf a6 26 1c 03 43 be 0c d0 36 
+Decrypted:
+0000 00 00 00 00 00 00 02 00 71 00 ed 9f 74 eb 91 6c 
+0010 a4 35 4d 0e 65 fd 5e d9 42 ef 00 8a 36 d5 8d 1c 
+0020 48 78 af d9 bb c3 85 6c a8 a8 05 05 05 05 05 05 
+Thread 34C created, Entry: ntdll.00007FFD0C022DC0
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 63 c1 a6 e7 
+0010 37 96 b3 5a 56 af 25 a8 b7 1c 97 a6 d9 36 52 7c 
+0020 dd ff 8d 54 c7 88 20 8a 2d 93 46 2d 
+CryptEncrypt: len - 48
+readFromPipe
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 4c 2c 6d 95 
+0010 68 42 86 65 9f 65 d6 b8 aa 27 dc 00 d0 1f 9c 13 
+0020 65 9f d7 35 ce 17 54 68 1d 13 f5 93 
+CryptDecrypt: len - 48
+0000 f9 f8 92 01 0d 85 1d 56 88 52 6c 3b b4 0d 2b f9 
+0010 83 19 4c c0 a1 a7 41 6d e6 a5 c3 af 6a ee 80 8b 
+0020 8e 58 72 05 02 db c2 ad 16 4f 33 c9 fc da d7 a6 
+Decrypted:
+0000 00 00 00 00 00 00 02 00 71 00 ed 9f 74 eb 91 6c 
+0010 a4 35 4d 0e 65 fd 5e d9 42 ef 00 8a 36 d5 8d 1c 
+0020 48 78 af d9 bb c3 85 6c a8 a8 05 05 05 05 05 05 
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 63 c1 a6 e7 
+0010 37 96 b3 5a 56 af 25 a8 b7 1c 97 a6 d9 36 52 7c 
+0020 dd ff 8d 54 c7 88 20 8a 2d 93 46 2d 
+CryptEncrypt: len - 48
+readFromPipe
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 4c 2c 6d 95 
+0010 68 42 86 65 9f 65 d6 b8 aa 27 dc 00 d0 1f 9c 13 
+0020 65 9f d7 35 ce 17 54 68 1d 13 f5 93 
+CryptDecrypt: len - 128
+0000 09 c1 a8 a0 ff 46 a4 57 d7 76 0d ac 63 bc d1 00 
+0010 37 1e b5 18 fe 44 cd 8c 29 50 fd f9 a2 cb 5a e4 
+0020 e1 78 25 09 03 57 82 7e d7 e8 49 85 86 a4 21 1b 
+0030 06 98 de a2 8b a3 42 62 c9 3b 26 3e e8 a4 6f e2 
+0040 e4 7d 89 78 24 95 41 26 22 e3 46 ea 28 ee 6e 35 
+0050 5a 0f 7d 56 bd 07 42 83 86 f0 85 d1 fc 19 d2 b0 
+0060 e4 a8 b4 df 15 2f 22 fe cf 8d ab 1d 5a c4 f6 d0 
+0070 d2 e0 46 e3 f6 ec 82 6b 02 56 5f f4 5a 33 85 31 
+Decrypted:
+0000 00 00 01 00 00 00 06 00 98 c9 71 56 01 00 34 46 
+0010 02 00 07 00 60 39 00 00 01 00 84 08 01 00 07 00 
+0020 b0 02 00 00 02 00 84 28 03 00 12 00 10 10 00 00 
+0030 02 00 66 37 01 00 0c 00 40 22 02 00 01 00 86 47 
+0040 00 00 01 00 20 5a 00 00 02 00 23 77 00 00 01 00 
+0050 d0 2f 00 00 57 4a 20 87 82 9e db 75 ef 08 00 49 
+0060 1a 65 9e 39 c8 81 db 82 05 77 ad 83 70 3e de b9 
+0070 7c 12 0b ad 0b 0b 0b 0b 0b 0b 0b 0b 0b 0b 0b 0b 
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 63 c1 a6 e7 
+0010 37 96 b3 5a 56 af 25 a8 b7 1c 97 a6 d9 36 52 7c 
+0020 dd ff 8d 54 c7 88 20 8a 2d 93 46 2d 
+CryptEncrypt: len - 48
+readFromPipe
+INT3 breakpoint at synawudfbiousb.00007FFCED25C37C (00007FFCED25C37C)!
+Import Key ???
+0000 08 02 00 00 10 66 00 00 20 00 00 00 4c 2c 6d 95 
+0010 68 42 86 65 9f 65 d6 b8 aa 27 dc 00 d0 1f 9c 13 
+0020 65 9f d7 35 ce 17 54 68 1d 13 f5 93 
+CryptDecrypt: len - 128
+0000 20 6f cd 1d 9e 1c 9b 85 13 87 8a af 1d e1 38 02 
+0010 66 59 0c 1a 27 b6 db 03 7a 8e b4 29 bc dd 2d 4c 
+0020 ab 1d 5d a0 4f 2b 5c c0 a7 ed 28 13 2d 22 82 83 
+0030 90 7e 90 83 ed a8 ec a0 8a a4 33 49 f1 10 93 32 
+0040 f4 78 22 aa ec 6e f1 a9 5c c8 64 a3 6c 48 ce 1b 
+0050 5d 98 bf 38 52 cb 88 6f cf 7d d5 61 9e 7e 75 54 
+0060 c4 fa 14 3d b9 fc 11 6d 84 29 62 ae 67 3d 08 af 
+0070 e8 c9 b5 77 9b cd 13 c1 d6 18 c7 61 f4 1c 52 65 
+Decrypted:
+0000 00 00 01 00 00 00 06 00 98 c9 71 56 01 00 34 46 
+0010 02 00 07 00 60 39 00 00 01 00 84 08 01 00 07 00 
+0020 b0 02 00 00 02 00 84 28 03 00 12 00 10 10 00 00 
+0030 02 00 66 37 01 00 0c 00 40 22 02 00 01 00 86 47 
+0040 00 00 01 00 20 5a 00 00 02 00 23 77 00 00 01 00 
+0050 d0 2f 00 00 57 4a 20 87 82 9e db 75 ef 08 00 49 
+0060 1a 65 9e 39 c8 81 db 82 05 77 ad 83 70 3e de b9 
+0070 7c 12 0b ad 0b 0b 0b 0b 0b 0b 0b 0b 0b 0b 0b 0b 
+Thread 374 exit

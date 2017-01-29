@@ -1,0 +1,154 @@
+
+RNDU = 
+0000 95 41 6c a9 12 86 8a da 9b b2 5b b4 bb d6 1d de
+0010 4f da 23 2a 74 7b 2a 93 f8 ac c6 69 24 70 c4 2a 
+
+P130-1 =
+	Packet >130
+	000b-002a
+
+DATA1
+	=
+	0000 6b 65 79 20 65 78 70 61 6e 73 69 6f 6e 
+	000d - 0010 = RND1'
+	0011 - 002c = RND2 
+	002d - 003f = P130-1
+
+SESSION_AES_ENCRYPT 
+	= HMAC_RC2(SESSION_KEY_RC2, HMAC_RC2(SESSION_KEY_RC2, HMAC_RC2(SESSION_KEY_RC2, DATA1)) + DATA1)
+
+SESSION_AES_ENCRYPT
+	=
+	SESSION_KEY_RC2
+	+
+	0000 aa 77 fb a9 2b 5e 67 e4 7b 69 8e b0 cd f1 2a 96 
+	0010 ee e0 54 94 94 96 b2 86 d1 cf 1f b2 e1 c1 87 e8
+		=
+		SESSION_KEY_RC2
+		+
+		0000 25 ce 6b 67 70 08 de d8 68 f1 9a f5 c9 f2 95 a1 
+		0010 bd f8 44 44 c2 2a 7a 63 d0 21 2a e8 37 7e 15 16
+			=
+			SESSION_KEY_RC2
+			+
+			DATA1
+	+
+	DATA1
+
+
+
+0000-001f 	HMAC_RC2(SESSION_KEY_RC2, HMAC_RC2(SESSION_KEY_RC2, HMAC_RC2(SESSION_KEY_RC2, DATA1)))
+
+0020 		6b 65 79 20 65 78 70 61 6e 73 69 6f 6e 
+002d - 0030 = RND1'
+0031 - 004c = RND2 
+
+004d 00 4b c7 
+0050 66 90 0c b8 01 0a d5 38 7b 72 0d e6 13 08 75 8d 
+0060 94 6b 34 94 44 db 83 35 9e 12 c4 03 97 
+
+
+
+
+
+
+
+
+
+--------------------------------------------
+
+0000   44 00 00 00 16 03 03 01 55 0b 00 00 c0 00 00 b8
+0010   00 00 b8 12 86 17 00 00 00 20 00 00 00 ab 9d fd
+0020   ba 74 25 29 93 9d 2d 5d f4 77 ec 90 2e 13 b8 21
+0030   1a 19 70 1e 50 2f f5 6e 6e 25 ae 8c 00 00 00 00
+0040   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+0050   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+0060   00 dd f4 04 74 f0 7a e4 e0 79 d1 f1 9f ae bd a8
+0070   ef 1e fa 18 c2 6a 76 ae a5 aa bf c3 4f 12 94 8c
+0080   8f 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+0090   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00a0   00 00 00 00 00 00 00 00 00 00 00 00 00 a5 58 ed
+00b0   0f 31 33 45 63 c8 8a d5 53 d9 e4 6e 20 5d 54 3b
+00c0   83 99 cf 9b ef 9e a8 aa c5 eb fb 20 a2 10 00 00
+00d0   41 04 
+
+00d2   1d d8 36 68 e9 b0 7b 93 12 38 31 23 90 c8
+00e0   87 ca db 82 27 39 de 7b 43 d2 23 d7 cd d1 3c 77
+00f0   0e d2 d1 93 70 02 af 3b 18 47 c5 30 4c 33 60 cf
+0100   bf c5 9b 3c 67 d9 45 06 38 da 92 be 65 bf 81 8c
+0110   aa 7e 
+
+0f 00 00 48 30 46 02 21 00 a3 ad aa 61 00
+0120   e6 9d
+
+0122   bd cf 48 73 b7 a6 ed e3 62 0a 79 e4 f8 14
+0130   27 4d eb 73 91 01 0c ae 08 b9 43 02 21 00 d3 28
+0140   a4 86 cf 8b af 35 c9 04 f7 1f e2 56 22 f7 5d df
+0150   53 13 4f c6 db 6b c0 0d 57 90 c4 23 fe 06 14 03
+0160   03 00 01 01 16 03 03 00 50 4b 77 62 ff a9 03 c1
+0170   1e 6f d8 35 93 17 2d 54 ef 6f da db a0 35 1b e1
+0180   b9 ca a3 90 df 7e 17 ec 0b e8 cc f9 a4 92 1b 77
+0190   9c 0f f3 c6 dc f9 b3 7d 3c 41 6c 4c 80 95 66 7e
+01a0   b1 7e 37 3d 28 ef a4 ca fd 3e fd 8f dd 84 10 c5
+01b0   b2 71 38 ab 8d 9c e3 ac 46
+
+
+
+
+
+
+0000   44 00 00 00 16 03 03 01 55 0b 00 00 c0 00 00 b8
+0010   00 00 b8 12 86 17 00 00 00 20 00 00 00 ab 9d fd
+0020   ba 74 25 29 93 9d 2d 5d f4 77 ec 90 2e 13 b8 21
+0030   1a 19 70 1e 50 2f f5 6e 6e 25 ae 8c 00 00 00 00
+0040   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+0050   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+0060   00 dd f4 04 74 f0 7a e4 e0 79 d1 f1 9f ae bd a8
+0070   ef 1e fa 18 c2 6a 76 ae a5 aa bf c3 4f 12 94 8c
+0080   8f 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+0090   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00a0   00 00 00 00 00 00 00 00 00 00 00 00 00 a5 58 ed
+00b0   0f 31 33 45 63 c8 8a d5 53 d9 e4 6e 20 5d 54 3b
+00c0   83 99 cf 9b ef 9e a8 aa c5 eb fb 20 a2 10 00 00
+00d0   41 04 1d d8 36 68 e9 b0 7b 93 12 38 31 23 90 c8
+00e0   87 ca db 82 27 39 de 7b 43 d2 23 d7 cd d1 3c 77
+00f0   0e d2 d1 93 70 02 af 3b 18 47 c5 30 4c 33 60 cf
+0100   bf c5 9b 3c 67 d9 45 06 38 da 92 be 65 bf 81 8c
+0110   aa 7e 0f 00 00 48 30 46 02 21 00 a3 ad aa 61 00
+0120   e6 9d bd cf 48 73 b7 a6 ed e3 62 0a 79 e4 f8 14
+0130   27 4d eb 73 91 01 0c ae 08 b9 43 02 21 00 d3 28
+0140   a4 86 cf 8b af 35 c9 04 f7 1f e2 56 22 f7 5d df
+0150   53 13 4f c6 db 6b c0 0d 57 90 c4 23 fe 06 14 03
+0160   03 00 01 01 16 03 03 00 50 4b 77 62 ff a9 03 c1
+0170   1e 6f d8 35 93 17 2d 54 ef 
+
+
+0179   6f da db a0 35 1b e1
+0180   b9 ca a3 90 df 7e 17 ec 0b e8 cc f9 a4 92 1b 77
+0190   9c 0f f3 c6 dc f9 b3 7d 3c 41 6c 4c 80 95 66 7e
+01a0   b1 7e 37 3d 28 ef a4 ca fd 3e fd 8f dd 84 10 c5
+01b0   b2 71 38 ab 8d 9c e3 ac 46
+
+
+SESSION_RC2
+ca 70 ac 7f 
+0010 ab 85 90 f2 e6 d3 87 e7 5d d7 28 30 dc d7 77 14 
+0020 cc 15 e9 08 c9 a9 aa 06 66 e3 5a eb 49 fa 71 ee 
+0030 b8 99 37 f8 0d 1f 40 bf c9 4e 52 49 
+
+SESSION_RC2_KEY2
+0000 8e e2 5e e1 d4 33 85 ac ed b7 43 43 95 1d 08 3e 
+0010 51 8f ce b5 e9 ed fe 41 ef 34 56 6c c1 6e eb e3 
+
+
+SESSION_AES_ENCRYPT
+
+3e 6b 4c 97 
+0010 1b e3 6c 85 f3 4e 3e 47 6d a9 c7 7d 71 7c 85 6c 
+0020 66 90 59 98 97 23 bc fd 9c 45 0d 13 
+
+
+DECRYPT
+18 d8 5f 3b 
+0010 9b cd 67 36 2a fe 83 72 76 88 7b a2 6f 3e 2d ca 
+0020 59 64 ac 61 68 ab bb cb fa bf d5 8d 

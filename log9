@@ -1,0 +1,719 @@
+DLL Loaded: 00007FFD08450000 C:\Windows\System32\kernel.appcore.dll
+Thread 14CC created, Entry: ntdll.00007FFD0C022DC0
+Thread 3A0 created, Entry: ntdll.00007FFD0C022DC0
+Thread 15E4 created, Entry: ntdll.00007FFD0C022DC0
+Thread D20 created, Entry: ntdll.00007FFD0C022DC0
+DLL Loaded: 00007FFD04B30000 C:\Windows\System32\winusb.dll
+MemRead failed on breakpoint address00007FFCF6546154!
+DLL Loaded: 00007FFCED220000 C:\Windows\System32\drivers\UMDF\synaWudfBioUsb.dll
+DLL Loaded: 00007FFD0B840000 C:\Windows\System32\ole32.dll
+DLL Loaded: 00007FFD09580000 C:\Windows\System32\gdi32.dll
+DLL Loaded: 00007FFD091C0000 C:\Windows\System32\gdi32full.dll
+DLL Loaded: 00007FFD095C0000 C:\Windows\System32\user32.dll
+DLL Loaded: 00007FFD09560000 C:\Windows\System32\win32u.dll
+DLL Loaded: 00007FFD09DD0000 C:\Windows\System32\shell32.dll
+DLL Loaded: 00007FFD089E0000 C:\Windows\System32\windows.storage.dll
+DLL Loaded: 00007FFD08470000 C:\Windows\System32\powrprof.dll
+DLL Loaded: 00007FFD0B6D0000 C:\Windows\System32\shlwapi.dll
+DLL Loaded: 00007FFD093B0000 C:\Windows\System32\SHCore.dll
+DLL Loaded: 00007FFD084C0000 C:\Windows\System32\profapi.dll
+DLL Loaded: 00007FFD08810000 C:\Windows\System32\crypt32.dll
+DLL Loaded: 00007FFD08460000 C:\Windows\System32\msasn1.dll
+DLL Loaded: 00007FFD0B980000 C:\Windows\System32\setupapi.dll
+DLL Loaded: 00007FFD08390000 C:\Windows\System32\bcrypt.dll
+DLL Loaded: 00007FFCF6090000 C:\Windows\System32\WUDFx.dll
+DLL Loaded: 00007FFD09970000 C:\Windows\System32\oleaut32.dll
+DLL Loaded: 00007FFD08770000 C:\Windows\System32\msvcp_win.dll
+DLL Loaded: 00007FFD07EC0000 C:\Windows\System32\cryptsp.dll
+DLL Loaded: 00007FFD07930000 C:\Windows\System32\rsaenh.dll
+DLL Loaded: 00007FFD07BA0000 C:\Windows\System32\userenv.dll
+BCryptOpenAlgorithmProvider Algo: ??? Ptr: 0000000000000000
+DLL Loaded: 00007FFD07EE0000 C:\Windows\System32\cryptbase.dll
+DLL Loaded: 00007FFD07970000 C:\Windows\System32\dpapi.dll
+Thread 624 created, Entry: <synawudfbiousb.$LN9_1>
+Thread 15E8 created, Entry: ntdll.00007FFD0C022DC0
+Thread 8CC created, Entry: synawudfbiousb.00007FFCED239534
+Thread CC created, Entry: <synawudfbiousb.StartAddress>
+readFromPipe
+readFromPipe
+readFromPipe
+readFromPipe
+readFromPipe
+readFromPipe
+readFromPipe
+CryptCreateHash
+BCryptOpenAlgorithmProvider Algo: L"SHA256" Ptr: 0000000000000000
+CryptHashData
+CryptCreateHash
+CryptHashData
+CryptCreateHash
+CryptHashData
+CryptCreateHash
+CryptHashData
+CryptCreateHash
+CryptHashData
+CryptCreateHash
+CryptHashData
+CryptCreateHash
+CryptHashData
+CryptCreateHash
+BCryptOpenAlgorithmProvider Algo: L"ECDH_P256" Ptr: 0000000000000000
+BCryptOpenAlgorithmProvider Algo: L"ECDSA_P256" Ptr: 0000000000000000
+CryptCreateHash
+CryptHashData
+BCryptOpenAlgorithmProvider Algo: L"ECDH_P256" Ptr: 0000000000000000
+BCryptOpenAlgorithmProvider Algo: L"ECDSA_P256" Ptr: 0000000000000000
+BCryptImportKeyPair \\\
+Type: L"ECCPUBLICBLOB" \\\
+Data len: F4F58F40hex
+[rsp+28]
+0000 45 43 53 31 20 00 00 00 f7 27 65 3b 4e 16 ce 06 
+0010 65 a6 89 4d 7f 3a 30 d7 d0 a0 be 31 0d 12 92 a7 
+0020 43 67 1f df 69 f6 a8 d3 a8 55 38 f8 b6 be c5 0d 
+0030 6e ef 8b d5 f4 d0 7a 88 62 43 c5 8b 23 93 94 8d 
+0040 f7 61 a8 47 21 a6 ca 94 
+CryptDecodeObject struct type ???
+0000 30 46 02 21 00 92 a1 f8 3a d4 45 57 cb 82 0f 2f 
+0010 07 0f af 87 e5 1c 82 9d 85 29 28 ab 9e aa 0d 23 
+0020 31 9e a8 25 5e 02 21 00 8d 98 5c ba 0c 62 39 a5 
+0030 31 cf 20 c0 14 a9 57 29 b7 62 d7 75 5a d6 8c f8 
+0040 20 dd 93 f6 45 a0 59 53 
+Decoded
+0000 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0050 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+
+
+CryptDecodeObject struct type ???
+0000 30 46 02 21 00 92 a1 f8 3a d4 45 57 cb 82 0f 2f 
+0010 07 0f af 87 e5 1c 82 9d 85 29 28 ab 9e aa 0d 23 
+0020 31 9e a8 25 5e 02 21 00 8d 98 5c ba 0c 62 39 a5 
+0030 31 cf 20 c0 14 a9 57 29 b7 62 d7 75 5a d6 8c f8 
+0040 20 dd 93 f6 45 a0 59 53 
+Decoded
+0000 20 00 00 00 00 00 00 00 f0 c9 f5 f4 07 02 00 00 
+0010 20 00 00 00 00 00 00 00 10 ca f5 f4 07 02 00 00 
+0020 5e 25 a8 9e 31 23 0d aa 9e ab 28 29 85 9d 82 1c 
+0030 e5 87 af 0f 07 2f 0f 82 cb 57 45 d4 3a f8 a1 92 
+0040 53 59 a0 45 f6 93 dd 20 f8 8c d6 5a 75 d7 62 b7 
+0050 29 57 a9 14 c0 20 cf 31 a5 39 62 0c ba 5c 98 8d 
+
+
+BCryptVerfySignature
+0000 5d 6c 0e 35 e8 3e 4d 4d 10 65 af d5 44 67 f7 c4 
+0010 f3 9f 7e 34 2b 58 a1 57 ec cf 68 18 ad 89 6c 2d 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 71 7c d7 2d 
+0010 09 62 bc 4a 28 46 13 8d bb 2c 24 19 25 12 a7 64 
+0020 07 06 5f 38 38 46 13 9d 4b ec 20 33 
+
+
+BCryptOpenAlgorithmProvider Algo: L"RC2" Ptr: 0000000000000000
+CryptCreateHash
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 71 7c d7 2d 
+0010 09 62 bc 4a 28 46 13 8d bb 2c 24 19 25 12 a7 64 
+0020 07 06 5f 38 38 46 13 9d 4b ec 20 33 
+CryptCreateHash
+CryptHashData
+
+
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 48 78 02 70 
+0010 5e 5a c4 a9 93 1c 44 aa 4d 32 25 22 39 e0 bf 8f 
+0020 0c 85 4d de 49 0c cc f6 87 ef ad 9c 
+CryptCreateHash
+CryptHashData
+
+
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 48 78 02 70 
+0010 5e 5a c4 a9 93 1c 44 aa 4d 32 25 22 39 e0 bf 8f 
+0020 0c 85 4d de 49 0c cc f6 87 ef ad 9c 
+CryptCreateHash
+CryptHashData
+
+
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 b7 01 5b e1 
+0010 65 8f 48 d0 d3 95 4b 2c 79 fe 66 b5 45 47 38 bd 
+0020 f3 a9 d4 ec e6 2e cf 7d d0 dd ba ba 
+CryptCreateHash
+CryptHashData
+
+
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 48 78 02 70 
+0010 5e 5a c4 a9 93 1c 44 aa 4d 32 25 22 39 e0 bf 8f 
+0020 0c 85 4d de 49 0c cc f6 87 ef ad 9c 
+BCryptOpenAlgorithmProvider Algo: L"AES" Ptr: 0000000000000000
+CryptDecrypt: len - 112
+0000 33 5c ed 15 55 3c f5 f4 de 14 a0 f2 59 68 00 a2 
+0010 a0 98 58 c2 06 67 d5 c1 06 e3 bf e6 6a ec 6a c0 
+0020 2d b2 d8 77 d9 0e c4 12 e3 ab 48 ab aa b4 b9 56 
+0030 75 30 69 9d 0a c3 d9 bb ff de 42 11 bd 34 03 21 
+0040 cf a2 8d 3c 1b e4 ba f0 1f f4 40 69 6f b4 78 18 
+0050 f3 2d 6b 22 80 86 64 31 14 34 2a 81 2c cc d7 c6 
+0060 62 f3 9e 5f 78 a6 39 d3 db 57 c3 30 d4 dd 12 8f 
+Decrypted:
+0000 ab 9d fd ba 74 25 29 93 9d 2d 5d f4 77 ec 90 2e 
+0010 13 b8 21 1a 19 70 1e 50 2f f5 6e 6e 25 ae 8c 00 
+0020 dd f4 04 74 f0 7a e4 e0 79 d1 f1 9f ae bd a8 ef 
+0030 1e fa 18 c2 6a 76 ae a5 aa bf c3 4f 12 94 8c 8f 
+0040 94 f5 52 49 8e de 72 ff fa 1f 04 b9 68 23 72 09 
+0050 20 6c 86 b7 2f f9 99 dc ce d1 2d b8 06 4c 87 d6 
+0060 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 
+
+
+CryptGenRandom 4
+Generated
+0000 40 74 91 2a 
+CryptGenRandom 28
+Generated
+0000 9f 9c 85 88 77 df 4e 3f 52 7b a0 62 1c 36 95 89 
+0010 d0 ae 6e cb f0 00 b5 94 30 52 58 c3 
+
+
+CryptHashData
+readFromPipe
+CryptHashData
+CryptHashData
+CryptHashData
+CryptHashData
+BCryptGenerateKeyPair ptr: 5555555100000130
+BCryptExportKey L"ECCPRIVATEBLOB"
+len: 5B0E17EA98
+BCryptExportKey L"ECCPRIVATEBLOB"
+Exported: len unknown
+0000 45 43 4b 32 20 00 00 00 fe 81 cd 53 62 ac d0 32 
+0010 2f 35 91 10 c4 43 49 be 99 a5 2e 11 d7 96 4e c8 
+0020 0c de c9 fb c5 1a 8a 2f d7 08 1c 20 83 f4 13 51 
+0030 c5 6f 0d 13 f3 c5 8e fc 8b e6 65 d0 31 6d 93 d6 
+0040 b9 b2 e4 21 3e f3 84 91 
+
+
+BCryptImportKeyPair \\\
+Type: L"ECCPRIVATEBLOB" \\\
+Data len: F4F5CBE0hex
+[rsp+28]
+0000 45 43 4b 32 20 00 00 00 fe 81 cd 53 62 ac d0 32 
+0010 2f 35 91 10 c4 43 49 be 99 a5 2e 11 d7 96 4e c8 
+0020 0c de c9 fb c5 1a 8a 2f d7 08 1c 20 83 f4 13 51 
+0030 c5 6f 0d 13 f3 c5 8e fc 8b e6 65 d0 31 6d 93 d6 
+0040 b9 b2 e4 21 3e f3 84 91 61 3c 52 e4 cd 0d 66 fb 
+0050 13 36 9e 2b 4b 34 b6 76 5f 45 0b a5 71 90 19 fb 
+0060 57 d1 3b f7 ef d8 77 06 
+
+
+BCryptImportKeyPair \\\
+KEY_EC_DRV_PUB
+
+
+BCryptSecretAgreement
+
+
+CryptHashData
+BCryptDeriveKey kdf: L"TLS_PRF"
+Derived:
+0000 04 23 db e4 75 6a db 14 84 e0 72 bc 62 6c 2a c7 
+0010 16 c6 8c 4b bc d3 99 84 9f bd f5 d2 3b 50 2a 17 
+0020 fe 12 55 7c 14 f6 88 3d 4d a1 57 72 19 12 69 67 
+
+
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 04 23 db e4 
+0010 75 6a db 14 84 e0 72 bc 62 6c 2a c7 16 c6 8c 4b 
+0020 bc d3 99 84 9f bd f5 d2 3b 50 2a 17 fe 12 55 7c 
+0030 14 f6 88 3d 4d a1 57 72 19 12 69 67 
+
+
+CryptCreateHash
+CryptHashData
+
+
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 04 23 db e4 
+0010 75 6a db 14 84 e0 72 bc 62 6c 2a c7 16 c6 8c 4b 
+0020 bc d3 99 84 9f bd f5 d2 3b 50 2a 17 fe 12 55 7c 
+0030 14 f6 88 3d 4d a1 57 72 19 12 69 67 
+
+
+CryptCreateHash
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 04 23 db e4 
+0010 75 6a db 14 84 e0 72 bc 62 6c 2a c7 16 c6 8c 4b 
+0020 bc d3 99 84 9f bd f5 d2 3b 50 2a 17 fe 12 55 7c 
+0030 14 f6 88 3d 4d a1 57 72 19 12 69 67 
+CryptCreateHash
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 04 23 db e4 
+0010 75 6a db 14 84 e0 72 bc 62 6c 2a c7 16 c6 8c 4b 
+0020 bc d3 99 84 9f bd f5 d2 3b 50 2a 17 fe 12 55 7c 
+0030 14 f6 88 3d 4d a1 57 72 19 12 69 67 
+CryptCreateHash
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 04 23 db e4 
+0010 75 6a db 14 84 e0 72 bc 62 6c 2a c7 16 c6 8c 4b 
+0020 bc d3 99 84 9f bd f5 d2 3b 50 2a 17 fe 12 55 7c 
+0030 14 f6 88 3d 4d a1 57 72 19 12 69 67 
+CryptCreateHash
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 04 23 db e4 
+0010 75 6a db 14 84 e0 72 bc 62 6c 2a c7 16 c6 8c 4b 
+0020 bc d3 99 84 9f bd f5 d2 3b 50 2a 17 fe 12 55 7c 
+0030 14 f6 88 3d 4d a1 57 72 19 12 69 67 
+CryptCreateHash
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 04 23 db e4 
+0010 75 6a db 14 84 e0 72 bc 62 6c 2a c7 16 c6 8c 4b 
+0020 bc d3 99 84 9f bd f5 d2 3b 50 2a 17 fe 12 55 7c 
+0030 14 f6 88 3d 4d a1 57 72 19 12 69 67 
+CryptCreateHash
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 04 23 db e4 
+0010 75 6a db 14 84 e0 72 bc 62 6c 2a c7 16 c6 8c 4b 
+0020 bc d3 99 84 9f bd f5 d2 3b 50 2a 17 fe 12 55 7c 
+0030 14 f6 88 3d 4d a1 57 72 19 12 69 67 
+
+
+CryptCreateHash
+CryptHashData
+
+
+BCryptImportKeyPair \\\
+KEY_EC_DRV_PRIV
+
+
+BCryptSignHash
+
+
+CryptEncodeObject ??? len unkown!
+0000 20 00 00 00 50 58 00 00 40 b4 f5 f4 07 02 00 00 
+0010 20 00 00 00 00 00 00 00 90 b4 f5 f4 07 02 00 00 
+0020 d0 a6 f5 f4 07 02 00 00 c8 a3 f5 f4 07 02 00 00 
+0030 c8 ae f5 f4 07 02 00 00 00 00 00 00 5b 00 00 00 
+Encoded
+0000 30 44 02 20 76 ae e4 a8 ee a6 bd 93 ad 65 c1 11 
+0010 fa 27 80 f5 94 3e 3d 67 4c 95 ad 45 8f 20 a6 2b 
+0020 de 48 6c ca 02 20 1f e1 6f 63 ed 0d b6 d6 ac 00 
+0030 10 78 4b ee a0 bc ae 02 8c c6 ad 92 5f a1 6b 60 
+0040 48 7b da 43 d7 a0 
+
+
+CryptHashData
+
+
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 04 23 db e4 
+0010 75 6a db 14 84 e0 72 bc 62 6c 2a c7 16 c6 8c 4b 
+0020 bc d3 99 84 9f bd f5 d2 3b 50 2a 17 fe 12 55 7c 
+0030 14 f6 88 3d 4d a1 57 72 19 12 69 67 
+
+
+CryptCreateHash
+CryptHashData
+
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 04 23 db e4 
+0010 75 6a db 14 84 e0 72 bc 62 6c 2a c7 16 c6 8c 4b 
+0020 bc d3 99 84 9f bd f5 d2 3b 50 2a 17 fe 12 55 7c 
+0030 14 f6 88 3d 4d a1 57 72 19 12 69 67 
+CryptCreateHash
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 2a 8a 58 22 
+0010 c1 a7 2e 2c 7e c9 05 7c 6e 4b a2 52 94 4d cb b9 
+0020 37 61 ca f9 8c cb 09 fe 84 f8 30 ea 
+CryptCreateHash
+CryptHashData
+CryptHashData
+CryptGenRandom 16
+Generated
+0000 88 f5 43 21 14 de 1a dc 3e 9b 2b 7e 05 33 7e c1 
+
+
+CryptImportKey 								-- first use of SES_AES_ENCRYPT
+0000 08 02 00 00 10 66 00 00 20 00 00 00 da 31 b2 66 
+0010 68 f0 75 9e fa 63 68 01 f9 60 ea fe ec 98 63 64 
+0020 cd 81 0c c8 fd 2b 59 83 0c 99 55 15 
+
+
+CryptEncrypt: len - 64
+0000 14 00 00 0c 6d 35 45 3f 84 a5 5a fb 24 c9 34 fa 
+0010 95 32 03 07 57 74 c3 4d de 04 9c 59 b2 43 24 ed 
+0020 b5 68 5a 39 10 2c 2e 69 bf ca d1 48 7b f8 f2 9f 
+0030 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 
+Encrypted:
+0000 58 cb c9 10 e1 db 52 8a b1 70 bb 60 e2 1b 34 a5 
+0010 49 05 df 9e c0 eb 7e c4 be ef 14 31 a4 d8 8e fe 
+0020 ae 26 df e6 ca 74 72 e0 b8 91 d4 2b 92 ce 05 e2 
+0030 56 18 4e 2c c7 43 c4 c1 b4 8c a2 b4 7e ef 51 a2 
+
+
+readFromPipe
+
+
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 e7 fc 34 4d  
+0010 3a 22 b1 cf a2 7e 3e ea 88 2c 09 1b c0 88 8b 74 
+0020 c0 d0 36 08 fc b0 b3 3d 3a df 7c 2f 
+CryptDecrypt: len - 64
+0000 62 99 e5 47 ef 70 42 31 5c 80 7b 35 49 e3 04 59 
+0010 94 c8 70 02 ef 47 0a 78 94 d0 15 1a 2d 04 3e cc 
+0020 e7 dc 0b 64 68 70 dd 86 2c ae 00 e7 4c 27 22 b2 
+0030 ef fd 33 49 46 f1 6a 87 f6 43 5d b0 4f c8 20 8f 
+Decrypted:
+0000 14 00 00 0c 91 88 f2 41 97 60 43 55 b1 21 27 4e 
+0010 a2 33 df 0c eb 02 76 47 c6 ee b9 b2 50 0f 57 4f 
+0020 6c 60 fb 63 35 94 65 c4 30 67 e3 82 f6 86 10 a5 
+0030 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 
+
+
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 a8 1a b1 90 
+0010 7b ef f7 4f bc d6 5a 60 86 19 6d 4a cd 2a fc 38 
+0020 1b ae 32 26 f5 90 ad 82 eb 30 bc 1e 
+CryptCreateHash
+CryptHashData
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 04 23 db e4 
+0010 75 6a db 14 84 e0 72 bc 62 6c 2a c7 16 c6 8c 4b 
+0020 bc d3 99 84 9f bd f5 d2 3b 50 2a 17 fe 12 55 7c 
+0030 14 f6 88 3d 4d a1 57 72 19 12 69 67 
+CryptCreateHash
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 04 23 db e4 
+0010 75 6a db 14 84 e0 72 bc 62 6c 2a c7 16 c6 8c 4b 
+0020 bc d3 99 84 9f bd f5 d2 3b 50 2a 17 fe 12 55 7c 
+0030 14 f6 88 3d 4d a1 57 72 19 12 69 67 
+CryptCreateHash
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 2a 8a 58 22 
+0010 c1 a7 2e 2c 7e c9 05 7c 6e 4b a2 52 94 4d cb b9 
+0020 37 61 ca f9 8c cb 09 fe 84 f8 30 ea 
+CryptCreateHash
+CryptHashData
+CryptHashData
+CryptGenRandom 16
+Generated
+0000 2d 53 4a bc 0c c5 ec b9 9d db fa 56 11 96 1e 29 
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 da 31 b2 66 
+0010 68 f0 75 9e fa 63 68 01 f9 60 ea fe ec 98 63 64 
+0020 cd 81 0c c8 fd 2b 59 83 0c 99 55 15 
+CryptEncrypt: len - 48
+0000 08 5c 20 00 80 07 00 00 00 04 ba 2b af 66 0a 58 
+0010 2f 9c fa 3d 8d 55 92 22 a5 c1 e7 2b 28 ec 59 4b 
+0020 13 8c 2b 48 b1 ca 8e 7d b6 6f 05 05 05 05 05 05 
+Encrypted:
+0000 8c 9d 55 91 73 05 72 1d 3c 00 7a 9b aa aa 2d ba 
+0010 1c bb 3a 6a 62 cb ef 8f 8a 82 f1 57 04 71 b5 26 
+0020 7e 3b f7 ff cd 1e a3 b1 4f e4 86 b0 b4 24 9b 10 
+readFromPipe
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 e7 fc 34 4d 
+0010 3a 22 b1 cf a2 7e 3e ea 88 2c 09 1b c0 88 8b 74 
+0020 c0 d0 36 08 fc b0 b3 3d 3a df 7c 2f 
+CryptDecrypt: len - 48
+0000 4b 0e b3 ad b8 b9 30 e7 82 26 04 3f 38 61 50 5d 
+0010 64 f0 0f 95 5f 85 9b 20 9c 7a 71 df f1 3f 72 77 
+0020 93 f4 1f 45 a8 51 fe ec 8f 46 23 46 7f a5 07 4d 
+Decrypted:
+0000 00 00 00 4c be 62 da 95 4c 9b 45 b2 50 e3 75 56 
+0010 52 1e 78 e3 f6 19 0d 90 09 ea d9 cf 5d e5 36 fe 
+0020 48 15 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 a8 1a b1 90 
+0010 7b ef f7 4f bc d6 5a 60 86 19 6d 4a cd 2a fc 38 
+0020 1b ae 32 26 f5 90 ad 82 eb 30 bc 1e 
+CryptCreateHash
+CryptHashData
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 2a 8a 58 22 
+0010 c1 a7 2e 2c 7e c9 05 7c 6e 4b a2 52 94 4d cb b9 
+0020 37 61 ca f9 8c cb 09 fe 84 f8 30 ea 
+CryptCreateHash
+CryptHashData
+CryptHashData
+CryptGenRandom 16
+Generated
+0000 5a ac 87 b5 c3 42 c4 5d 56 29 59 7d ed 2d 3c 66 
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 da 31 b2 66 
+0010 68 f0 75 9e fa 63 68 01 f9 60 ea fe ec 98 63 64 
+0020 cd 81 0c c8 fd 2b 59 83 0c 99 55 15 
+CryptEncrypt: len - 48
+0000 07 80 20 00 80 04 e9 84 fb bc 5d 49 1e e6 a4 79 
+0010 92 d1 84 38 49 38 f1 37 92 57 89 67 66 bb fa da 
+0020 08 ea 43 70 da 7a 09 09 09 09 09 09 09 09 09 09 
+Encrypted:
+0000 d2 fc 83 43 1f 22 53 71 a6 57 35 df 3c 5a a4 f2 
+0010 f1 19 a4 3f 7c 87 f4 32 fd 1d 73 be af 4a 22 eb 
+0020 1e 10 72 31 46 60 a7 14 d3 1a 8d 51 c4 0b 06 78 
+readFromPipe
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 e7 fc 34 4d 
+0010 3a 22 b1 cf a2 7e 3e ea 88 2c 09 1b c0 88 8b 74 
+0020 c0 d0 36 08 fc b0 b3 3d 3a df 7c 2f 
+CryptDecrypt: len - 48
+0000 5b 6f 8f ad 6c d3 63 1e 57 e9 83 f7 8a ad 71 d1 
+0010 53 bb 00 32 82 b0 ad e1 58 b6 2f bb d2 ad 13 0f 
+0020 3b 2e a7 46 05 2f 68 23 a0 29 44 dd 77 2e d1 00 
+Decrypted:
+0000 00 00 02 00 00 00 b4 54 ff 98 ed ca 96 b9 5a f9 
+0010 8c c2 4e 62 af 96 96 ae be 01 21 0a 50 f4 1c ca 
+0020 c6 95 af 5a c4 46 09 09 09 09 09 09 09 09 09 09 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 a8 1a b1 90 
+0010 7b ef f7 4f bc d6 5a 60 86 19 6d 4a cd 2a fc 38 
+0020 1b ae 32 26 f5 90 ad 82 eb 30 bc 1e 
+CryptCreateHash
+CryptHashData
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 2a 8a 58 22 
+0010 c1 a7 2e 2c 7e c9 05 7c 6e 4b a2 52 94 4d cb b9 
+0020 37 61 ca f9 8c cb 09 fe 84 f8 30 ea 
+CryptCreateHash
+CryptHashData
+CryptHashData
+CryptGenRandom 16
+Generated
+0000 2f 5d 06 06 a9 8e 9c 0c 5a 07 c7 76 36 20 20 4f 
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 da 31 b2 66 
+0010 68 f0 75 9e fa 63 68 01 f9 60 ea fe ec 98 63 64 
+0020 cd 81 0c c8 fd 2b 59 83 0c 99 55 15 
+CryptEncrypt: len - 48
+0000 75 38 fa 29 8a 4b aa 7e 81 ce c0 b9 6b e3 17 c7 
+0010 05 2f 28 79 2a 39 84 98 a6 c2 7e dd 2b dc fc 9d 
+0020 de 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 
+Encrypted:
+0000 c4 ab 55 71 e6 9f 8c b3 46 19 28 a4 56 d4 12 5f 
+0010 74 36 62 03 54 b4 50 12 2a e2 19 f1 42 48 f2 be 
+0020 6e c4 e8 e2 34 43 c4 83 13 28 13 0f 16 0c 3c 12 
+readFromPipe
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 e7 fc 34 4d 
+0010 3a 22 b1 cf a2 7e 3e ea 88 2c 09 1b c0 88 8b 74 
+0020 c0 d0 36 08 fc b0 b3 3d 3a df 7c 2f 
+CryptDecrypt: len - 48
+0000 68 f5 50 f2 a2 ec 42 22 c4 5a 52 ee cc 41 8f b9 
+0010 10 52 e5 9e b8 5d ef 4f af e8 48 f0 00 1f 97 6c 
+0020 13 4f 35 8e 22 ed 14 1d 58 1b 0b 23 b0 06 ef 55 
+Decrypted:
+0000 00 00 00 00 00 00 02 00 71 00 d6 b9 bb 94 c6 ae 
+0010 7b 8f 83 c2 ce e9 96 db cb 56 b4 1e da dd 49 84 
+0020 7c f1 af cd f3 78 18 0c f4 67 05 05 05 05 05 05 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 a8 1a b1 90 
+0010 7b ef f7 4f bc d6 5a 60 86 19 6d 4a cd 2a fc 38 
+0020 1b ae 32 26 f5 90 ad 82 eb 30 bc 1e 
+CryptCreateHash
+CryptHashData
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 2a 8a 58 22 
+0010 c1 a7 2e 2c 7e c9 05 7c 6e 4b a2 52 94 4d cb b9 
+0020 37 61 ca f9 8c cb 09 fe 84 f8 30 ea 
+CryptCreateHash
+CryptHashData
+CryptHashData
+CryptGenRandom 16
+Generated
+0000 2c 00 55 b9 b9 cc 77 da 0b 4d c5 4f bd a1 3e 05 
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 da 31 b2 66 
+0010 68 f0 75 9e fa 63 68 01 f9 60 ea fe ec 98 63 64 
+0020 cd 81 0c c8 fd 2b 59 83 0c 99 55 15 
+CryptEncrypt: len - 48
+0000 75 38 fa 29 8a 4b aa 7e 81 ce c0 b9 6b e3 17 c7 
+0010 05 2f 28 79 2a 39 84 98 a6 c2 7e dd 2b dc fc 9d 
+0020 de 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 
+Encrypted:
+0000 88 60 fd b3 0c 8d eb 40 af 2d 17 22 40 9a 4d 42 
+0010 90 73 05 45 0b d6 51 a7 c1 3d 3c d5 e3 0e 31 72 
+0020 32 45 6f c0 87 13 7a 62 6a bd b5 dd 41 47 1d 2a 
+readFromPipe
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 e7 fc 34 4d 
+0010 3a 22 b1 cf a2 7e 3e ea 88 2c 09 1b c0 88 8b 74 
+0020 c0 d0 36 08 fc b0 b3 3d 3a df 7c 2f 
+CryptDecrypt: len - 48
+0000 c5 0d 90 da ff 4e b5 7d e9 43 67 cc 8b 96 cd 2e 
+0010 46 df 12 41 20 47 15 13 6f 2b a0 71 62 0c d1 9f 
+0020 68 8a 0c 3a 87 67 be 06 67 d3 11 47 3b f6 01 f3 
+Decrypted:
+0000 00 00 00 00 00 00 02 00 71 00 d6 b9 bb 94 c6 ae 
+0010 7b 8f 83 c2 ce e9 96 db cb 56 b4 1e da dd 49 84 
+0020 7c f1 af cd f3 78 18 0c f4 67 05 05 05 05 05 05 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 a8 1a b1 90 
+0010 7b ef f7 4f bc d6 5a 60 86 19 6d 4a cd 2a fc 38 
+0020 1b ae 32 26 f5 90 ad 82 eb 30 bc 1e 
+CryptCreateHash
+CryptHashData
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 2a 8a 58 22 
+0010 c1 a7 2e 2c 7e c9 05 7c 6e 4b a2 52 94 4d cb b9 
+0020 37 61 ca f9 8c cb 09 fe 84 f8 30 ea 
+CryptCreateHash
+CryptHashData
+CryptHashData
+CryptGenRandom 16
+Generated
+0000 62 bd d3 d8 11 39 3e d2 1c 5f f7 0c be 9d 4e a6 
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 da 31 b2 66 
+0010 68 f0 75 9e fa 63 68 01 f9 60 ea fe ec 98 63 64 
+0020 cd 81 0c c8 fd 2b 59 83 0c 99 55 15 
+CryptEncrypt: len - 48
+0000 75 38 fa 29 8a 4b aa 7e 81 ce c0 b9 6b e3 17 c7 
+0010 05 2f 28 79 2a 39 84 98 a6 c2 7e dd 2b dc fc 9d 
+0020 de 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 0e 
+Encrypted:
+0000 f2 ac e3 c2 20 2d 7d 13 2f b6 c4 5a 9a 62 74 77 
+0010 a9 65 c6 2f b3 32 d2 97 61 b5 7d 50 83 bb 56 9e 
+0020 ce 11 52 05 1c 3f ee 67 bd 70 49 4b a0 0c f7 6a 
+readFromPipe
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 e7 fc 34 4d 
+0010 3a 22 b1 cf a2 7e 3e ea 88 2c 09 1b c0 88 8b 74 
+0020 c0 d0 36 08 fc b0 b3 3d 3a df 7c 2f 
+CryptDecrypt: len - 48
+0000 cf a3 0f bf 9a fb ba e6 60 26 cb b2 89 2f fe 1b 
+0010 0b 2d 81 97 f3 3a 25 bf ee 87 ef f7 fd e9 92 78 
+0020 6f fc c5 ea 24 7e a5 9e 0d 65 fe 09 87 55 21 b0 
+Decrypted:
+0000 00 00 00 00 00 00 02 00 71 00 d6 b9 bb 94 c6 ae 
+0010 7b 8f 83 c2 ce e9 96 db cb 56 b4 1e da dd 49 84 
+0020 7c f1 af cd f3 78 18 0c f4 67 05 05 05 05 05 05 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 a8 1a b1 90 
+0010 7b ef f7 4f bc d6 5a 60 86 19 6d 4a cd 2a fc 38 
+0020 1b ae 32 26 f5 90 ad 82 eb 30 bc 1e 
+CryptCreateHash
+CryptHashData
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 2a 8a 58 22 
+0010 c1 a7 2e 2c 7e c9 05 7c 6e 4b a2 52 94 4d cb b9 
+0020 37 61 ca f9 8c cb 09 fe 84 f8 30 ea 
+CryptCreateHash
+CryptHashData
+CryptHashData
+CryptGenRandom 16
+Generated
+0000 3f 7e 1f cd 88 b9 50 9d 2a e4 12 04 86 e7 aa 70 
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 da 31 b2 66 
+0010 68 f0 75 9e fa 63 68 01 f9 60 ea fe ec 98 63 64 
+0020 cd 81 0c c8 fd 2b 59 83 0c 99 55 15 
+CryptEncrypt: len - 48
+0000 43 02 28 72 5b 70 f4 22 1d 80 21 d6 b6 6f e8 06 
+0010 cf 5b c5 a5 6e cd ac eb 43 e1 1f 22 ef 51 2a af 
+0020 af d3 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 
+Encrypted:
+0000 4f 6f 0d 93 ac 8e 40 ad f7 26 85 21 6e f7 d0 59 
+0010 4c 58 5c 5d c7 74 a9 ce 45 31 10 c9 a3 17 0c cd 
+0020 3d f5 72 98 ba d6 cf 82 12 de 14 10 18 7b 73 63 
+readFromPipe
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 e7 fc 34 4d 
+0010 3a 22 b1 cf a2 7e 3e ea 88 2c 09 1b c0 88 8b 74 
+0020 c0 d0 36 08 fc b0 b3 3d 3a df 7c 2f 
+CryptDecrypt: len - 128
+0000 e4 a4 99 a1 d0 ef 58 b3 6c 3e 25 91 80 cf ae 42 
+0010 36 b0 ae 2b be 47 43 66 e4 5b b1 24 0f 64 d1 50 
+0020 99 ce 10 6a 03 19 aa 7a 53 71 2f f8 d1 57 19 36 
+0030 ad f0 fe 56 5a 78 4e 34 09 ec 08 a6 cc be dc 87 
+0040 07 a8 8c 91 c6 89 bd c2 dd ce 70 fa 55 60 d1 85 
+0050 65 cc f9 0a b6 80 d2 8b 33 91 10 70 7e 47 f5 43 
+0060 03 80 0e 7a 2f 71 b8 a6 01 5b 61 8d 1e 86 df 21 
+0070 7e ed a2 f0 c1 a7 ea 56 e4 7a d0 b4 99 53 71 14 
+Decrypted:
+0000 00 00 01 00 00 00 06 00 98 c9 71 56 01 00 34 46 
+0010 02 00 07 00 60 39 00 00 01 00 84 08 01 00 07 00 
+0020 b0 02 00 00 02 00 84 28 03 00 12 00 10 10 00 00 
+0030 02 00 66 37 01 00 0c 00 40 22 02 00 01 00 86 47 
+0040 00 00 01 00 20 5a 00 00 02 00 23 77 00 00 01 00 
+0050 d0 2f 00 00 0f 35 5b b8 83 9f fa 75 08 cd c9 54 
+0060 cd a1 17 13 1b 20 d7 2d f8 db fd 62 32 75 da 9b 
+0070 51 7a ee 83 0b 0b 0b 0b 0b 0b 0b 0b 0b 0b 0b 0b 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 a8 1a b1 90 
+0010 7b ef f7 4f bc d6 5a 60 86 19 6d 4a cd 2a fc 38 
+0020 1b ae 32 26 f5 90 ad 82 eb 30 bc 1e 
+CryptCreateHash
+CryptHashData
+CryptHashData
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 2a 8a 58 22 
+0010 c1 a7 2e 2c 7e c9 05 7c 6e 4b a2 52 94 4d cb b9 
+0020 37 61 ca f9 8c cb 09 fe 84 f8 30 ea 
+CryptCreateHash
+CryptHashData
+CryptHashData
+CryptGenRandom 16
+Generated
+0000 de 74 f4 83 2f 3a 65 89 b8 08 08 ed 83 8d 0b 27 
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 da 31 b2 66 
+0010 68 f0 75 9e fa 63 68 01 f9 60 ea fe ec 98 63 64 
+0020 cd 81 0c c8 fd 2b 59 83 0c 99 55 15 
+CryptEncrypt: len - 48
+0000 43 02 28 72 5b 70 f4 22 1d 80 21 d6 b6 6f e8 06 
+0010 cf 5b c5 a5 6e cd ac eb 43 e1 1f 22 ef 51 2a af 
+0020 af d3 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 0d 
+Encrypted:
+0000 78 ae 4f d2 63 b6 93 4a 49 16 a2 25 82 8e 22 49 
+0010 f5 09 81 1e 19 74 36 90 9a 9e 56 bf dd ca f6 1e 
+0020 ef 20 98 71 c8 0d f9 60 37 92 5b bf a4 03 07 52 
+readFromPipe
+
+
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 e7 fc 34 4d 
+0010 3a 22 b1 cf a2 7e 3e ea 88 2c 09 1b c0 88 8b 74 
+0020 c0 d0 36 08 fc b0 b3 3d 3a df 7c 2f 
+CryptDecrypt: len - 128
+0000 79 4f 04 6b 54 e8 18 1a 79 66 ed 2e 0b ab dd 16 
+0010 1f 96 41 52 26 70 19 4e 19 df 21 3f 15 5e 20 54 
+0020 49 87 d3 f6 c4 cb 5f eb 6d 0d 01 6f 8b 2d c9 a5 
+0030 57 ab 18 8e 87 b8 7d 86 5a d6 b4 7f c4 89 f1 de 
+0040 47 99 8d 3d b4 56 4a aa 02 06 de af cb 95 9f 5e 
+0050 49 05 10 9b d6 6a c5 1d 05 0f cf fa 67 0d 7f 1e 
+0060 6b 59 d7 74 f0 44 ff d8 59 31 46 a3 7e a7 ea 0b 
+0070 af 16 3c 73 06 67 fb 11 15 d7 ec e4 0f c2 c1 44 
+Decrypted:
+0000 00 00 01 00 00 00 06 00 98 c9 71 56 01 00 34 46 
+0010 02 00 07 00 60 39 00 00 01 00 84 08 01 00 07 00 
+0020 b0 02 00 00 02 00 84 28 03 00 12 00 10 10 00 00 
+0030 02 00 66 37 01 00 0c 00 40 22 02 00 01 00 86 47 
+0040 00 00 01 00 20 5a 00 00 02 00 23 77 00 00 01 00 
+0050 d0 2f 00 00 0f 35 5b b8 83 9f fa 75 08 cd c9 54 
+0060 cd a1 17 13 1b 20 d7 2d f8 db fd 62 32 75 da 9b 
+0070 51 7a ee 83 0b 0b 0b 0b 0b 0b 0b 0b 0b 0b 0b 0b 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 a8 1a b1 90 
+0010 7b ef f7 4f bc d6 5a 60 86 19 6d 4a cd 2a fc 38 
+0020 1b ae 32 26 f5 90 ad 82 eb 30 bc 1e 
+CryptCreateHash
+CryptHashData
+CryptHashData
+Thread CC exit
