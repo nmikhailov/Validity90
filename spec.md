@@ -84,11 +84,6 @@ HMAC_RC2(SESSION_KEY_RC2,
 
 13. Send packet
 
-
-
-INVALID 1005. Send
-	Packet 505
-
 ```
 0000   44 00 00 00 16 03 03 01 55 0b 00 00 c0 00 00 b8
 0010   00 00 b8 12 86 17 00 00 00 20 00 00 00 ab 9d fd
@@ -103,11 +98,10 @@ INVALID 1005. Send
 00a0   00 00 00 00 00 00 00 00 00 00 00 00 00 a5 58 ed
 00b0   0f 31 33 45 63 c8 8a d5 53 d9 e4 6e 20 5d 54 3b
 00c0   83 99 cf 9b ef 9e a8 aa c5 eb fb 20 a2 10 00 00
-00d0   41 04 1d d8 36 68 e9 b0 7b 93 12 38 31 23 90 c8
-00e0   87 ca db 82 27 39 de 7b 43 d2 23 d7 cd d1 3c 77
-00f0   0e d2 d1 93 70 02 af 3b 18 47 c5 30 4c 33 60 cf
-0100   bf c5 9b 3c 67 d9 45 06 38 da 92 be 65 bf 81 8c
-0110   aa 7e 0f 00 00 48 30 46 02 21 00 a3 ad aa 61 00
+
+00d0-0111 SESSION_ECDH_PRIV1 X[] + Y[]
+
+			 0f 00 00 48 30 46 02 21 00 a3 ad aa 61 00
 0120   e6 9d bd cf 48 73 b7 a6 ed e3 62 0a 79 e4 f8 14
 0130   27 4d eb 73 91 01 0c ae 08 b9 43 02 21 00 d3 28
 0140   a4 86 cf 8b af 35 c9 04 f7 1f e2 56 22 f7 5d df

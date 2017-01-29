@@ -204,3 +204,10 @@ host -> usb
 CryptDecodeObject
 X509_ASN_ENCODING
 X509_ECC_SIGNATURE
+
+
+
+CreateHashAlgs:
+800c - SHA256
+
+8009 - CALG_HMAC
