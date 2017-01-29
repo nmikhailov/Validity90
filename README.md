@@ -1,12 +1,26 @@
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Validity90/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+# Validity90
 
-Stuff for reverse engineering protocol for Validity 138a:0090 fingerprint reader
+This project aims on revers engineering protocol of Validity 138a:0090 fingerprint reader, creating specification and FLOSS libfprint driver.
+
+## Discussions
+
+Gitter chat: [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Validity90/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+
+libfrprint bug: [https://bugs.freedesktop.org/show_bug.cgi?id=94536](https://bugs.freedesktop.org/show_bug.cgi?id=94536)
+
+Lenovo forums: [https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerprint-Reader-Linux/td-p/3352145](https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerprint-Reader-Linux/td-p/3352145)
+
+## Notable files
+
+1. spec.md - Specification draft, the main work goes here right now.
+2. dissector.lua - Wireshark dissector for decrypting communication after key exchange.
 
 ## Status
 | Task | Status  |
 |---|---|
-| RE of Inital Key Exchange  | Started  |
+| RE of Key Exchange  | In progress, ~80%  |
 | RE of Packets encryption  | Done  |
-| RE of packet purposes  | Started  |
-| RE of image format  | Not started  |
+| RE of Initialization  | Started  |
+| RE of Scan routine  | Not started  |
+| RE of Image format  | Not started  |
 | libfprint driver  | Not started  |
