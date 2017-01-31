@@ -1,6 +1,6 @@
 # Validity90
 
-This project aims on revers engineering protocol of Validity 138a:0090 fingerprint reader, creating specification and FLOSS libfprint driver.
+This project aims on reverse engineering protocol of Validity 138a:0090 fingerprint reader, creating specification and FLOSS libfprint driver.
 
 ## Discussions
 
@@ -12,15 +12,14 @@ Lenovo forums: [https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerpri
 
 ## Notable files
 
-1. spec.md - Specification draft, the main work goes here right now.
-2. dissector.lua - Wireshark dissector for decrypting communication after key exchange.
+1. [spec.md](spec.md) - Specification draft, the main work goes here right now.
+2. [dissector.lua](dissector.lua) - Wireshark dissector for decrypting communication after key exchange.
 
 ## Status
-| Task | Status  |
-|---|---|
-| RE of Key Exchange  | In progress, ~80%  |
-| RE of Packets encryption  | Done  |
-| RE of Initialization  | Started  |
-| RE of Scan routine  | Not started  |
-| RE of Image format  | Not started  |
-| libfprint driver  | Not started  |
+| 		Task 			| Specification/Analysis	| Driver 		|
+|-----------------------|---------------------------|---------------|
+| Key Exchange 			| In progress, ~80%  		| Not Started 	|
+| Packets encryption	| Done  					| Not Started 	|
+| Initialization  		| Started  					| Not Started 	|
+| Scan routine  		| Not started  				| Not Started 	|
+| Image format  		| Not started  				| Not Started 	|
