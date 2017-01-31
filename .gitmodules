@@ -1,3 +1,6 @@
 [submodule "lockbox"]
 	path = lockbox
 	url = https://github.com/somesocks/lua-lockbox.git
+[submodule "libfprint"]
+	path = libfprint
+	url = git@github.com:nmikhailov/Validity90.git
