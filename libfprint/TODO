@@ -1,0 +1,30 @@
+LIBRARY
+=======
+test suite against NFIQ compliance set
+make library optionally asynchronous and maybe thread-safe
+nbis cleanups
+API function to determine if img device supports uncond. capture
+race-free way of saying "save this print but don't overwrite"
+
+NEW DRIVERS
+===========
+Sunplus 895 driver
+AES3400/3500 driver
+ID Mouse driver
+Support for 2nd generation MS devices
+Support for 2nd generation UPEK devices
+
+IMAGING
+=======
+ignore first frame or two with aes2501
+aes2501: increase threshold "sum" for end-of-image detection
+aes2501 gain calibration
+aes4000 gain calibration
+aes4000 resampling
+PPMM parameter to get_minutiae seems to have no effect
+nbis minutiae should be stored in endian-independent format
+
+PORTABILITY
+===========
+OpenBSD can't do -Wshadow or visibility
+OpenBSD: add compat codes for ENOTSUP ENODATA and EPROTO

@@ -1,0 +1,41 @@
+libfprint
+=========
+
+libfprint is part of the fprint project:
+http://www.reactivated.net/fprint
+
+libfprint was originally developed as part of an academic project at the
+University of Manchester with the aim of hiding differences between different
+consumer fingerprint scanners and providing a single uniform API to application
+developers. The ultimate goal of the fprint project is to make fingerprint
+scanners widely and easily usable under common Linux environments.
+
+The academic university project runs off a codebase maintained separately
+from this one, although I try to keep them as similar as possible (I'm not
+hiding anything in the academic branch, it's just the open source release
+contains some commits excluded from the academic project).
+
+THE UNIVERSITY OF MANCHESTER DOES NOT ENDORSE THIS THIS SOFTWARE RELEASE AND
+IS IN NO WAY RESPONSIBLE FOR THE CODE CONTAINED WITHIN, OR ANY DAMAGES CAUSED
+BY USING OR DISTRIBUTING THE SOFTWARE. Development does not happen on
+university computers and the project is not hosted at the university either.
+
+For more information on libfprint, supported devices, API documentation, etc.,
+see the homepage:
+http://www.reactivated.net/fprint/Libfprint
+
+libfprint is licensed under the GNU LGPL version 2.1. See the COPYING file
+for the license text.
+
+Section 6 of the license states that for compiled works that use this
+library, such works must include libfprint copyright notices alongside the
+copyright notices for the other parts of the work. We have attempted to
+make this process slightly easier for you by grouping these all in one place:
+the AUTHORS file.
+
+libfprint includes code from NIST's NBIS software distribution:
+http://fingerprint.nist.gov/NBIS/index.html
+We include bozorth3 from the US export controlled distribution. We have
+determined that it is fine to ship bozorth3 in an open source project,
+see http://reactivated.net/fprint/wiki/US_export_control
+

@@ -1,0 +1,96 @@
+Copyright notices
+=================
+
+If you make a contribution substantial enough to add or update a copyright
+notice on a file, such notice must be mirrored in the AUTHORS file. This is
+to make it easy for people to comply to section 6 of the LGPL, which states
+that a "work that uses the Library" must include copyright notices from
+this library. By providing them all in one place, hopefully we save such
+users some time.
+
+
+USB
+===
+
+At the time of development, there are no known consumer fingerprint readers
+which do not operate over the USB bus. Therefore the library is designed around
+the fact that each driver drivers USB devices, and each device is a USB device.
+If we were to ever support a non-USB device, some rearchitecting would be
+needed, but this would not be a substantial task.
+
+
+GLib
+====
+
+Although the library uses GLib internally, libfprint is designed to provide
+a completely neutral interface to it's application users. So, the public
+APIs should never return GLib data types or anything like that.
+
+
+Two-faced-ness
+==============
+
+Like any decent library, this one is designed to provide a stable and
+documented API to it's users: applications. Clear distinction is made between
+data available internally in the library, and data/functions available to
+the applications.
+
+This library is confused a little by the fact that there is another 'interface'
+at hand: the internal interface provided to drivers. So, we effectively end
+up with 2 APIs:
+
+ 1. The external-facing API for applications
+ 2. The internal API for fingerprint drivers
+
+Non-static functions which are intended for internal use only are prepended
+with the "fpi_" prefix.
+
+
+API stability
+=============
+
+No API stability has been promised to anyone: go wild, there's no issue with
+breaking APIs at this point in time.
+
+
+Portability
+===========
+
+libfprint is primarily written for Linux. However, I'm interested in
+supporting efforts to port this to other operating systems too.
+
+You should ensure code is portable wherever possible. Try and use GLib rather
+than OS-specific features.
+
+Endianness must be considered in all code. libfprint must support both big-
+and little-endian systems.
+
+
+Coding Style
+============
+
+This project follows Linux kernel coding style but with a tab width of 4.
+
+
+Documentation
+=============
+
+All additions of public API functions must be accompanied with doxygen
+comments.
+
+All changes which potentially change the behaviour of the public API must
+be reflected by updating the appropriate doxygen comments.
+
+
+Contributing
+============
+
+Patches should be sent to the fprint bugzilla:
+https://bugs.freedesktop.org/enter_bug.cgi?product=libfprint
+
+Information about libfprint development repositories can be found here:
+http://www.freedesktop.org/wiki/Software/fprint/libfprint
+
+If you're looking for ideas for things to work on, look at the TODO file or
+grep the source code for FIXMEs.
+

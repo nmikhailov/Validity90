@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:nmikhailov/Validity90.git
+	branch = libfprint
+	commit = 347e2e321480bb421f2fa431c8638f4a42b9239c
+	parent = 9d8081050716d45bf24b49ac73b8b6e69a912915
+	cmdver = 0.3.0

@@ -1,0 +1,101 @@
+This file lists notable changes in each release. For the full history of all
+changes, see ChangeLog.
+
+2015-02-03: v0.6.0 release
+
+* Drivers:
+  - Reduce duplication between AES3500 and AES4000 drivers and
+    add support for AES3500 device
+  - Add support for UPEK 147e:2020 and Upek Eikon 2 devices
+  - Add EgisTec ES603 driver
+  - Add VFS5011 driver
+  - Always perform 5 scans for image enrollment
+  - Better verification with AES1660 driver
+  - Better verification for a number of AES drivers
+
+* Library:
+  - Always use Pixman for image manipulation, gdk-pixbuf and ImageMagick
+    are not supported any more.
+
+* Udev rules:
+  - Fix warning when USB hub or system does not support power management
+
+2013-08-11: v0.5.1 release
+
+* Drivers
+  - Add support for 147e:2020 to upeke2 driver
+  - Fix possible race condition, and cancellation in uru4000 driver
+
+* Udev rules:
+  - Add Microsoft keyboard to the suspend blacklist
+
+* Plenty of build fixes
+
+2012-12-03: v0.5.0 release
+
+* Drivers:
+  - New VFS300/VFS301 driver
+  - New AES2550/AES2810 drivers
+  - New AES1660 driver
+  - New AES2660 driver
+  - New DigitalPersona URU4500 driver
+  - Avoid empty capture and improve image contrast in the
+  AES2501 and AES2550 drivers
+  - Update upektc driver, add support for Eikon Touch 300
+  - Fix UrU4000 image capture on ARM
+
+* Library:
+  - Fix global variable collisions with libusb and other system headers
+  - Fix possible crash in NBIS image processing with some fingerprints
+
+* Udev rules:
+  - Fix power control path for newer kernels
+  - Move udev rules to the correct directory
+  - Don't print duplicated udev rules
+  - Include udev rules in the tarball
+  - Allow disabling of udev rules for cross-compiling
+  - Add driver names in the generated rules
+
+2011-04-18: v0.4.0 release
+ * Add support for Validity VFS101 (USB ID 138a:0001)
+ * Fix crasher when resizing a fingerprint image
+ * Fix wrong timeout being returned when either of
+   libusb or libfprint doesn't have a timeout
+
+2010-09-08: v0.3.0 release
+ * Add support for UPEK TCS4C (USB ID 147e:1000)
+ * Use NSS instead of OpenSSL for GPL compliance
+ * upeksonly driver bug fixes
+ * Fix a crash if a scan was shorter than 8 lines
+ * Fix compilation with C++ compiler
+
+2010-08-19: v0.2.0 release (since 0.1.0-pre2)
+ * Add gdk-pixbuf support for image manipulation
+ * Add udev rules to allow devices to autosuspend
+ * Finish port of AES1610 driver
+ * Add UPEK EikonII (TCRD4C) driver
+
+2007-12-07: v0.0.5 release
+ * AES1610 imaging improvements
+ * Internal cleanups for Authentec drivers
+ * Add support for latest Microsoft Fingerprint Scanner hardware revision
+
+2007-11-22: v0.0.4 release
+ * Enable AES1610 driver thanks to Michele B
+ * Implement identification: one-to-many fingerprint matching (Daniel Drake)
+
+2007-11-19: v0.0.3 release
+ * Add API to access minutiae (Daniel Drake)
+ * Add API to delete enroll data (Daniel Drake)
+ * Add Authentec AES1610 driver (Anthony Bretaudeau)
+
+2007-11-17: v0.0.2 release
+ * Detect reversed scans on AES2501 (Vasily Khoruzhick)
+ * Improved AES2501 scanning
+ * Compatibility with older ImageMagick versions
+ * Add UPEK TouchChip driver (Jan-Michael Brummer)
+ * Add binarization API
+
+2007-11-15: v0.0.1 release
+ * Initial release
+
