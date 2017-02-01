@@ -512,7 +512,9 @@ CryptCreateHash alg: 8009
 CryptHashData
 0000 6b 65 79 20 65 78 70 61 6e 73 69 6f 6e 95 6c 41 
 0010 a9 12 86 8a da 9b b2 5b b4 bb d6 1d de 4f da 23 
-0020 2a 74 7b 2a 93 f8 ac c6 69 24 70 c4 2a 00 4b c7 
+0020 2a 74 7b 2a 93 f8 ac c6 69 24 70 c4 2a 
+
+00 4b c7 
 0030 66 90 0c b8 01 0a d5 38 7b 72 0d e6 13 08 75 8d 
 0040 94 6b 34 94 44 db 83 35 9e 12 c4 03 97 
 CryptGetHashParam type : 2
@@ -755,6 +757,8 @@ CryptGetHashParam type : 2
 DumpGot
 0000 da 04 57 9a 5d 22 ef 43 f2 b6 20 57 ed 65 f5 8c 
 0010 85 0a 92 83 51 cd b2 a5 12 14 3d 5a 94 f0 4c dd 
+
+
 CryptImportKey
 0000 08 02 00 00 02 66 00 00 20 00 00 00 7c 86 4e a1 
 0010 f7 a0 6b de 16 77 34 c9 c9 13 92 85 d4 7b df 4b 
@@ -764,6 +768,8 @@ CryptHashData
 0000 16 03 03 00 10 
 CryptHashData
 0000 14 00 00 0c da 04 57 9a 5d 22 ef 43 f2 b6 20 57 
+
+
 CryptGetHashParam type : 2
 DumpGot
 CryptGetHashParam type : 2

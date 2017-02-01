@@ -39,13 +39,17 @@ fd 01 93 3c d8 18 9d 65
 0050 9c 41 d3 be 6e cb 8b 08 58 0a ae 80 b4 2d d0 b5 
 0060 54 81 89 91 d0 68 b0 26 
 
-SESSION_RC2
+
+
+EPHEMERAL_KEY_RC2_A
 0000 f7 76 0a 70 a9 88 13 76 ef 67 db 9d 5d f8 28 d0 
 0010 98 0c 47 8f 01 8b d3 c1 e1 9d c2 4e 19 37 68 a4 
 0020 75 2b 93 58 0f 41 c2 67 c5 c6 87 fe 36 21 80 b5 
 
 
-
+SESSION_RC2_C
+0000 c4 59 a1 74 9b 4e c4 0e c1 42 3b d8 7e 07 26 29 
+0010 b4 ab 33 d9 f9 8c 25 6a 7d a9 26 41 3e 59 3f f6 
 
 
 
@@ -88,9 +92,41 @@ SESSION_RC2
 	0170   1e 6f d8 35 93 17 2d 54 ef 
 
 	0179-01b8	Encrypt with SESSION_AES_ENCRYPT
-		0000 14 00 00 0c da 04 57 9a 5d 22 ef 43 f2 b6 20 57 
-		0010 6f a4 32 d7 7b b7 75 ca 55 a2 fc af 7d a0 b5 fa 
-		0020 35 c0 3e 7e e2 6e d3 f2 5b ee 99 ed 1b 9c 31 29 
+		0000 14 00 00 0c 89 18 b7 87 5b 0f 25 60 e9 e9 b1 0e 
+		
+		0010 92 22 f4 53 e7 3b ca 84 ac bd e3 b8 0f 5f a8 3d 
+		0020 06 0b 60 c6 71 5b e9 37 78 0c b6 9c 03 b3 e6 5e 
+		=
+			0000 16 03 03 00 10 
+			0000 14 00 00 0c 89 18 b7 87 5b 0f 25 60 e9 e9 b1 0e 
+
+		
 		0030 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f
 
 	```
+
+CONST1 = 6b 65 79 20 65 78 70 61 6e 73 69 6f 6e 
+
+PDEV2= 
+	6b 65 79 20 65 78 70 61 6e 73 69 6f 6e 
+
+SESSION_KEY_RC2_C =
+	HMAC(
+		SESSION_KEY_RC2_A,
+
+		PDEV1
+			HMAC(SESSION_KEY_RC2_A,
+				CONST1
+				RANDU
+				P002_DATA1
+			)
+		CONST1
+		RANDU
+		P002_DATA1
+	)
+
+
+
+
+0000 c4 59 a1 74 9b 4e c4 0e c1 42 3b d8 7e 07 26 29 
+0010 b4 ab 33 d9 f9 8c 25 6a 7d a9 26 41 3e 59 3f f6 
