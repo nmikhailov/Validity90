@@ -12,18 +12,82 @@
 6. Generate 0004 bytes of secure random data as RND1
 7. Generate 001c bytes of secure random data as RND2
 8. Send packet // 140
+	TLS v1.2 Client Hello
  
 	```
-	0000   		44 00 00 00 16 03 03 00 43 01 00 00 3f 03 03 
+	0000   		44 00 00 00 - unknown header
+	0004 		16 03 03 00 43 01 00 00 3f 03 03 - TLS
 	000f-0012   'RND1
 	0012-002e	RND2
-	002f   		07
-	0030   		00 00 00 00 00 00 00 00 04 c0 05 00 3d 00 00 0a
-	0040   		00 04 00 02 00 17 00 0b 00 02 01 00
+	002f   		07  - TLS
+	0030   		00 00 00 00 00 00 00 00 04 c0 05 00 3d 00 00 0a  - TLS
+	0040   		00 04 00 02 00 17 00 0b 00 02 01 00  - TLS
 	```
 
+	```
+	Secure Sockets Layer
+	    TLSv1.2 Record Layer: Handshake Protocol: Client Hello
+	        Content Type: Handshake (22)
+	        Version: TLS 1.2 (0x0303)
+	        Length: 67
+	        Handshake Protocol: Client Hello
+	            Handshake Type: Client Hello (1)
+	            Length: 63
+	            Version: TLS 1.2 (0x0303)
+	            Random
+	                GMT Unix Time: 4 bytes as 'RND1
+	                Random Bytes: 1c bytes as RND2
+	            Session ID Length: 7
+	            Session ID: 00000000000000
+	            Cipher Suites Length: 4
+	            Cipher Suites (2 suites)
+	                Cipher Suite: TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA (0xc005)
+	                Cipher Suite: TLS_RSA_WITH_AES_256_CBC_SHA256 (0x003d)
+	            Compression Methods Length: 0
+	            Extensions Length: 10
+	            Extension: truncated_hmac
+	                Type: truncated_hmac (0x0004)
+	                Length: 2
+	                Data (2 bytes)
+	            Extension: ec_point_formats
+	                Type: ec_point_formats (0x000b)
+	                Length: 2
+	                EC point formats Length: 1
+	                Elliptic curves point formats (1)
+	```
+
+
 9. Receive Packet 130 as P002
+	TLS v1.2 Server Hello, Certificate Request
+	Certificate Request is malformed
 	Stable header: `16 03 03 00 3d 02 00 00 2d 03 03`
+
+
+	```
+	Secure Sockets Layer
+	    TLSv1.2 Record Layer: Handshake Protocol: Multiple Handshake Messages
+	        Content Type: Handshake (22)
+	        Version: TLS 1.2 (0x0303)
+	        Length: 61
+	        Handshake Protocol: Server Hello
+	            Handshake Type: Server Hello (2)
+	            Length: 45
+	            Version: TLS 1.2 (0x0303)
+	            Random 	as P002_DATA1
+	            Session ID Length: 7
+	            Session ID: 544c53900cb801
+	            Cipher Suite: TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA (0xc005)
+	            Compression Method: null (0)
+	        Handshake Protocol: Certificate Request
+	            Handshake Type: Certificate Request (13)
+	            Length: 4
+	            Certificate types count: 1
+	            Certificate types (1 type)
+	            Signature Hash Algorithms Length: 0
+	            Distinguished Names Length: 3584
+	            Distinguished Names (3584 bytes) - Invalid
+
+	```
 10. Copy 0020 bytes offset 000b-002a from P002 as P002_DATA1
 11. Gen EC P256 KeyPair as EPHEMERAL_KEY_ECDHE_DRV_PUB and EPHEMERAL_KEY_ECDHE_DRV_PRIV
 12. Derive shared key from (EPHEMERAL_KEY_ECDHE_DRV_PRIV, STATIC_KEY_ECDH_DEV_PUB) as EPHEMERAL_KEY_RC2_A
@@ -93,9 +157,11 @@
 		
 
 17. Send packet
+	TLS v1.2 Certificate(malformed), Change chipher, encrypted handshake
 
 	```
-	0000   44 00 00 00 16 03 03 01 55 0b 00 00 c0 00 00 b8
+	0000   44 00 00 00 
+	0004   16 03 03 01 55 0b 00 00 c0 00 00 b8
 	0010   00 00 b8 [12 86???] 17 00 00 00 20 00 00 00 ab 9d fd
 	0020   ba 74 25 29 93 9d 2d 5d f4 77 ec 90 2e 13 b8 21
 	0030   1a 19 70 1e 50 2f f5 6e 6e 25 ae 8c 00 00 00 00
@@ -115,8 +181,11 @@
 	0120   e6 9d bd cf 48 73 b7 a6 ed e3 62 0a 79 e4 f8 14
 	0130   27 4d eb 73 91 01 0c ae 08 b9 43 02 21 00 d3 28
 	0140   a4 86 cf 8b af 35 c9 04 f7 1f e2 56 22 f7 5d df
-	0150   53 13 4f c6 db 6b c0 0d 57 90 c4 23 fe 06 14 03
-	0160   03 00 01 01 16 03 03 00 50 4b 77 62 ff a9 03 c1
+	0150   53 13 4f c6 db 6b c0 0d 57 90 c4 23 fe 06 
+
+	015e   14 03 03 00 01 01 - Change chipher
+
+	0164   16 03 03 00 50 4b 77 62 ff a9 03 c1 - Encrypted handshake
 	0170   1e 6f d8 35 93 17 2d 54 ef 
 
 	0179-01b8	Encrypt with EPHEMERAL_KEY_AES_ENCRYPT
@@ -126,13 +195,31 @@
 		0030 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f  
 
 	```
+18. Receive packet
+
+	```
+	Secure Sockets Layer
+	    TLSv1.2 Record Layer: Change Cipher Spec Protocol: Change Cipher Spec
+	        Content Type: Change Cipher Spec (20)
+	        Version: TLS 1.2 (0x0303)
+	        Length: 1
+	        Change Cipher Spec Message
+
+	    TLSv1.2 Record Layer: Handshake Protocol: Encrypted Handshake Message
+	        Content Type: Handshake (22)
+	        Version: TLS 1.2 (0x0303)
+	        Length: 80
+	        Handshake Protocol: Encrypted Handshake Message
+    ```
 
 
 ## Encrypted packet format
 
+TLSv1.2 Application data
+
 | Offset | Size | Name | Description |
 |---|---|---|---|
-| 0000  | 0003 | header | Header, always 170303 |
+| 0000  | 0003 | header | TLSv1.2 Data Header |
 | 0003  | 0002 | $length | Packet length, can span across multiple USB_BULK packets |
 | 0005  | $length | data | Data, encrypted with AES256 CBC mode, PKCS#5 padding |
 
