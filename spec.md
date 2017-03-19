@@ -4,14 +4,9 @@
 
 ## Key exchange
 
-1. Receive Packet 4160 as P001 
-2. Receive FF FF FF FF FF FF FF FF
-3. Copy 0696+48 from P001 as ECSIGNATURE - stable
-4. Copy 0062+70 from P001 as DECRYPT1	- stable
-5. TODO: Check Signatures
-6. Generate 0004 bytes of secure random data as RND1
-7. Generate 001c bytes of secure random data as RND2
-8. Send packet // 140
+1. Generate 0004 bytes of secure random data as RND1
+2. Generate 001c bytes of secure random data as RND2
+3. Send packet 140
 	TLS v1.2 Client Hello
  
 	```
@@ -57,9 +52,9 @@
 	```
 
 
-9. Receive Packet 130 as P002
-	TLS v1.2 Server Hello, Certificate Request
-	Certificate Request is malformed
+4. Receive Packet 130 as P002
+	TLS v1.2 Server Hello, Certificate Request(custom), Server Hello Done
+
 	Stable header: `16 03 03 00 3d 02 00 00 2d 03 03`
 
 
@@ -73,7 +68,7 @@
 	            Handshake Type: Server Hello (2)
 	            Length: 45
 	            Version: TLS 1.2 (0x0303)
-	            Random 	as P002_DATA1
+	            Random 	as SERVER_RAND
 	            Session ID Length: 7
 	            Session ID: 544c53900cb801
 	            Cipher Suite: TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA (0xc005)
@@ -88,43 +83,43 @@
 	            Distinguished Names (3584 bytes) - Invalid
 
 	```
-10. Copy 0020 bytes offset 000b-002a from P002 as P002_DATA1
-11. Gen EC P256 KeyPair as EPHEMERAL_KEY_ECDHE_DRV_PUB and EPHEMERAL_KEY_ECDHE_DRV_PRIV
-12. Derive shared key from (EPHEMERAL_KEY_ECDHE_DRV_PRIV, STATIC_KEY_ECDH_DEV_PUB) as EPHEMERAL_KEY_RC2_A
-13. Define P002_DATA1_WRAPPED
+5. Copy 0020 bytes offset 000b-002a from P002 as SERVER_RAND
+6. Gen EC P256 KeyPair as EPHEMERAL_KEY_ECDHE_DRV_PUB and EPHEMERAL_KEY_ECDHE_DRV_PRIV
+7. Derive shared key from (EPHEMERAL_KEY_ECDHE_DRV_PRIV, STATIC_KEY_ECDH_DEV_PUB) as EPHEMERAL_KEY_RC2_A
+8. Define CLIENT_AND_SERVER_RAND_WRAPPED
 
 	```	
 	0000 6b 65 79 20 65 78 70 61 6e 73 69 6f 6e 
 	000d - 0010 = 'RND1
 	0011 - 002c = RND2 
-	002d - 003f = P002_DATA1
+	002d - 003f = SERVER_RAND
 	```
 
-14. Define EPHEMERAL_KEY_RC2_B
+9. Define EPHEMERAL_KEY_RC2_B
 
 	```
 	HMAC(
 		EPHEMERAL_KEY_RC2_A,
 		HMAC(
 			EPHEMERAL_KEY_RC2_A,
-			HMAC(EPHEMERAL_KEY_RC2_A, P002_DATA1)
+			HMAC(EPHEMERAL_KEY_RC2_A, SERVER_RAND)
 		)
 		+
-		P002_DATA1
+		SERVER_RAND
 	)
 	```
 
-15. Define EPHEMERAL_KEY_RC2_C
+10. Define EPHEMERAL_KEY_RC2_C
 
 	```
 	HMAC(
 		SESSION_KEY_RC2_A,
-		HMAC(SESSION_KEY_RC2_A, P002_DATA1_WRAPPED) 
+		HMAC(SESSION_KEY_RC2_A, CLIENT_AND_SERVER_RAND_WRAPPED) 
 		+ 
-		P002_DATA1_WRAPPED
+		CLIENT_AND_SERVER_RAND_WRAPPED
 	)
 	```
-15. Define EPHEMERAL_KEY_AES_ENCRYPT
+11. Define EPHEMERAL_KEY_AES_ENCRYPT
 
 	```
 	HMAC(
@@ -134,68 +129,86 @@
 			EPHEMERAL_KEY_RC2_A,
 			HMAC(
 				EPHEMERAL_KEY_RC2_A,
-				HMAC(EPHEMERAL_KEY_RC2_A, P002_DATA1)
+				HMAC(EPHEMERAL_KEY_RC2_A, SERVER_RAND)
 			)
-		) + P002_DATA1_WRAPPED
+		) + CLIENT_AND_SERVER_RAND_WRAPPED
 
 	);
 	```
 
-16. Define EPHEMERAL_KEY_AES_DECRYPT
+12. Define EPHEMERAL_KEY_AES_DECRYPT
 
 	```
 	HMAC(EPHEMERAL_KEY_RC2_A,
 
-		0000-001f 	HMAC(EPHEMERAL_KEY_RC2_A, HMAC(EPHEMERAL_KEY_RC2_A, HMAC(EPHEMERAL_KEY_RC2_A, HMAC(EPHEMERAL_KEY_RC2_A, P002_DATA1))))
-0020-006c	P002_DATA1_WRAPPED
+		0000-001f 	HMAC(EPHEMERAL_KEY_RC2_A, HMAC(EPHEMERAL_KEY_RC2_A, HMAC(EPHEMERAL_KEY_RC2_A, HMAC(EPHEMERAL_KEY_RC2_A, SERVER_RAND))))
+0020-006c	CLIENT_AND_SERVER_RAND_WRAPPED
 
 	);
 	```
-16. Define VAR1
-	DECRYPT(
-		EPHEMERAL_KEY_AES_DECRYPT,
+13. Define PP1 
+	HMAC(EPHEMERAL_KEY_RC2_A,
+
+	)
+	PP1_S = PP1[0:c]
 		
 
-17. Send packet
-	TLS v1.2 Certificate(malformed), Change chipher, encrypted handshake
+14. Send packet 505
+	TLS v1.2 Certificate(custom), Client Key Exchange, Certificate Verify(custom), Change chipher Spec, Encrypted handshake
 
 	```
-	0000   44 00 00 00 
-	0004   16 03 03 01 55 0b 00 00 c0 00 00 b8
-	0010   00 00 b8 [12 86???] 17 00 00 00 20 00 00 00 ab 9d fd
-	0020   ba 74 25 29 93 9d 2d 5d f4 77 ec 90 2e 13 b8 21
-	0030   1a 19 70 1e 50 2f f5 6e 6e 25 ae 8c 00 00 00 00
-	0040   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-	0050   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-	0060   00 dd f4 04 74 f0 7a e4 e0 79 d1 f1 9f ae bd a8
-	0070   ef 1e fa 18 c2 6a 76 ae a5 aa bf c3 4f 12 94 8c
-	0080   8f 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-	0090   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-	00a0   00 00 00 00 00 00 00 00 00 00 00 00 00 a5 58 ed
-	00b0   0f 31 33 45 63 c8 8a d5 53 d9 e4 6e 20 5d 54 3b
-	00c0   83 99 cf 9b ef 9e a8 aa c5 eb fb 20 a2 10 00 00
-	00d0   41 04 
-	00d2-0112 EPHEMERAL_KEY_ECDHE_DRV_PUB (no header)
+	// Unknown header
+	0000   		44 00 00 00
 
-				 0f 00 00 48 30 46 02 21 00 a3 ad aa 61 00
-	0120   e6 9d bd cf 48 73 b7 a6 ed e3 62 0a 79 e4 f8 14
-	0130   27 4d eb 73 91 01 0c ae 08 b9 43 02 21 00 d3 28
-	0140   a4 86 cf 8b af 35 c9 04 f7 1f e2 56 22 f7 5d df
-	0150   53 13 4f c6 db 6b c0 0d 57 90 c4 23 fe 06 
+	// TLS Handshake
+	0004   		16 03 03 01
 
-	015e   14 03 03 00 01 01 - Change chipher
+	// TLS Handshake - Certificate
+	0008 		55 0b 00 00 c0 00 00 b8
+	
+	// Certificate(custom)
+	0010   		00 00 b8
+	0013-0014 	RND2[0:2]
+	0015			           17 00 00 00 20 00 00 00 ab 9d fd
+	0020   		ba 74 25 29 93 9d 2d 5d f4 77 ec 90 2e 13 b8 21
+	0030   		1a 19 70 1e 50 2f f5 6e 6e 25 ae 8c 00 00 00 00
+	0040   		00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+	0050   		00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+	0060   		00 dd f4 04 74 f0 7a e4 e0 79 d1 f1 9f ae bd a8
+	0070   		ef 1e fa 18 c2 6a 76 ae a5 aa bf c3 4f 12 94 8c
+	0080   		8f 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+	0090   		00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+	00a0   		00 00 00 00 00 00 00 00 00 00 00 00 00 a5 58 ed
+	00b0   		0f 31 33 45 63 c8 8a d5 53 d9 e4 6e 20 5d 54 3b
+	00c0   		83 99 cf 9b ef 9e a8 aa c5 eb fb 20 a2
 
-	0164   16 03 03 00 50 4b 77 62 ff a9 03 c1 - Encrypted handshake
-	0170   1e 6f d8 35 93 17 2d 54 ef 
+	// TLS Handshake - Client Key exchange
+	00cd		10 00 00
+	00d0   		41 04 
+	00d2-0112 	EPHEMERAL_KEY_ECDHE_DRV_PUB (no header)
+
+	// TLS Handshake - Certificate Verify
+	0112			  0f 00 00 48 30 46 02 21 00 a3 ad aa 61 00
+	0120   		e6 9d bd cf 48 73 b7 a6 ed e3 62 0a 79 e4 f8 14
+	0130   		27 4d eb 73 91 01 0c ae 08 b9 43 02 21 00 d3 28
+	0140   		a4 86 cf 8b af 35 c9 04 f7 1f e2 56 22 f7 5d df
+	0150   		53 13 4f c6 db 6b c0 0d 57 90 c4 23 fe 06 
+
+	// TLS Change Chipher Spec
+	015e   		14 03 03 00 01 01 - Change chipher
+
+	// TLS Encrypted Handshake
+	0164   		16 03 03 00 50 4b 77 62 ff a9 03 c1
+	0170   		1e 6f d8 35 93 17 2d 54 ef 
 
 	0179-01b8	Encrypt with EPHEMERAL_KEY_AES_ENCRYPT
-		0000 14 00 00 0c 
-		da 04 57 9a 5d 22 ef 43 f2 b6 20 57 - unknown as PP1
-		0010-002f  HMAC (EPHEMERAL_KEY_RC2_C, 16 03 03 00 10 + PP1)	
-		0030 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f  
+		0000 		14 00 00 0c 
+					da 04 57 9a 5d 22 ef 43 f2 b6 20 57 - unknown as PP1
+		0010-002f  	HMAC (EPHEMERAL_KEY_RC2_C, 16 03 03 00 10 + PP1)	
+		0030 		0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f  
 
 	```
-18. Receive packet
+15. Receive packet
 
 	```
 	Secure Sockets Layer

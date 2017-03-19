@@ -29,6 +29,7 @@ local CONST_MAGIC_HEADER_44 = ByteArray.new("44000000")
 local CONST_MAGIC_HEADER = ByteArray.new("170303")
 local CONST_MAGIC_HEADER_TLS_DATA = ByteArray.new("17")
 local CONST_MAGIC_HEADER_TLS = ByteArray.new("16")
+local CONST_MAGIC_HEADER_TLS15 = ByteArray.new("15")
 local CONST_MAGIC_HEADER_TLS14 = ByteArray.new("14")
 
 local packetDb = {}
@@ -112,6 +113,7 @@ function validity90_proto.dissector(buffer, pinfo, tree)
     if magic_header1:bytes() == CONST_MAGIC_HEADER_TLS 
         or magic_header1:bytes() == CONST_MAGIC_HEADER_TLS_DATA 
         or magic_header1:bytes() == CONST_MAGIC_HEADER_TLS14
+        or magic_header1:bytes() == CONST_MAGIC_HEADER_TLS15
         then
         offset = offset + 3
 
@@ -162,11 +164,6 @@ function validity90_proto.dissector(buffer, pinfo, tree)
         offset = offset + 4
         partialBuffer = nil
         pcall(parseSsl, buf:bytes(offset):tvb("44 data"), pinfo, tree)
-
-        local data44 = buf:bytes(offset + 0x15a):tvb("44 data+")
-
-        pcall(parseSsl, data44, pinfo, t_validity90)
-        packetDb[pinfo.number].buf = buf:bytes()
     else
         partialBuffer = nil
     end
