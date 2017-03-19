@@ -1,0 +1,168 @@
+#!/usr/bin/env python3
+
+import usb.core
+import usb.util
+import sys
+import os
+import OpenSSL.SSL as ssl
+
+def fhex(data):
+	return bytes.fromhex(data)
+
+def compare(data, expected):
+	res, cur = [], ''
+	for i in range(0, len(data)):
+		if data[i] != expected[i] and expected[i] != '?':
+			print('Expected:', expected)
+			print('Got     :', data)
+			print('Differen:', (' ' * i) + '^')
+			raise ValueError(fhex(data))
+
+		if expected[i] == '?':
+			cur += data[i]
+		elif len(cur) > 0:
+			res.append(cur)
+			cur = ''
+
+	if len(cur) > 0:
+		res.append(cur)
+		cur = ''
+
+	return res
+
+class Validity(object):
+	def __init__(self):
+		super(Validity, self).__init__()
+		self.dev = None
+
+	def open(self):
+		self.dev = usb.core.find(idVendor=0x138a, idProduct=0x0090)
+	
+		if self.dev is None:
+			raise ValueError('Device not found')
+
+		self.dev.set_configuration()
+
+		# get an endpoint instance
+		self.cfg = self.dev.get_active_configuration()
+		self.intf = self.cfg[(0,0)]
+
+		self.ep_in = usb.util.find_descriptor(
+			self.intf,
+			custom_match = \
+			lambda e: \
+				usb.util.endpoint_direction(e.bEndpointAddress) == \
+				usb.util.ENDPOINT_IN)
+
+		self.ep_out = usb.util.find_descriptor(
+			self.intf,
+			custom_match = \
+			lambda e: \
+				usb.util.endpoint_direction(e.bEndpointAddress) == \
+				usb.util.ENDPOINT_OUT)
+
+		assert self.ep_in is not None
+		assert self.ep_out is not None
+
+	def close(self):
+		self.dev.reset()
+		self.dev = None
+
+	def reopen(self):
+		if self.dev != None:
+			self.close()
+		self.open()
+
+	def write_read(self, data, buffer_len):
+		self.ep_out.write(data)
+		read = self.ep_in.read(buffer_len)
+		return bytes(read)
+
+	def write_read_check(self, data, expected):
+		self.ep_out.write(data)
+		read = bytes(self.ep_in.read(len(expected) + 1))
+		return compare(read.hex(), expected)
+
+	def pre_init(self):
+		self.write_read_check(bytes([0x01]), "0000f0b05e54a4000000060701300001000026858842453b0023000000000100000000000007")
+
+		data = self.write_read_check(bytes([0x19]), "0000000301020001000000000000000000000000188e7533??000000????????000000000000000000000000000000000000000000000000000000000000000000000000")
+		print('RSP2:', '\n\tFLAG_UNK:', data[0], '\n\tHAS_ERR:', data[1])
+
+		self.write_read_check(bytes([0x43, 0x02]), "000001000000060098c971560100344602000700603900000100840801000700b00200000200842803001200101000000200663701000c00402202000100864700000100205a00000200237700000100d02f0000")
+		self.write_read_check(fhex("06020000013917b3dda91383b5bcac64fa4ad35dce96570a9d2d974b80926a431f9cd46248980a263c6fcef6a82839a90b59ac590848859afac817b7d53bf51cd3205c1b8f43048be8253c3bd247937c837aca8b18d3cc8ee8c8971ac4f688813cf3d8550d71496985b7ec07ff2dc7896d330fdab263a0ee433a5c4bc910439d1c6161853feb03f5502209502e7308beb7919473cfe69f422c30502d226a4d0a34d96c8c77956cf69db8ef6cf927a3b57849d4aa8ad4b44266923e34b82a39c8146ba3cd708c70dfedb50c2de61feb45b1d4f19584297203f5fdc865795fec9d6449f3ba9b6f1e4bed698ee151e83d4d8702f76a4006cfa24d9b797888203b2269f8a77d524034ac32e4af58b86ebc63552cb35b12b285255deaf3a32bf46cdc5ad3bc1c9ed1bcc112c72143f9aec568e2cacfa89ba0c7bb65590d8b93e6871a33c6c6983c0acd04e737ff55eee024ca6b9a48332c1a69a5a3fdd24b964cf7e7c55229bb0b48a6e339eb2c42d07ec850a4ee780660ad6c77ffa302a63bd19426134c4533d6f967441163fb78b73547c68a493b2f800d3cdab827b116762789992aae3c8ab345a49edd312dfd2a27bc501427dc7fa00ac3c5c36551dbb3d5cad8d5bd7cea37e58a31307a6d50e6ae379a53f1366678c0741a3d872b8dcfefa7f63128dc8245"), "0000")
+		self.write_read_check(fhex("3e"), "0000ef00400000100100000101000500010407000010000000100000020102000020000000e00300050503000000040000800000060603000080040000800000040305000000050000000300")
+		self.write_read_check(fhex("40010100000000000000100000"), "0000001000000000000001006e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d000400a100c838d8e1dbf50453041ac5a7b40b2f1ef27d7e1bfd48daa9420659f33b07a7e302654c1adda357651384c798384e5ed9c7335ced15553cf5f4de14a0f2596800a2a09858c20667d5c106e3bfe66aec6ac02db2d877d90ec412e3ab48abaab4b9567530699d0ac3d9bbffde4211bd340321cfa28d3c1be4baf01ff440696fb47818f32d6b228086643114342a812cccd7c662f39e5f78a639d3db57c330d4dd128f12907e4b95090efaa2e31707e974d833a24220009a33ca701cb93f026e78a2ca0300b800ed52bb71b3d90c0086ad640d4576c732b6d5d3392d895e654b606a826ae5bd0c1700000020000000ab9dfdba742529939d2d5df477ec902e13b8211a19701e502ff56e6e25ae8c00000000000000000000000000000000000000000000000000000000000000000000000000ddf40474f07ae4e079d1f19faebda8ef1efa18c26a76aea5aabfc34f12948c8f0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a558ed0f31334563c88ad553d9e46e205d543b8399cf9bef9ea8aac5ebfb20a20500a401ec5d900e5a79586d2cdbeec62240c6899d37475e0f46bb9efd3f5a4f32e827d2170000000001000001000000fcffffffffffffffffffffff00000000000000000000000001000000ffffffff0000000000000000000000000000000000000000000000000000000000000000000000004b60d2273e3cce3bf6b053ccb0061d65bc86987655bdebb3e7933aaad835c65a00000000000000000000000000000000000000000000000000000000000000000000000096c298d84539a1f4a033eb2d817d0377f240a463e5e6bcf847422ce1f2d1176b000000000000000000000000000000000000000000000000000000000000000000000000f551bf376840b6cbce5e316b5733ce2b169e0f7c4aebe78e9b7f1afee242e34f000000000000000000000000000000000000000000000000000000000000000000000000512563fcc2cab9f3849e17a7adfae6bcffffffffffffffff00000000ffffffff000000000000000000000000000000000000000000000000000000000000000000000000ffffffffffffffffffffffff00000000000000000000000001000000ffffffff000000000000000000000000000000000000000000000000000000000000000000000000010000015341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000015341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006009001d7b7f6532bf4a34f4f4190fead551ce62aba5408e53060e6361c356a771dc77b2000000017000000ced6b5febc993f0c9b05fa6ef09b426f1898f610535386a3745566766f17715f000000000000000000000000000000000000000000000000000000000000000000000000cacef45f49fdccd087e3501d7526b8658167bdac684b6f4fb09900ab9155613e00000000000000000000000000000000000000000000000000000000000000000000000048000000304602210092a1f83ad44557cb820f2f070faf87e51c829d852928ab9eaa0d23319ea8255e0221008d985cba0c6239a531cf20c014a95729b762d7755ad68cf820dd93f645a05953000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+
+	def init_ssl(self):
+		self.ssl_context = ssl.Context(ssl.TLSv1_2_METHOD)
+		self.ssl_context.set_options(ssl.OP_NO_TICKET | ssl.OP_NO_COMPRESSION | \
+			ssl.OP_NO_SSLv2 | ssl.OP_NO_SSLv3 | ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1)
+		self.ssl_context.set_cipher_list("ECDH-ECDSA-AES256-SHA")
+		self.ssl_context.set_session_id(fhex("00 00 00 00 00 00 00"))
+		self.ssl_context.set_session_cache_mode(ssl.SESS_CACHE_NO_AUTO_CLEAR)
+
+		self.ssl_connection = ssl.Connection(self.ssl_context, None)
+		self.ssl_connection.set_connect_state()
+
+		try:
+			self.ssl_connection.do_handshake()
+		except:
+			pass
+
+		data = bytearray(self.ssl_connection.bio_read(5000))
+
+		# data[0x08] = data[0x08] + 1
+		# data[0x35] = data[0x35]
+		data[2] = 0x3
+		# data[0x32] = 0x0
+		# data = data[0:0x32] + fhex("00") + data[0x34:]
+		# data = data[0:0x33] + fhex("000a000400020017000b00020100")
+
+		data = data[0:0x32] + fhex("00000a000400020017000b00020100")
+
+		data[0x08] = len(data) - 9
+		data[0x04] = len(data) - 9 + 4
+
+		handshake1 = fhex("44 00 00 00") + data
+
+		rsp1 = self.write_read(handshake1, 5000)
+		print(rsp1.hex())
+
+		self.ssl_connection.bio_write(rsp1)
+
+		try:
+			self.ssl_connection.do_handshake()
+		except:
+			pass
+
+		data = bytearray(self.ssl_connection.bio_read(5000))
+
+		handshake2 = fhex("44 00 00 00") + data
+		rsp2 = self.write_read(handshake2, 5000)
+
+	def wrap_control_ssl(self, data):
+		return fhex("44 00 00 00") + data
+
+	def init_ssl2(self):
+		self.client_random = os.urandom(0x20)
+		client_hello = fhex("16030300430100003f0303") \
+			+ self.client_random \
+			+ fhex("07000000000000000004c005003d00000a000400020017000b00020100")
+
+		server_hello = self.write_read(self.wrap_control_ssl(client_hello), 5000)
+		self.server_random = server_hello[0x0b: 0x0b+0x20]
+
+		print('Client random: ', self.client_random.hex())
+		print('Server random: ', self.server_random.hex())
+
+
+v = Validity()
+
+try:
+	v.reopen()
+	v.pre_init()
+	v.init_ssl2()
+
+finally:
+	v.close()
