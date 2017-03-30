@@ -674,6 +674,8 @@ Encoded
 0020 2a 68 cb be 6f 02 21 00 f9 a3 a5 35 d2 0e 3e 0e 
 0030 99 bf 61 f3 ea e4 69 4a 97 f7 47 29 7a 89 dd 83 
 0040 3b 85 a5 19 7d 5d fe 84 
+
+
 CryptHashData
 0000 0f 00 00 48 30 46 02 21 00 82 0e 78 a9 e5 21 c3 
 0010 19 d4 e9 1a a9 26 9f 05 f7 8c 9d 08 75 27 eb 25 
@@ -687,10 +689,12 @@ CryptGetHashParam type : 2
 DumpGot
 0000 89 65 9d ca 35 45 da b2 da 5d 33 79 ab 83 86 a2 
 0010 b5 4f 8c 8c 78 09 4d 69 28 65 d4 60 f9 09 da 0c 
+
+
 CryptImportKey
 0000 08 02 00 00 02 66 00 00 30 00 00 00 f7 76 0a 70 
 0010 a9 88 13 76 ef 67 db 9d 5d f8 28 d0 98 0c 47 8f 
-0020 01 8b d3 c1 e1 9d c2 4e 19 37 68 a4 75 2b 93 58 
+0020 01 8b d3 c1 e1 9d c2 4e 19 37 68 a4 75 2b 93 58 <-----EPHEMERAL_KEY_RC2_A
 0030 0f 41 c2 67 c5 c6 87 fe 36 21 80 b5 
 CryptCreateHash alg: 8009
 CryptHashData
@@ -703,17 +707,23 @@ CryptGetHashParam type : 2
 DumpGot
 0000 a7 85 18 ab 5e 61 02 a6 31 03 63 09 bf 79 5c fc 
 0010 54 ff e1 17 88 0e b8 e8 3f ea 79 5c 37 54 92 77 
+
+
 CryptImportKey
 0000 08 02 00 00 02 66 00 00 30 00 00 00 f7 76 0a 70 
 0010 a9 88 13 76 ef 67 db 9d 5d f8 28 d0 98 0c 47 8f 
-0020 01 8b d3 c1 e1 9d c2 4e 19 37 68 a4 75 2b 93 58 
+0020 01 8b d3 c1 e1 9d c2 4e 19 37 68 a4 75 2b 93 58  <-----EPHEMERAL_KEY_RC2_A
 0030 0f 41 c2 67 c5 c6 87 fe 36 21 80 b5 
 CryptCreateHash alg: 8009
 CryptHashData
-0000 a7 85 18 ab 5e 61 02 a6 31 03 63 09 bf 79 5c fc 
+0000 a7 85 18 ab 5e 61 02 a6 31 03 63 09 bf 79 5c fc <<---- HMAC(VAR8) 
 0010 54 ff e1 17 88 0e b8 e8 3f ea 79 5c 37 54 92 77 
-0020 63 6c 69 65 6e 74 20 66 69 6e 69 73 68 65 64 89 
-0030 65 9d ca 35 45 da b2 da 5d 33 79 ab 83 86 a2 b5 
+
+0020 63 6c 69 65 6e 74 20 66 69 6e 69 73 68 65 64 
+
+89 
+
+0030 65 9d ca 35 45 da b2 da 5d 33 79 ab 83 86 a2 b5 <<--- VAR8???
 0040 4f 8c 8c 78 09 4d 69 28 65 d4 60 f9 09 da 0c 
 CryptGetHashParam type : 2
 DumpGot
@@ -768,7 +778,7 @@ CryptImportKey
 0020 c0 7e ca f4 a0 8f b6 b1 3b 14 a3 07 
 CryptDecrypt: len - 64
 0000 a8 97 1d 90 a3 34 1a 39 58 65 8d 7d ad 17 23 df 
-0010 a1 85 05 dd 70 58 85 b7 9b 9a 18 5b ea d2 4c c2 
+0010 a1 85 05 dd 70 58 85 b7 9b 9a 18 5b ea d2 4c c2 <--- PACKET 155>
 0020 58 d6 2a b6 c2 07 5b 22 fe d3 4a ed 37 0c 0c 5d 
 0030 7f 30 c3 9d 9b 20 44 85 e2 99 1d a0 d2 e1 80 e2 
 Decrypted:
@@ -788,7 +798,6 @@ CryptHashData
 CryptHashData
 0000 14 00 00 0c 8a 20 06 eb 2e 16 b7 66 db 9a 4b af 
 
-
 CryptGetHashParam type : 2
 DumpGot
 CryptGetHashParam type : 2
@@ -802,6 +811,8 @@ CryptGetHashParam type : 2
 DumpGot
 0000 89 65 9d ca 35 45 da b2 da 5d 33 79 ab 83 86 a2 
 0010 b5 4f 8c 8c 78 09 4d 69 28 65 d4 60 f9 09 da 0c 
+
+
 CryptImportKey
 0000 08 02 00 00 02 66 00 00 30 00 00 00 f7 76 0a 70 
 0010 a9 88 13 76 ef 67 db 9d 5d f8 28 d0 98 0c 47 8f 

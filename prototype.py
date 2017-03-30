@@ -30,6 +30,9 @@ def compare(data, expected):
 
 	return res
 
+def build
+
+
 class Validity(object):
 	def __init__(self):
 		super(Validity, self).__init__()
