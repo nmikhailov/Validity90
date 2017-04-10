@@ -1,5 +1,5 @@
 TEMPLATE = app
-LIBS += -lusb-1.0 -lssl3 -lsmime3 -lnss3 -lnssutil3 -lplds4 -lplc4 -lnspr4
+LIBS += -lusb-1.0 -lssl3 -lsmime3 -lnss3 -lnssutil3 -lplds4 -lplc4 -lnspr4 -lssl -lcrypto
 CONFIG += console
 CONFIG += c99
 
