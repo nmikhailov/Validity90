@@ -15,12 +15,13 @@ Lenovo forums: [https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerpri
 1. [spec.md](spec.md) - Specification draft, the main work goes here right now.
 2. [dissector.lua](dissector.lua) - Wireshark dissector for decrypting communication after key exchange.
 3. [libfprint directory](libfprint) - libfprint repo with this driver integrated
+4. [prototype](prototype/prototype.c) - Standalone prototype(extremly ugly code, would be completly rewritten for driver)
 
 ## Status
-| 		Task 			| Specification/Analysis	| Driver 		|
-|-----------------------|---------------------------|---------------|
-| Key Exchange 			| In progress, ~80%  		| Not Started 	|
-| Packets encryption	| Done  					| Not Started 	|
-| Initialization  		| Started  					| Not Started 	|
-| Scan routine  		| Not started  				| Not Started 	|
-| Image format  		| Not started  				| Not Started 	|
+| 		Task 			| Specification/Analysis	| Prototype    | Driver 	 |
+|-----------------------|---------------------------|--------------|-------------|
+| Initialization  		| Done 					    | Done	 	   | Not Started |
+| Crypto/Keys 			| Done 						| Done  	   | Not Started |
+| TLS Handshake	        | Done              		| Done         | Not Started |
+| Scan routine  		| Not started  				| Not Started  | Not Started |
+| Image format  		| Not started  				| Not Started  | Not Started |

@@ -1,3 +1,7 @@
+/*
+    Warning: extremly ugly code
+*/
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <libusb.h>
@@ -55,7 +59,7 @@ void print_hex_gn(byte* data, int len, int sz) {
             if (i != 0) {
                 printf("\n");
             }
-//            printf("%04x ", i);
+            printf("%04x ", i);
         } else if ((i % 8) == 0) {
             printf(" ");
         }
