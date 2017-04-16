@@ -255,8 +255,10 @@ BCRYPT_ECDSA_PRIVATE_P256_MAGIC 20
 
 0000 00 8c ae 25 6e 6e f5 2f 50 1e 70 19 1a 21 b8 13
 0010 2e 90 ec 77 f4 5d 2d 9d 93 29 25 74 ba fd 9d ab 
+
 0020 8f 8c 94 12 4f c3 bf aa a5 ae 76 6a c2 18 fa 1e 
 0030 ef a8 bd ae 9f f1 d1 79 e0 e4 7a f0 74 04 f4 dd 
+
 0040 d6 87 4c 06 b8 2d d1 ce dc 99 f9 2f b7 86 6c 20 
 0050 09 72 23 68 b9 04 1f fa ff 72 de 8e 49 52 f5 94 
 ```

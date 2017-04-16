@@ -43,6 +43,8 @@ readFromPipe
 readFromPipe
 CryptCreateHash alg: 800C
 BCryptOpenAlgorithmProvider Algo: L"SHA256" Ptr: 0000000000000000
+
+
 CryptHashData
 0000 00 
 CryptGetHashParam type : 4
@@ -52,6 +54,7 @@ CryptGetHashParam type : 2
 DumpGot
 0000 6e 34 0b 9c ff b3 7a 98 9c a5 44 e6 bb 78 0a 2c 
 0010 78 90 1d 3f b3 37 38 76 85 11 a3 06 17 af a0 1d 
+
 CryptCreateHash alg: 800C
 CryptHashData
 0000 02 65 4c 1a dd a3 57 65 13 84 c7 98 38 4e 5e d9 
@@ -271,6 +274,9 @@ Decoded
 0030 e5 87 af 0f 07 2f 0f 82 cb 57 45 d4 3a f8 a1 92 
 0040 53 59 a0 45 f6 93 dd 20 f8 8c d6 5a 75 d7 62 b7 
 0050 29 57 a9 14 c0 20 cf 31 a5 39 62 0c ba 5c 98 8d 
+
+
+
 BCryptVerfySignature
 0000 5d 6c 0e 35 e8 3e 4d 4d 10 65 af d5 44 67 f7 c4 
 0010 f3 9f 7e 34 2b 58 a1 57 ec cf 68 18 ad 89 6c 2d 
@@ -303,6 +309,7 @@ CryptGetHashParam type : 2
 DumpGot
 0000 48 78 02 70 5e 5a c4 a9 93 1c 44 aa 4d 32 25 22 
 0010 39 e0 bf 8f 0c 85 4d de 49 0c cc f6 87 ef ad 9c 
+
 CryptImportKey
 0000 08 02 00 00 02 66 00 00 20 00 00 00 48 78 02 70 
 0010 5e 5a c4 a9 93 1c 44 aa 4d 32 25 22 39 e0 bf 8f 
@@ -431,7 +438,9 @@ BCryptExportKey L"ECCPRIVATEBLOB"
 len: 13DDFEE68
 BCryptExportKey L"ECCPRIVATEBLOB"
 Exported: len unknown
-0000 45 43 4b 32 20 00 00 00 65 d7 f7 6f f2 94 e4 e9 
+0000 45 43 4b 32 20 00 00 00 
+
+65 d7 f7 6f f2 94 e4 e9 
 0010 d8 ae c5 79 8d 77 3b b1 ad d4 e7 f2 bd 09 64 a7 
 0020 d9 9c eb 50 33 56 bb 3e cb 1c 62 fc 40 60 bf d2 
 0030 d8 7b c9 3f dc 4c c7 ab b3 fe 3a 25 8c 35 a1 2f 
@@ -452,22 +461,27 @@ Data len: 2604CC40hex
 0040 8e 67 e3 89 c7 6a 32 f4 fd 01 93 3c d8 18 9d 65 
 0050 9c 41 d3 be 6e cb 8b 08 58 0a ae 80 b4 2d d0 b5 
 0060 54 81 89 91 d0 68 b0 26 
+
 BCryptImportKeyPair \\\
 Type: L"ECCPUBLICBLOB" \\\
 Data len: 2604C9C0hex
 [rsp+28]
 0000 45 43 4b 31 20 00 00 00 5f 71 17 6f 76 66 55 74 
 0010 a3 86 53 53 10 f6 98 18 6f 42 9b f0 6e fa 05 9b 
-0020 0c 3f 99 bc fe b5 d6 ce 3e 61 55 91 ab 00 99 b0 
+0020 0c 3f 99 bc fe b5 d6 ce 3e 61 55 91 ab 00 99 b0  STATIC_KEY_ECDH_DEV_PUB
 0030 4f 6f 4b 68 ac bd 67 81 65 b8 26 75 1d 50 e3 87 
 0040 d0 cc fd 49 5f f4 ce ca 
+
 BCryptSecretAgreement
+
 CryptHashData
-0000 10 00 00 41 04 65 d7 f7 6f f2 94 e4 e9 d8 ae c5 
+0000 10 00 00 41 04 
+65 d7 f7 6f f2 94 e4 e9 d8 ae c5 
 0010 79 8d 77 3b b1 ad d4 e7 f2 bd 09 64 a7 d9 9c eb 
 0020 50 33 56 bb 3e cb 1c 62 fc 40 60 bf d2 d8 7b c9 
 0030 3f dc 4c c7 ab b3 fe 3a 25 8c 35 a1 2f 8e 67 e3 
 0040 89 c7 6a 32 f4 
+
 BCryptDeriveKey kdf: L"TLS_PRF"
 Derived:
 0000 f7 76 0a 70 a9 88 13 76 ef 67 db 9d 5d f8 28 d0 
@@ -626,6 +640,7 @@ CryptImportKey
 0010 a9 88 13 76 ef 67 db 9d 5d f8 28 d0 98 0c 47 8f 
 0020 01 8b d3 c1 e1 9d c2 4e 19 37 68 a4 75 2b 93 58 
 0030 0f 41 c2 67 c5 c6 87 fe 36 21 80 b5 
+
 CryptCreateHash alg: 8009
 CryptHashData
 0000 68 fc f3 08 ca 43 10 f9 0e 65 94 aa 64 65 44 1e 
@@ -644,6 +659,8 @@ CryptGetHashParam type : 2
 DumpGot
 0000 e5 53 fb 2c ac aa c1 a1 ce 45 81 4d fc 15 ec 2f 
 0010 89 b7 5f 33 c0 7e ca f4 a0 8f b6 b1 3b 14 a3 07 
+
+
 CryptGetHashParam type : 4
 DumpGot
 0000 20 00 00 00 
@@ -651,6 +668,7 @@ CryptGetHashParam type : 2
 DumpGot
 0000 25 ae 2f 8c 79 c6 91 56 29 50 1d 13 b4 68 40 7e 
 0010 bb 53 a1 7e 0b 81 ba 06 e1 92 c0 65 c1 7c 1e 99 
+
 BCryptImportKeyPair \\\
 Type: L"ECCPRIVATEBLOB" \\\
 Data len: 2604A650hex
@@ -662,8 +680,16 @@ Data len: 2604A650hex
 0040 e0 e4 7a f0 74 04 f4 dd d6 87 4c 06 b8 2d d1 ce 
 0050 dc 99 f9 2f b7 86 6c 20 09 72 23 68 b9 04 1f fa 
 0060 ff 72 de 8e 49 52 f5 94 
+
+
+
+
+
+
 BCryptSignHash
 CryptEncodeObject ??? len unkown!
+
+04 26 f9
 0000 20 00 00 00 a9 0d 00 00 70 b2 04 26 f9 01 00 00 
 0010 20 00 00 00 00 00 00 00 c0 b2 04 26 f9 01 00 00 
 0020 f0 a6 04 26 f9 01 00 00 38 a4 04 26 f9 01 00 00 
@@ -680,7 +706,7 @@ CryptHashData
 0000 0f 00 00 48 30 46 02 21 00 82 0e 78 a9 e5 21 c3 
 0010 19 d4 e9 1a a9 26 9f 05 f7 8c 9d 08 75 27 eb 25 
 0020 63 f9 13 d8 2a 68 cb be 6f 02 21 00 f9 a3 a5 35 
-0030 d2 0e 3e 0e 99 bf 61 f3 ea e4 69 4a 97 f7 47 29 
+0030 d2 0e 3e 0e 99 bf 61 f3 ea e4 69 4a 97 f7 47 29 <---- session_all
 0040 7a 89 dd 83 3b 85 a5 19 7d 5d fe 84 
 CryptGetHashParam type : 4
 DumpGot
