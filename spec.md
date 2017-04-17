@@ -19,6 +19,7 @@ Modified [TLS 1.2](https://tools.ietf.org/html/rfc5246) is used as cryptographic
 2. CertificateRequest and Certificate are in unknown format
 3. Certificate Verify message has no algorithm bytes
 4. Device doesn't allow much variation(ie extra extension in ClientHello) in handshake.
+5. Custom padding scheme for AES encryption is used - almost like PKCS#8, but all values are one off, eg: 00; 01 01; 02 02 02
 
 
 ### Handshake session
