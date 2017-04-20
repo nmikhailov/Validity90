@@ -146,8 +146,13 @@ function validity90_proto.dissector(buffer, pinfo, tree)
                 t_validity90:add(f.f_data, data)
 
                 -- Decode
-                local dec_data = ByteArray.new(decode_aes(iv:bytes():tohex(), data:bytes():tohex())):tvb("Decrypted")
-                t_validity90:add(f.f_dec_data, dec_data())
+                local dec_data = ByteArray.new(decode_aes(iv:bytes():tohex(), data:bytes():tohex()))
+                local res = dec_data:tvb("Decrypted")
+
+                local pad_len = dec_data:get_index(dec_data:len() - 1) + 1
+                dec_data:subset(0, dec_data:len() - 0x20 - pad_len):tvb("Unpadded")
+
+                t_validity90:add(f.f_dec_data, res())
             else
                 pinfo.cols["info"]:append(string.format(" INVALID", len:uint() - buf:len() + 5))
                 partialBuffer = nil
