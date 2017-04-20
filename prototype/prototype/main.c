@@ -24,6 +24,7 @@
 #include <openssl/ssl.h>
 #include <openssl/tls1.h>
 #include <openssl/ecdh.h>
+#include <png.h>
 #include "constants.h"
 
 
@@ -34,6 +35,7 @@
 #define min(a,b) (a > b ? b : a)
 
 #define err(x) res_err(x, xstr(x))
+#define errb(x) res_errb(x, xstr(x))
 
 static libusb_device_handle * dev;
 
@@ -64,6 +66,13 @@ void print_hex_gn(byte* data, int len, int sz) {
             printf(" ");
         }
         printf("%02x ", data[i * sz]);
+    }
+    puts("");
+}
+
+void print_hex_string(byte* data, int len) {
+    for (int i = 0; i < len; i++) {
+        printf("%02x", data[i]);
     }
     puts("");
 }
@@ -107,9 +116,17 @@ void res_err(int result, char* where) {
     }
 }
 
+void res_errb(int result, char* where) {
+    if (result != 1) {
+        printf("Failed '%s': %d - %s\n", where, result, libusb_error_name(result));
+        ERR_print_errors_fp(stderr);
+        exit(0);
+    }
+}
+
 void qwrite(byte * data, int len) {
     int send;
-    err(libusb_bulk_transfer(dev, 0x01, data, len, &send, 100));
+    err(libusb_bulk_transfer(dev, 0x01, data, len, &send, 1000));
 }
 
 void qread(byte * data, int len, int *out_len) {
@@ -513,12 +530,16 @@ byte * key_block;
 void mac_then_encrypt(byte type, byte * data, int data_len, byte **res, int *res_len) {
     byte iv[0x10] = {0x4b, 0x77, 0x62, 0xff, 0xa9, 0x03, 0xc1, 0x1e, 0x6f, 0xd8, 0x35, 0x93, 0x17, 0x2d, 0x54, 0xef};
 
+    int prefix_len = 5;
+    if (type == 0xFF) {
+        prefix_len = 0;
+    }
     // header for hmac + data + hmac
-    byte all_data[0x05 + data_len + 0x20];
+    byte all_data[prefix_len + data_len + 0x20];
     all_data[0] = type; all_data[1] = all_data[2] = 0x03; all_data[3] = (data_len >> 8) & 0xFF; all_data[4] = data_len & 0xFF;
-    memcpy(all_data + 0x05, data, data_len);
+    memcpy(all_data + prefix_len, data, data_len);
 
-    memcpy(all_data + 0x05 + data_len, hmac_compute(key_block + 0x00, 0x20, all_data, 0x05 + data_len), 0x20);
+    memcpy(all_data + prefix_len + data_len, hmac_compute(key_block + 0x00, 0x20, all_data, prefix_len + data_len), 0x20);
 
 
     EVP_CIPHER_CTX *context = EVP_CIPHER_CTX_new();
@@ -530,25 +551,31 @@ void mac_then_encrypt(byte type, byte * data, int data_len, byte **res, int *res
     memcpy(*res, iv, 0x10);
     int written = 0, wr2, wr3 = 0;
 
-    puts("To encrypt & mac:");
-    print_hex(data, data_len);
+//    puts("To encrypt & mac:");
+//    print_hex(data, data_len);
 
-    EVP_EncryptUpdate(context, *res + 0x10, &written, all_data + 0x05, data_len + 0x20);
-    printf("enc written: %02x\n", written);
-    byte pad[0x10] = {0xf,0xf,0xf,0xf,0xf,0xf,0xf,0xf,0xf,0xf,0xf,0xf,0xf,0xf,0xf,0xf,0xf};
+    EVP_EncryptUpdate(context, *res + 0x10, &written, all_data + prefix_len, data_len + 0x20);
+//    printf("enc written: %02x\n", written);
 
-    EVP_EncryptUpdate(context, *res + 0x10 + written, &wr3, pad, 0x10);
+    int pad_len = *res_len - (0x30 + data_len);
+    if (pad_len == 0) {
+        pad_len = 16;
+    }
+    byte pad[pad_len];
+    memset(pad, pad_len - 1, pad_len);
+
+    EVP_EncryptUpdate(context, *res + 0x10 + written, &wr3, pad, pad_len);
 
     EVP_EncryptFinal(context, *res + 0x10 + written + wr3, &wr2);
-    printf("enc written: %02x\n", wr2);
+//    printf("enc written: %02x\n", wr2);
     *res_len = written + wr2 + wr3 + 0x10;
 
-    print_hex(all_data + 0x05, data_len + 0x20);
+//    print_hex(all_data + prefix_len, data_len + 0x20);
 
-    puts("Encrypted& hmac");
-    print_hex(*res, *res_len);
+//    puts("Encrypted& hmac");
+//    print_hex(*res, *res_len);
 
-//    EVP_CIPHER_CTX_free(context);
+    EVP_CIPHER_CTX_free(context);
 }
 
 byte *sign(EVP_PKEY* key, byte *data, int data_len) {
@@ -712,7 +739,7 @@ memcpy(buff + 0x2c, packet_bytes, sizeof(packet_bytes));
 
     key_block = TLS_PRF2(master_secret, 0x30, "key expansion", seed, 0x40, 0x120);
     puts("keyblock");
-//    print_hex(key_block, 0x120);
+    print_hex(key_block, 0x120);
 
 
     // copy client_random to cert
@@ -773,6 +800,205 @@ memcpy(buff + 0x2c, packet_bytes, sizeof(packet_bytes));
     qread(buff, 1024 * 1024, &len);
 }
 
+void tls_write(byte * data, int data_len) {
+    byte *res;
+    int res_len;
+    mac_then_encrypt(0x17, data, data_len, &res, &res_len);
+    byte *wr = malloc(res_len + 5);
+    memcpy(wr + 5, res, res_len);
+    wr[0] = 0x17; wr[1] = wr[2] = 0x03; wr[3] = res_len >> 8; wr[4] = res_len & 0xFF;
+    qwrite(wr, res_len + 5);
+
+    free(res);
+    free(wr);
+}
+
+void tls_read(byte *output_buffer, int *output_len) {
+    byte *raw_buff = malloc(1024 * 1024);
+    int raw_buff_len;
+
+    qread(raw_buff, 1024 * 1024, &raw_buff_len);
+
+    int buff_len = raw_buff_len - 5;
+    byte *buff = raw_buff + 5;
+
+    EVP_CIPHER_CTX *context = EVP_CIPHER_CTX_new();
+    errb(EVP_DecryptInit(context, EVP_aes_256_cbc(), key_block + 0x60, buff));
+    EVP_CIPHER_CTX_set_padding(context, 0);
+
+    int res_len = buff_len - 0x10;
+    int tlen1 = 0, tlen2;
+    byte *res = malloc(res_len);
+    errb(EVP_DecryptUpdate(context, res, &tlen1, buff + 0x10, res_len));
+
+    errb(EVP_DecryptFinal(context, res + tlen1, &tlen2));
+    EVP_CIPHER_CTX_free(context);
+
+    *output_len = tlen1 + tlen2 - 0x20 - (res[res_len - 1] + 1);
+    memcpy(output_buffer, res, *output_len);
+
+    free(raw_buff);
+}
+
+int writeImage(char* filename, int width, int height, float *buffer) {
+    int code = 0;
+    FILE *fp = NULL;
+    png_structp png_ptr = NULL;
+    png_infop info_ptr = NULL;
+
+    // Open file for writing (binary mode)
+    fp = fopen(filename, "wb");
+    if (fp == NULL) {
+        fprintf(stderr, "Could not open file %s for writing\n", filename);
+        code = 1;
+        goto finalise;
+    }
+
+    // Initialize write structure
+    png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    if (png_ptr == NULL) {
+        fprintf(stderr, "Could not allocate write struct\n");
+        code = 1;
+        goto finalise;
+    }
+
+    // Initialize info structure
+    info_ptr = png_create_info_struct(png_ptr);
+    if (info_ptr == NULL) {
+        fprintf(stderr, "Could not allocate info struct\n");
+        code = 1;
+        goto finalise;
+    }
+
+    // Setup Exception handling
+    if (setjmp(png_jmpbuf(png_ptr))) {
+        fprintf(stderr, "Error during png creation\n");
+        code = 1;
+        goto finalise;
+    }
+
+    png_init_io(png_ptr, fp);
+
+    // Write header (8 bit colour depth)
+    png_set_IHDR(png_ptr, info_ptr, width, height,
+            8, PNG_COLOR_TYPE_GRAY, PNG_INTERLACE_NONE,
+            PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
+
+
+    png_write_info(png_ptr, info_ptr);
+
+    // Write image data
+    int x, y;
+    for (y=0 ; y<height ; y++) {
+       png_write_row(png_ptr, buffer + 36 * y);
+    }
+
+    // End write
+    png_write_end(png_ptr, NULL);
+
+    finalise:
+    if (fp != NULL) fclose(fp);
+    if (info_ptr != NULL) png_free_data(png_ptr, info_ptr, PNG_FREE_ALL, -1);
+    if (png_ptr != NULL) png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
+
+    return code;
+}
+
+void fingerprint() {
+
+    byte data1[] = {
+        0x08, 0x5c, 0x20, 0x00, 0x80, 0x07, 0x00, 0x00, 0x00, 0x04
+    };
+    byte data2[] = {
+        0x07, 0x80, 0x20, 0x00, 0x80, 0x04
+    };
+    byte data345[] = {
+        0x75
+    };
+    byte data67[] = {
+        0x43, 0x02
+    };
+
+    byte data10[] = {
+        0x51, 0x00, 0x20, 0x00, 0x00 // read data - return buffer
+    };
+    byte data11[] = {
+        0x51, 0x00, 0x20, 0x00, 0x00
+    };
+
+    byte response[1024 * 1024];
+    int response_len = 0;
+
+
+    tls_write(data1, sizeof(data1));
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+
+    tls_write(data2, sizeof(data2));
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+
+    for (int i =0; i < 3; i++ ){
+        tls_write(data345, sizeof(data345));
+        tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+    }
+
+    for (int i =0; i < 2; i++ ){
+        tls_write(data67, sizeof(data67));
+        tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+    }
+
+
+    tls_write(scan_matrix2, sizeof(scan_matrix2));
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+
+    tls_write(scan_matrix1, sizeof(scan_matrix1));
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+
+    byte interrupt[0x100]; int interrupt_len;
+
+    byte desired_interrupt[] = { 0x03, 0x43, 0x04, 0x00, 0x41 };
+
+    puts("Awaiting fingerprint:");
+    while (true) {
+        int status = libusb_interrupt_transfer(dev, 0x83, interrupt, 0x100, &interrupt_len, 5 * 1000);
+        if (status == 0) {
+            puts("interrupt:");
+            print_hex(interrupt, interrupt_len);
+            fflush(stdout);
+
+            if (sizeof(desired_interrupt) == interrupt_len &&
+                    memcmp(desired_interrupt, interrupt, sizeof(desired_interrupt)) == 0) {
+                break;
+            }
+        }
+    }
+
+    byte image[144 * 144];
+    int image_len = 0;
+
+    tls_write(data10, sizeof(data10));
+    tls_read(response, &response_len);
+    memcpy(image, response + 0x12, response_len - 0x12);
+    image_len += response_len - 0x12;
+
+    tls_write(data10, sizeof(data10));
+    tls_read(response, &response_len);
+    memcpy(image + image_len, response + 0x06, response_len - 0x06);
+    image_len += response_len - 0x06;
+
+    tls_write(data10, sizeof(data10));
+    tls_read(response, &response_len);
+    memcpy(image + image_len, response + 0x06, response_len - 0x06);
+    image_len += response_len - 0x06;
+
+    printf("total len  %d\n", image_len);
+    writeImage("img.png", 144, 144, image);
+    puts("Image written - img.png, img.raw");
+
+    FILE *f = fopen("img.raw", "wb");
+    fwrite(image, 144, 144, f);
+    fclose(f);
+}
+
 int main(int argc, char *argv[]) {
     libusb_init(NULL);
     libusb_set_debug(NULL, 3);
@@ -796,6 +1022,13 @@ int main(int argc, char *argv[]) {
 
     init();
     handshake();
+
+    printf("IN: "); print_hex_string(key_block + 0x60, 0x20);
+    printf("OUT: "); print_hex_string(key_block + 0x40, 0x20);
+
+    fflush(stdout);
+    fingerprint();
+
 //    test_crypto_hash();
 //    puts("hmac");
 //    test_crypto_hash_hmac();
