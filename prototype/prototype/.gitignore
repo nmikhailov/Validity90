@@ -71,3 +71,7 @@ Thumbs.db
 *.dll
 *.exe
 
+*.png
+*.raw
+*.pro
+prototype

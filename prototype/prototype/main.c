@@ -929,7 +929,6 @@ void fingerprint() {
     byte response[1024 * 1024];
     int response_len = 0;
 
-
     tls_write(data1, sizeof(data1));
     tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
 
@@ -956,6 +955,7 @@ void fingerprint() {
     byte interrupt[0x100]; int interrupt_len;
 
     byte desired_interrupt[] = { 0x03, 0x43, 0x04, 0x00, 0x41 };
+    byte scan_failed_interrupt[] = { 0x03, 0x20, 0x07, 0x00, 0x00 }; // 03 60 07 00 40
 
     puts("Awaiting fingerprint:");
     while (true) {
@@ -968,6 +968,11 @@ void fingerprint() {
             if (sizeof(desired_interrupt) == interrupt_len &&
                     memcmp(desired_interrupt, interrupt, sizeof(desired_interrupt)) == 0) {
                 break;
+            }
+            if (sizeof(scan_failed_interrupt) == interrupt_len &&
+                    memcmp(scan_failed_interrupt, interrupt, sizeof(desired_interrupt)) == 0) {
+                puts("scan failed");
+                return;
             }
         }
     }
