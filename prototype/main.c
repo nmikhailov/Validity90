@@ -127,16 +127,10 @@ void res_errb(int result, char* where) {
 void qwrite(byte * data, int len) {
     int send;
     err(libusb_bulk_transfer(dev, 0x01, data, len, &send, 1000));
-
-    puts("usb write:");
-    print_hex(data, len);
 }
 
 void qread(byte * data, int len, int *out_len) {
     err(libusb_bulk_transfer(dev, 0x81, data, len, out_len, 1000));
-
-    puts("usb read:");
-    print_hex(data, *out_len);
 }
 
 void init() {
@@ -526,9 +520,9 @@ void HUpdate(HASHContext *context, const unsigned char *src, unsigned int len) {
     HASH_Update(context, src, len);
     memcpy(all_messages + all_messages_index, src, len);
     all_messages_index += len;
-    // puts("HASHING>>>");
-    // print_hex(src, len);
-    // puts("HASHING<<");
+    puts("HASHING>>>");
+    print_hex(src, len);
+    puts("HASHING<<");
 }
 
 byte * key_block;

@@ -9,6 +9,14 @@
 5. Send INIT_MSG5, receive INIT_RSP5
 6. Send INIT_MSG6, receive INIT_RSP6
 
+## Key derivation
+
+Sym key1:
+0x20 bytes
+
+First 8 bytes:  
+71 7c d7 2d 09 62 bc 4a
+
 ## TLS Handshake
 
 Modified [TLS 1.2](https://tools.ietf.org/html/rfc5246) is used as cryptographic protocol.

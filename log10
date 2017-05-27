@@ -265,6 +265,8 @@ CryptGetHashParam type : 2
 DumpGot
 0000 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 0010 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+
+
 BCryptOpenAlgorithmProvider Algo: L"ECDH_P256" Ptr: 0000000000000000
 BCryptOpenAlgorithmProvider Algo: L"ECDSA_P256" Ptr: 0000000000000000
 BCryptImportKeyPair \\\
@@ -401,7 +403,7 @@ DumpGot
 
 
 CryptImportKey
-0000 08 02 00 00 10 66 00 00 20 00 00 00 48 78 02 70 
+0000 08 02 00 00 10 66 00 00 20 00 00 00 48 78 02 70 <--- unknown key
 0010 5e 5a c4 a9 93 1c 44 aa 4d 32 25 22 39 e0 bf 8f 
 0020 0c 85 4d de 49 0c cc f6 87 ef ad 9c 
 BCryptOpenAlgorithmProvider Algo: L"AES" Ptr: 0000000000000000
@@ -416,10 +418,13 @@ CryptDecrypt: len - 112
 Decrypted:
 0000 ab 9d fd ba 74 25 29 93 9d 2d 5d f4 77 ec 90 2e 
 0010 13 b8 21 1a 19 70 1e 50 2f f5 6e 6e 25 ae 8c 00 
+
 0020 dd f4 04 74 f0 7a e4 e0 79 d1 f1 9f ae bd a8 ef 
 0030 1e fa 18 c2 6a 76 ae a5 aa bf c3 4f 12 94 8c 8f 
+
 0040 94 f5 52 49 8e de 72 ff fa 1f 04 b9 68 23 72 09 
 0050 20 6c 86 b7 2f f9 99 dc ce d1 2d b8 06 4c 87 d6 
+
 0060 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 
 CryptGenRandom 4
 Generated
@@ -930,6 +935,8 @@ CryptImportKey
 0010 f7 a0 6b de 16 77 34 c9 c9 13 92 85 d4 7b df 4b 
 0020 a2 5b 57 a7 1e 16 9d 02 40 f0 dc d0 
 CryptCreateHash alg: 8009
+
+
 CryptHashData
 0000 17 03 03 00 0a 
 CryptHashData
@@ -943,8 +950,10 @@ DumpGot
 CryptGenRandom 16
 Generated
 0000 04 fe cd a5 91 ad 57 0a fb db 91 65 7c 36 de b1 
+
+
 CryptImportKey
-0000 08 02 00 00 10 66 00 00 20 00 00 00 3e 6b 4c 97 
+0000 08 02 00 00 10 66 00 00 20 00 00 00 3e 6b 4c 97  !!!!!
 0010 1b e3 6c 85 f3 4e 3e 47 6d a9 c7 7d 71 7c 85 6c 
 0020 66 90 59 98 97 23 bc fd 9c 45 0d 13 
 CryptEncrypt: len - 48
@@ -955,6 +964,7 @@ Encrypted:
 0000 82 88 d7 16 5a 1a 91 ab 5f f6 23 e8 b9 ad 8c 17 
 0010 b9 44 be 1c 2a 61 a1 91 48 fa bc 7f b0 52 3c 98 
 0020 43 db 25 71 6d 5c a6 a9 2f 66 f6 15 5c a5 cf b8 
+
 readFromPipe
 CryptImportKey
 0000 08 02 00 00 10 66 00 00 20 00 00 00 18 d8 5f 3b 
