@@ -1,0 +1,116 @@
+meta:
+  id: init6
+
+seq:
+  - id: const1
+    contents: [0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 1]
+    
+  - id: hash1
+    type: hash
+    doc: Hash of 00
+  
+  - id: const2
+    contents: [0x1d, 0x00, 0x04, 0x00, 0xa1, 0x00]
+
+  - id: data2_hash
+    type: hash
+    doc: Hash of data2
+    
+  - id: data2
+    type: data2
+    size: 0xa1
+    
+  - id: const3
+    contents: [3, 0, 184, 0]
+    size: 0x04
+    
+  - id: data3_hash
+    type: hash
+    
+  - id: data3
+    type: data3
+    size: 0xb8
+    
+  - id: const4
+    contents: [0x05, 0x00, 0xa4, 0x01]
+    
+  - id: data4_hash
+    type: hash
+    
+  - id: data4
+    size: 0x1a4
+    
+  - id: const5
+    contents: [0x01, 0x00, 0x00, 0x01]
+    
+  - id: data5_hash
+    type: hash
+    
+  - id: data5
+    size: 0x100
+    doc: Zeroes
+    
+  - id: const6
+    contents: [0x02, 0x00, 0x00, 0x01]
+    
+  - id: data6_hash
+    type: hash
+  
+  - id: data6
+    size: 0x100
+    doc: Zeroes
+    
+  - id: const7
+    contents: [0x06, 0x00, 0x90, 0x01]
+    
+  - id: data7_hash
+    type: hash
+    
+  - id: data7
+    size: 0x190
+    type: data7
+
+types:
+  hash:
+    seq:
+      - id: hash
+        size: 0x20
+  data2:
+    seq:
+      - id: data1
+        size: 0x11
+      - id: encrypted
+        size: 0x70
+        doc: >
+          Encrypted & padded data of
+          data3.data1 + data3.data2 +
+          0040 94 f5 52 49 8e de 72 ff fa 1f 04 b9 68 23 72 09 
+          0050 20 6c 86 b7 2f f9 99 dc ce d1 2d b8 06 4c 87 d6 
+      - id: data2
+        size: 0x20
+        
+  data3:
+    seq:
+      - id: header
+        size: 0x8
+      - id: data1
+        size: 0x20
+      - id: pad1
+        size: 0x24
+      - id: data2
+        size: 0x20
+      - id: pad2
+        size: 0x2c
+      - id: data3
+        size: 0x20
+        
+  data7:
+    seq:
+      - id: part1
+        size: 0x90
+      - id: signature
+        size: 0x4c
+        doc: CryptDecodeObject encodded signature
+      - id: part2
+        size-eos: true
+        doc: Zeroes

@@ -3,3 +3,5 @@
 *.creator
 *.files
 *.includes
+*.swp
+__pycache__
