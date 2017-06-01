@@ -127,10 +127,27 @@ void res_errb(int result, char* where) {
 void qwrite(byte * data, int len) {
     int send;
     err(libusb_bulk_transfer(dev, 0x01, data, len, &send, 1000));
+
+    puts("usb write:");
+    print_hex(data, len);
 }
 
 void qread(byte * data, int len, int *out_len) {
     err(libusb_bulk_transfer(dev, 0x81, data, len, out_len, 1000));
+
+    puts("usb read:");
+    print_hex(data, *out_len);
+}
+
+static byte pubkey1[0x40];
+
+void reverse_mem(byte * data, int size) {
+    byte tmp;
+    for (int i = 0; i < size / 2; i++) {
+        tmp = data[i];
+        data[i] = data[size - 1 - i];
+        data[size - 1 - i] = tmp;
+    }
 }
 
 void init() {
@@ -150,6 +167,20 @@ void init() {
     STEP(init_sequence_msg5, init_sequence_rsp5);
     STEP(init_sequence_msg6, init_sequence_rsp6);
 #undef STEP
+
+    if (len > 0x660 + 0x20) {
+        memcpy(pubkey1, buff + 0x600 + 10, 0x20);
+        memcpy(pubkey1 + 0x20, buff + 0x640 + 0xe, 0x20);
+
+        reverse_mem(pubkey1, 0x20);
+        reverse_mem(pubkey1 + 0x20, 0x20);
+
+        puts("pub key:");
+        print_hex(pubkey1, 0x40);
+    } else {
+        puts("Invalid rsp6, can't get public key");
+        exit(-1);
+    }
 }
 
 
@@ -268,14 +299,6 @@ void test_crypto_hash_hmac() {
     print_hex(result, hashLen);
 }
 
-
-static const byte pubkey1[] = {
-    0x5f, 0x71, 0x17, 0x6f, 0x76, 0x66, 0x55, 0x74, 0xa3, 0x86, 0x53, 0x53, 0x10, 0xf6, 0x98, 0x18,
-    0x6f, 0x42, 0x9b, 0xf0, 0x6e, 0xfa, 0x05, 0x9b, 0x0c, 0x3f, 0x99, 0xbc, 0xfe, 0xb5, 0xd6, 0xce,
-
-    0x3e, 0x61, 0x55, 0x91, 0xab, 0x00, 0x99, 0xb0, 0x4f, 0x6f, 0x4b, 0x68, 0xac, 0xbd, 0x67, 0x81,
-    0x65, 0xb8, 0x26, 0x75, 0x1d, 0x50, 0xe3, 0x87, 0xd0, 0xcc, 0xfd, 0x49, 0x5f, 0xf4, 0xce, 0xca
-};
 //10
 static const byte privkey1[] = {
     0x1d, 0xd8, 0x36, 0x68, 0xe9, 0xb0, 0x7b, 0x93, 0x12, 0x38, 0x31, 0x23, 0x90, 0xc8, 0x87, 0xca,
@@ -520,9 +543,9 @@ void HUpdate(HASHContext *context, const unsigned char *src, unsigned int len) {
     HASH_Update(context, src, len);
     memcpy(all_messages + all_messages_index, src, len);
     all_messages_index += len;
-    puts("HASHING>>>");
-    print_hex(src, len);
-    puts("HASHING<<");
+    // puts("HASHING>>>");
+    // print_hex(src, len);
+    // puts("HASHING<<");
 }
 
 byte * key_block;

@@ -1,5 +1,5 @@
-CFLAGS = -c
-LDFLAGS =
+CFLAGS = -c -w -g
+LDFLAGS = 
  
 SOURCES = main.c
 OBJECTS = $(SOURCES:.c=.o)
