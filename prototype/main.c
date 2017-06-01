@@ -169,6 +169,10 @@ void init() {
 #undef STEP
 
     if (len > 0x660 + 0x20) {
+        // Cert
+        memcpy(tls_certificate + 21, buff + 0x116, 0xb8);
+
+        // Pubkey
         memcpy(pubkey1, buff + 0x600 + 10, 0x20);
         memcpy(pubkey1 + 0x20, buff + 0x640 + 0xe, 0x20);
 
@@ -1028,6 +1032,7 @@ void fingerprint() {
 }
 
 int main(int argc, char *argv[]) {
+    puts("Prototype version 3");
     libusb_init(NULL);
     libusb_set_debug(NULL, 3);
 
