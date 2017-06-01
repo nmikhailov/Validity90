@@ -1,0 +1,431 @@
+usb write:
+0000 01 
+
+usb read:
+0000 00 00 f0 b0 5e 54 a4 00  00 00 06 07 01 30 00 01 
+0010 00 00 69 fb 88 9b 40 f7  00 23 00 00 00 00 01 00 
+0020 00 00 00 00 00 07 
+
+usb write:
+0000 19 
+usb read:
+0000 00 00 00 03 01 02 00 01  00 00 00 00 00 00 00 00 
+0010 00 00 00 00 fb e9 32 3b  00 00 00 00 00 00 00 00 
+0020 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0030 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0040 00 00 00 00 
+
+usb write:
+0000 43 02 
+
+usb read:
+0000 00 00 01 00 00 00 06 00  98 c9 71 56 01 00 34 46 
+0010 02 00 07 00 60 39 00 00  01 00 84 08 01 00 07 00 
+0020 b0 02 00 00 02 00 84 28  03 00 12 00 10 10 00 00 
+0030 02 00 66 37 01 00 0c 00  40 22 02 00 01 00 86 47 
+0040 00 00 01 00 20 5a 00 00  02 00 23 77 00 00 01 00 
+0050 d0 2f 00 00 
+usb write:
+0000 06 02 00 00 01 39 17 b3  dd a9 13 83 b5 bc ac 64 
+0010 fa 4a d3 5d ce 96 57 0a  9d 2d 97 4b 80 92 6a 43 
+0020 1f 9c d4 62 48 98 0a 26  3c 6f ce f6 a8 28 39 a9 
+0030 0b 59 ac 59 08 48 85 9a  fa c8 17 b7 d5 3b f5 1c 
+0040 d3 20 5c 1b 8f 43 04 8b  e8 25 3c 3b d2 47 93 7c 
+0050 83 7a ca 8b 18 d3 cc 8e  e8 c8 97 1a c4 f6 88 81 
+0060 3c f3 d8 55 0d 71 49 69  85 b7 ec 07 ff 2d c7 89 
+0070 6d 33 0f da b2 63 a0 ee  43 3a 5c 4b c9 10 43 9d 
+0080 1c 61 61 85 3f eb 03 f5  50 22 09 50 2e 73 08 be 
+0090 b7 91 94 73 cf e6 9f 42  2c 30 50 2d 22 6a 4d 0a 
+00a0 34 d9 6c 8c 77 95 6c f6  9d b8 ef 6c f9 27 a3 b5 
+00b0 78 49 d4 aa 8a d4 b4 42  66 92 3e 34 b8 2a 39 c8 
+00c0 14 6b a3 cd 70 8c 70 df  ed b5 0c 2d e6 1f eb 45 
+00d0 b1 d4 f1 95 84 29 72 03  f5 fd c8 65 79 5f ec 9d 
+00e0 64 49 f3 ba 9b 6f 1e 4b  ed 69 8e e1 51 e8 3d 4d 
+00f0 87 02 f7 6a 40 06 cf a2  4d 9b 79 78 88 20 3b 22 
+0100 69 f8 a7 7d 52 40 34 ac  32 e4 af 58 b8 6e bc 63 
+0110 55 2c b3 5b 12 b2 85 25  5d ea f3 a3 2b f4 6c dc 
+0120 5a d3 bc 1c 9e d1 bc c1  12 c7 21 43 f9 ae c5 68 
+0130 e2 ca cf a8 9b a0 c7 bb  65 59 0d 8b 93 e6 87 1a 
+0140 33 c6 c6 98 3c 0a cd 04  e7 37 ff 55 ee e0 24 ca 
+0150 6b 9a 48 33 2c 1a 69 a5  a3 fd d2 4b 96 4c f7 e7 
+0160 c5 52 29 bb 0b 48 a6 e3  39 eb 2c 42 d0 7e c8 50 
+0170 a4 ee 78 06 60 ad 6c 77  ff a3 02 a6 3b d1 94 26 
+0180 13 4c 45 33 d6 f9 67 44  11 63 fb 78 b7 35 47 c6 
+0190 8a 49 3b 2f 80 0d 3c da  b8 27 b1 16 76 27 89 99 
+01a0 2a ae 3c 8a b3 45 a4 9e  dd 31 2d fd 2a 27 bc 50 
+01b0 14 27 dc 7f a0 0a c3 c5  c3 65 51 db b3 d5 ca d8 
+01c0 d5 bd 7c ea 37 e5 8a 31  30 7a 6d 50 e6 ae 37 9a 
+01d0 53 f1 36 66 78 c0 74 1a  3d 87 2b 8d cf ef a7 f6 
+01e0 31 28 dc 82 45 
+usb read:
+0000 00 00 
+usb write:
+0000 3e 
+usb read:
+0000 00 00 ef 00 40 00 00 10  01 00 00 01 01 00 05 00 
+0010 01 04 07 00 00 10 00 00  00 10 00 00 02 01 02 00 
+0020 00 20 00 00 00 e0 03 00  05 05 03 00 00 00 04 00 
+0030 00 80 00 00 06 06 03 00  00 80 04 00 00 80 00 00 
+0040 04 03 05 00 00 00 05 00  00 00 03 00 
+usb write:
+0000 40 01 01 00 00 00 00 00  00 00 10 00 00 
+usb read:
+0000 00 00 00 10 00 00 00 00  00 00 01 00 6e 34 0b 9c 
+0010 ff b3 7a 98 9c a5 44 e6  bb 78 0a 2c 78 90 1d 3f 
+0020 b3 37 38 76 85 11 a3 06  17 af a0 1d 00 04 00 a1 
+0030 00 92 92 63 d6 3e c6 b7  ec 43 af 34 a8 66 3c 72 
+0040 ac 96 9e 17 ca c3 58 61  14 f3 18 05 01 c9 6b 2e 
+0050 7d 02 84 a0 bb 26 bd fc  9f 81 d1 53 08 c0 83 5d 
+0060 ea 2b 39 1d 6a bc b0 c8  1b 07 b0 cc 4b d1 68 45 
+0070 9e 69 5a 48 7c 49 55 5d  0a ea 5e d6 a7 f9 e4 b7 
+0080 9e 80 de 6a 26 d2 31 35  09 3f f4 0b 74 77 87 1b 
+0090 93 03 fe b6 65 45 db 0a  5e 07 6b 41 e5 cd 76 89 
+00a0 f9 73 5e 52 77 4a bc 53  10 60 67 0e 35 d1 e9 13 
+00b0 3c 9c 89 98 45 36 fb 05  15 3d ed 46 ef c6 b5 bf 
+00c0 d6 18 bf 59 2e 0f 30 30  3a a1 47 a3 b6 5d 00 b2 
+00d0 84 4f 26 e8 55 a1 42 d8  36 ae 44 13 0a 7f 53 85 
+00e0 dc e2 13 64 73 93 9c 3b  a5 e4 85 00 e7 c4 25 c0 
+00f0 08 ed 03 00 b8 00 65 ed  a7 36 0c be 6e 04 fa da 
+0100 d0 db 4b 65 8e f0 2d 1a  c9 0b 52 da 40 70 ef 2d 
+0110 24 03 46 05 c2 ef 17 00  00 00 20 00 00 00 57 f5 
+0120 79 a6 04 12 91 30 66 45  5f d8 c2 eb 68 96 35 00 
+0130 f2 e1 aa 46 66 4b 9f c7  49 df dd 7f fc 40 00 00 
+0140 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0150 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0160 00 00 43 c4 33 85 89 c2  ab df 40 65 a2 0d 69 d7 
+0170 46 2b de e0 cc e0 59 6d  8d a4 68 00 05 bd dd d1 
+0180 a0 49 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0190 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+01a0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 20 50 
+01b0 4a 7b b5 d3 ce 95 d0 49  6e 11 2e 9e 6b e7 21 bf 
+01c0 7d b0 56 9d 30 09 22 15  d8 8a 23 f2 fa 17 05 00 
+01d0 a4 01 ec 5d 90 0e 5a 79  58 6d 2c db ee c6 22 40 
+01e0 c6 89 9d 37 47 5e 0f 46  bb 9e fd 3f 5a 4f 32 e8 
+01f0 27 d2 17 00 00 00 00 01  00 00 01 00 00 00 fc ff 
+0200 ff ff ff ff ff ff ff ff  ff ff 00 00 00 00 00 00 
+0210 00 00 00 00 00 00 01 00  00 00 ff ff ff ff 00 00 
+0220 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0230 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0240 00 00 4b 60 d2 27 3e 3c  ce 3b f6 b0 53 cc b0 06 
+0250 1d 65 bc 86 98 76 55 bd  eb b3 e7 93 3a aa d8 35 
+0260 c6 5a 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0270 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0280 00 00 00 00 00 00 96 c2  98 d8 45 39 a1 f4 a0 33 
+0290 eb 2d 81 7d 03 77 f2 40  a4 63 e5 e6 bc f8 47 42 
+02a0 2c e1 f2 d1 17 6b 00 00  00 00 00 00 00 00 00 00 
+02b0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+02c0 00 00 00 00 00 00 00 00  00 00 f5 51 bf 37 68 40 
+02d0 b6 cb ce 5e 31 6b 57 33  ce 2b 16 9e 0f 7c 4a eb 
+02e0 e7 8e 9b 7f 1a fe e2 42  e3 4f 00 00 00 00 00 00 
+02f0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0300 00 00 00 00 00 00 00 00  00 00 00 00 00 00 51 25 
+0310 63 fc c2 ca b9 f3 84 9e  17 a7 ad fa e6 bc ff ff 
+0320 ff ff ff ff ff ff 00 00  00 00 ff ff ff ff 00 00 
+0330 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0340 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0350 00 00 ff ff ff ff ff ff  ff ff ff ff ff ff 00 00 
+0360 00 00 00 00 00 00 00 00  00 00 01 00 00 00 ff ff 
+0370 ff ff 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0380 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0390 00 00 00 00 00 00 01 00  00 01 53 41 e6 b2 64 69 
+03a0 79 a7 0e 57 65 30 07 a1  f3 10 16 94 21 ec 9b dd 
+03b0 9f 1a 56 48 f7 5a de 00  5a f1 00 00 00 00 00 00 
+03c0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+03d0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+03e0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+03f0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0400 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0410 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0420 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0430 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0440 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0450 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0460 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0470 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0480 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0490 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+04a0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+04b0 00 00 00 00 00 00 00 00  00 00 02 00 00 01 53 41 
+04c0 e6 b2 64 69 79 a7 0e 57  65 30 07 a1 f3 10 16 94 
+04d0 21 ec 9b dd 9f 1a 56 48  f7 5a de 00 5a f1 00 00 
+04e0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+04f0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0500 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0510 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0520 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0530 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0540 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0550 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0560 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0570 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0580 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0590 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+05a0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+05b0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+05c0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+05d0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 06 00 
+05e0 90 01 9d 04 d2 76 08 c5  e1 19 92 c3 b7 1f ea ef 
+05f0 50 d4 ff b0 76 ef a4 de  d4 3f f7 b7 e2 48 9c 79 
+0600 c5 a2 20 00 00 00 17 00  00 00 f0 d4 55 3e 1c 7e 
+0610 bb 3d 05 a5 f1 b6 c3 9c  64 e8 90 2e be ad 04 ba 
+0620 1e 19 fc 91 dd 03 4a b8  8c 66 00 00 00 00 00 00 
+0630 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0640 00 00 00 00 00 00 00 00  00 00 00 00 00 00 b4 25 
+0650 b4 5d 87 6e 0d 2d 88 9b  c1 27 40 f8 2f ed a9 e9 
+0660 fe de 9f 85 57 02 35 76  62 c7 96 3b 56 fe 00 00 
+0670 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0680 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0690 00 00 48 00 00 00 30 46  02 21 00 cc a7 7a ea b6 
+06a0 80 76 15 94 66 14 61 3b  13 a0 56 fb 81 10 90 be 
+06b0 85 e1 0e fb 71 97 63 30  1d 86 82 02 21 00 92 d4 
+06c0 3a 80 31 d6 c8 02 cd 91  c4 c7 15 66 14 6f 9d ba 
+06d0 0b 2c ad 23 bf 24 f1 f6  bc 43 e2 60 0b 85 00 00 
+06e0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+06f0 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0700 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0710 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0720 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0730 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0740 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0750 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0760 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0770 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0780 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0790 00 00 ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+07a0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+07b0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+07c0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+07d0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+07e0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+07f0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0800 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0810 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0820 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0830 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0840 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0850 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0860 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0870 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0880 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0890 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+08a0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+08b0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+08c0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+08d0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+08e0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+08f0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0900 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0910 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0920 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0930 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0940 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0950 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0960 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0970 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0980 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0990 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+09a0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+09b0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+09c0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+09d0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+09e0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+09f0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0a00 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0a10 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0a20 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0a30 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0a40 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0a50 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0a60 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0a70 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0a80 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0a90 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0aa0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0ab0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0ac0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0ad0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0ae0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0af0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0b00 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0b10 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0b20 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0b30 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0b40 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0b50 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0b60 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0b70 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0b80 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0b90 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0ba0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0bb0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0bc0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0bd0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0be0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0bf0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0c00 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0c10 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0c20 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0c30 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0c40 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0c50 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0c60 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0c70 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0c80 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0c90 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0ca0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0cb0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0cc0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0cd0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0ce0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0cf0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0d00 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0d10 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0d20 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0d30 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0d40 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0d50 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0d60 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0d70 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0d80 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0d90 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0da0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0db0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0dc0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0dd0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0de0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0df0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0e00 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0e10 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0e20 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0e30 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0e40 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0e50 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0e60 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0e70 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0e80 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0e90 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0ea0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0eb0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0ec0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0ed0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0ee0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0ef0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0f00 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0f10 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0f20 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0f30 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0f40 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0f50 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0f60 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0f70 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0f80 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0f90 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0fa0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0fb0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0fc0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0fd0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0fe0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+0ff0 ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff 
+1000 ff ff ff ff ff ff ff ff 
+
+usb write:
+0000 44 00 00 00 16 03 03 00  43 01 00 00 3f 03 03 95 
+0010 6c 41 a9 12 86 8a da 9b  b2 5b b4 bb d6 1d de 4f 
+0020 da 23 2a 74 7b 2a 93 f8  ac c6 69 24 70 c4 2a 07 
+0030 00 00 00 00 00 00 00 00  04 c0 05 00 3d 00 00 0a 
+0040 00 04 00 02 00 17 00 0b  00 02 01 00 
+usb read:
+0000 16 03 03 00 3d 02 00 00  2d 03 03 00 00 6b c4 d3 
+0010 1f b9 67 a5 e8 54 a5 9c  a7 5d 2a 96 40 fd f5 ef 
+0020 69 a5 24 92 42 fe c0 e5  82 11 e9 07 54 4c 53 d3 
+0030 1f b9 67 c0 05 00 0d 00  00 04 01 40 00 00 0e 00 
+0040 00 00 
+Server tls Random:
+0000 00 00 6b c4 d3 1f b9 67  a5 e8 54 a5 9c a7 5d 2a 
+0010 96 40 fd f5 ef 69 a5 24  92 42 fe c0 e5 82 11 e9 
+66master secret
+0000 91 c5 9a 2f 0e d5 2b 77  69 f0 19 fa 33 8e a2 d4 
+0010 f1 4e 5b 99 b8 9f 8d 03  ed 26 b2 4a 00 49 a2 74 
+0020 be 08 95 11 ba d5 ff 7b  5e 79 4f 4b 08 80 bc be 
+keyblock
+0000 3b 9d ca 96 6e 70 b9 a8  a4 fb 1c 53 2d df 26 dd 
+0010 db 31 f3 b8 77 7f e1 43  f9 68 b9 29 27 7c 3e 49 
+0020 f1 57 e5 ba 48 2f 97 34  3b bb 75 5a 5c 80 cd 43 
+0030 6c d2 01 19 7d ce e3 bd  c7 c3 3e 20 ac 00 d3 ee 
+0040 61 97 5a ae 60 f1 0a 9f  96 9b fa 50 e7 fc 4d 21 
+0050 25 71 cd 6c 13 95 6c a0  19 55 b8 0b 62 23 51 70 
+0060 e7 41 8e 28 4c 64 32 ca  64 c7 d7 c1 fc 05 e2 88 
+0070 6e 4e 59 bb a1 c5 56 4e  51 04 91 3e ab 19 e2 4e 
+0080 03 84 08 26 ea 88 0b 28  9c 96 47 b5 cc 3e ed e7 
+0090 93 54 b2 ce 80 d2 2a 76  a2 45 ea 08 4f e7 77 0c 
+00a0 8d 41 c6 fd 6e d5 af b9  17 d6 8b d9 39 7c 23 e3 
+00b0 50 d0 0a 86 8a 1a fc 48  1f b7 33 4f 11 8e ce 8b 
+00c0 4f 92 8e f4 9f 95 a4 da  ad 87 3b 86 58 9b 4d b6 
+00d0 1a 6d 36 e6 81 f7 be 14  ab 2b 7a e2 8d e6 0d ff 
+00e0 c9 40 46 4b bc c3 fe 5e  ac 68 49 47 d4 8d ae bb 
+00f0 d1 86 11 54 c1 20 fe e1  f9 5e 8b 5d c8 84 b5 1d 
+0100 41 97 44 b9 12 34 d1 2d  75 07 71 33 ba 45 15 70 
+0110 b7 62 0d 69 38 53 9a c2  e3 96 23 cf 5f 19 f5 b0 
+Hash
+0000 cb 2c 8a 60 e1 4f 95 1e  b3 fe c3 c9 85 08 ac 7c 
+0010 1f e4 31 c0 c8 d6 ef be  0b 6b 60 5a 46 31 22 e3 
+
+Cert signed: 
+0000 30 46 02 21 00 f0 36 39  10 0d 90 5d 96 42 5a fb 
+0010 69 ce 77 b8 9e a2 04 6d  ab e8 e0 65 69 42 61 8f 
+0020 a2 90 48 c8 94 02 21 00  e2 ce f2 c7 6e 8b ba ff 
+0030 1d 2a 5d 44 75 57 2e d2  3c ee 3c eb 4c f0 9a a1 
+0040 c5 7b 27 9e 69 35 40 1e 
+hash of handshake messages
+0000 84 ce bd 85 d7 eb cf 47  1e 5f 4d 76 24 8d 7b f8 
+0010 02 44 f1 51 45 d4 ba c5  dc fb 5d 4e a0 93 aa 66 
+client finished
+0000 14 00 00 0c fb 8c dd 74  49 12 ce 5e f0 bf bf e7 
+final
+0000 4b 77 62 ff a9 03 c1 1e  6f d8 35 93 17 2d 54 ef 
+0010 ee bd 62 f5 08 35 f5 98  b5 b1 85 52 91 f2 4f 99 
+0020 10 7a 28 8c 3f a6 f6 97  b1 50 ed c2 b4 78 a7 a7 
+0030 b2 31 8d e1 77 31 e2 29  27 dc b4 37 72 5d a0 f8 
+0040 f3 b6 7d c8 94 ed bb d0  44 9e b6 be 18 47 5d 84 
+usb write:
+0000 44 00 00 00 16 03 03 01  55 0b 00 00 c0 00 00 b8 
+0010 00 00 b8 12 86 17 00 00  00 20 00 00 00 ab 9d fd 
+0020 ba 74 25 29 93 9d 2d 5d  f4 77 ec 90 2e 13 b8 21 
+0030 1a 19 70 1e 50 2f f5 6e  6e 25 ae 8c 00 00 00 00 
+0040 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0050 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0060 00 dd f4 04 74 f0 7a e4  e0 79 d1 f1 9f ae bd a8 
+0070 ef 1e fa 18 c2 6a 76 ae  a5 aa bf c3 4f 12 94 8c 
+0080 8f 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+0090 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+00a0 00 00 00 00 00 00 00 00  00 00 00 00 00 a5 58 ed 
+00b0 0f 31 33 45 63 c8 8a d5  53 d9 e4 6e 20 5d 54 3b 
+00c0 83 99 cf 9b ef 9e a8 aa  c5 eb fb 20 a2 10 00 00 
+00d0 41 04 1d d8 36 68 e9 b0  7b 93 12 38 31 23 90 c8 
+00e0 87 ca db 82 27 39 de 7b  43 d2 23 d7 cd d1 3c 77 
+00f0 0e d2 d1 93 70 02 af 3b  18 47 c5 30 4c 33 60 cf 
+0100 bf c5 9b 3c 67 d9 45 06  38 da 92 be 65 bf 81 8c 
+0110 aa 7e 0f 00 00 48 30 46  02 21 00 f0 36 39 10 0d 
+0120 90 5d 96 42 5a fb 69 ce  77 b8 9e a2 04 6d ab e8 
+0130 e0 65 69 42 61 8f a2 90  48 c8 94 02 21 00 e2 ce 
+0140 f2 c7 6e 8b ba ff 1d 2a  5d 44 75 57 2e d2 3c ee 
+0150 3c eb 4c f0 9a a1 c5 7b  27 9e 69 35 40 1e 14 03 
+0160 03 00 01 01 16 03 03 00  50 4b 77 62 ff a9 03 c1 
+0170 1e 6f d8 35 93 17 2d 54  ef ee bd 62 f5 08 35 f5 
+0180 98 b5 b1 85 52 91 f2 4f  99 10 7a 28 8c 3f a6 f6 
+0190 97 b1 50 ed c2 b4 78 a7  a7 b2 31 8d e1 77 31 e2 
+01a0 29 27 dc b4 37 72 5d a0  f8 f3 b6 7d c8 94 ed bb 
+01b0 d0 44 9e b6 be 18 47 5d  84 
+usb read:
+0000 15 03 03 00 02 01 2a 
+IN: e7418e284c6432ca64c7d7c1fc05e2886e4e59bba1c5564e5104913eab19e24e
+OUT: 61975aae60f10a9f969bfa50e7fc4d212571cd6c13956ca01955b80b62235170
+usb write:
+0000 17 03 03 00 40 4b 77 62  ff a9 03 c1 1e 6f d8 35 
+0010 93 17 2d 54 ef 8f 15 7b  7e 30 91 f1 8c 46 c3 0d 
+0020 c7 b2 17 38 9b 8e d9 b2  c5 fa 15 4f 84 aa 65 80 
+0030 9d ab 56 66 4d 80 c2 e7  23 c9 f8 79 f0 32 fb 13 
+0040 2e e6 60 54 d8 
+usb read:
+0000 04 04 
+Failed 'EVP_DecryptUpdate(context, res, &tlen1, buff + 0x10, res_len)': 0 - LIBUSB_SUCCESS / LIBUSB_TRANSFER_COMPLETED
