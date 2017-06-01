@@ -1,32 +1,13 @@
-Database file: C:\Users\Test\Desktop\release\x64\db\WUDFHost.exe.dd64
-Process Started: 00007FF6BF7E0000 C:\Windows\System32\WUDFHost.exe
-Loading database from C:\Users\Test\Desktop\release\x64\db\WUDFHost.exe.dd64 765ms
-DLL Loaded: 00007FF8D5EB0000 C:\Windows\System32\ntdll.dll
-Thread 1164 created, Entry: <ntdll.DbgUiRemoteBreakin>
-DLL Loaded: 00007FF8D5530000 C:\Windows\System32\kernel32.dll
-DLL Loaded: 00007FF8D2580000 C:\Windows\System32\KernelBase.dll
-DLL Loaded: 00007FF8D5400000 C:\Windows\System32\rpcrt4.dll
-DLL Loaded: 00007FF8D4B30000 C:\Windows\System32\combase.dll
-DLL Loaded: 00007FF8D29A0000 C:\Windows\System32\ucrtbase.dll
-DLL Loaded: 00007FF8D27A0000 C:\Windows\System32\bcryptprimitives.dll
-DLL Loaded: 00007FF8D4EC0000 C:\Windows\System32\sechost.dll
-DLL Loaded: 00007FF8D0F10000 C:\Windows\System32\devobj.dll
-DLL Loaded: 00007FF8D2C70000 C:\Windows\System32\cfgmgr32.dll
-DLL Loaded: 00007FF8CF8A0000 C:\Windows\System32\WUDFPlatform.dll
-DLL Loaded: 00007FF8D5110000 C:\Windows\System32\advapi32.dll
-DLL Loaded: 00007FF8D4E00000 C:\Windows\System32\msvcrt.dll
-DLL Loaded: 00007FF8D1F80000 C:\Windows\System32\sspicli.dll
-Attach breakpoint reached!
-Thread 1164 exit
-Thread E1C created, Entry: ntdll.00007FF8D5EE2DC0
+Thread B08 exit
+Thread 9F0 created, Entry: ntdll.00007FF8D5EE2DC0
 DLL Loaded: 00007FF8D2320000 C:\Windows\System32\kernel.appcore.dll
-Thread 11A0 created, Entry: ntdll.00007FF8D5EE2DC0
-Thread 1698 created, Entry: ntdll.00007FF8D5EE2DC0
-Thread E4C created, Entry: ntdll.00007FF8D5EE2DC0
-Thread C48 created, Entry: ntdll.00007FF8D5EE2DC0
-DLL Loaded: 00007FF8CE780000 C:\Windows\System32\winusb.dll
-MemRead failed on breakpoint address00007FF8B97F6154!
-DLL Loaded: 00007FF8B04D0000 C:\Windows\System32\drivers\UMDF\synaWudfBioUsb.dll
+Thread 1704 created, Entry: ntdll.00007FF8D5EE2DC0
+Thread 13EC created, Entry: ntdll.00007FF8D5EE2DC0
+Thread 13F8 created, Entry: ntdll.00007FF8D5EE2DC0
+Thread AB4 created, Entry: ntdll.00007FF8D5EE2DC0
+DLL Loaded: 00007FF8CE720000 C:\Windows\System32\winusb.dll
+MemRead failed on breakpoint address00007FF8B93E6154!
+DLL Loaded: 00007FF8B00C0000 C:\Windows\System32\drivers\UMDF\synaWudfBioUsb.dll
 DLL Loaded: 00007FF8D5BF0000 C:\Windows\System32\ole32.dll
 DLL Loaded: 00007FF8D3440000 C:\Windows\System32\gdi32.dll
 DLL Loaded: 00007FF8D2810000 C:\Windows\System32\gdi32full.dll
@@ -51,119 +32,37 @@ DLL Loaded: 00007FF8D1A60000 C:\Windows\System32\userenv.dll
 BCryptOpenAlgorithmProvider Algo: L"MD5" Ptr: 0000000000000000
 DLL Loaded: 00007FF8D1DA0000 C:\Windows\System32\cryptbase.dll
 DLL Loaded: 00007FF8D1820000 C:\Windows\System32\dpapi.dll
-Thread E10 created, Entry: <synawudfbiousb.$LN9_1>
-Thread CC4 created, Entry: ntdll.00007FF8D5EE2DC0
-Thread E10 exit
-DLL Unloaded: 00007FF8D2330000 powrprof.dll
-DLL Unloaded: 00007FF8D2400000 shcore.dll
-DLL Unloaded: 00007FF8D2CC0000 windows.storage.dll
-DLL Unloaded: 00007FF8D3620000 shell32.dll
-DLL Unloaded: 00007FF8D5E50000 shlwapi.dll
-DLL Unloaded: 00007FF8D2310000 msasn1.dll
-DLL Unloaded: 00007FF8D1820000 dpapi.dll
-DLL Unloaded: 00007FF8D2AA0000 crypt32.dll
-DLL Unloaded: 00007FF8D57C0000 setupapi.dll
-Could not delete breakpoint 00007FF8B97F6154! (DeleteBPX)
-DLL Unloaded: 00007FF8B04D0000 synawudfbiousb.dll
-DLL Unloaded: 00007FF8CF190000 wudfx.dll
-Thread 11A0 exit
-Thread 160 exit
-Thread C48 exit
-Thread E4C exit
-Thread 1698 exit
-Thread CC4 exit
-Process stopped with exit code 0x0
-Saving database to C:\Users\Test\Desktop\release\x64\db\WUDFHost.exe.dd64 391ms
-Debugging stopped!
-Database file: C:\Users\Test\Desktop\release\x64\db\WUDFHost.exe.dd64
-Process Started: 00007FF6BF7E0000 C:\Windows\System32\WUDFHost.exe
-Loading database from C:\Users\Test\Desktop\release\x64\db\WUDFHost.exe.dd64 610ms
-DLL Loaded: 00007FF8D5EB0000 C:\Windows\System32\ntdll.dll
-Thread 14D8 created, Entry: <ntdll.DbgUiRemoteBreakin>
-DLL Loaded: 00007FF8D5530000 C:\Windows\System32\kernel32.dll
-DLL Loaded: 00007FF8D2580000 C:\Windows\System32\KernelBase.dll
-DLL Loaded: 00007FF8D5400000 C:\Windows\System32\rpcrt4.dll
-DLL Loaded: 00007FF8D4B30000 C:\Windows\System32\combase.dll
-DLL Loaded: 00007FF8D29A0000 C:\Windows\System32\ucrtbase.dll
-DLL Loaded: 00007FF8D27A0000 C:\Windows\System32\bcryptprimitives.dll
-DLL Loaded: 00007FF8D4EC0000 C:\Windows\System32\sechost.dll
-DLL Loaded: 00007FF8D0F10000 C:\Windows\System32\devobj.dll
-DLL Loaded: 00007FF8D2C70000 C:\Windows\System32\cfgmgr32.dll
-DLL Loaded: 00007FF8CF8A0000 C:\Windows\System32\WUDFPlatform.dll
-DLL Loaded: 00007FF8D5110000 C:\Windows\System32\advapi32.dll
-DLL Loaded: 00007FF8D4E00000 C:\Windows\System32\msvcrt.dll
-DLL Loaded: 00007FF8D1F80000 C:\Windows\System32\sspicli.dll
-Attach breakpoint reached!
-Thread 14D8 exit
-Thread 1478 created, Entry: ntdll.00007FF8D5EE2DC0
-DLL Loaded: 00007FF8D2320000 C:\Windows\System32\kernel.appcore.dll
-Thread 12EC created, Entry: ntdll.00007FF8D5EE2DC0
-Thread 1280 created, Entry: ntdll.00007FF8D5EE2DC0
-Thread 1398 created, Entry: ntdll.00007FF8D5EE2DC0
-Thread 1470 created, Entry: ntdll.00007FF8D5EE2DC0
-DLL Loaded: 00007FF8CE720000 C:\Windows\System32\winusb.dll
-MemRead failed on breakpoint address00007FF8B97F6154!
-DLL Loaded: 00007FF8B04D0000 C:\Windows\System32\drivers\UMDF\synaWudfBioUsb.dll
-DLL Loaded: 00007FF8D5BF0000 C:\Windows\System32\ole32.dll
-DLL Loaded: 00007FF8D3440000 C:\Windows\System32\gdi32.dll
-DLL Loaded: 00007FF8D2810000 C:\Windows\System32\gdi32full.dll
-DLL Loaded: 00007FF8D55E0000 C:\Windows\System32\user32.dll
-DLL Loaded: 00007FF8D24B0000 C:\Windows\System32\win32u.dll
-DLL Loaded: 00007FF8D3620000 C:\Windows\System32\shell32.dll
-DLL Loaded: 00007FF8D2CC0000 C:\Windows\System32\windows.storage.dll
-DLL Loaded: 00007FF8D2330000 C:\Windows\System32\powrprof.dll
-DLL Loaded: 00007FF8D5E50000 C:\Windows\System32\shlwapi.dll
-DLL Loaded: 00007FF8D2400000 C:\Windows\System32\SHCore.dll
-DLL Loaded: 00007FF8D2380000 C:\Windows\System32\profapi.dll
-DLL Loaded: 00007FF8D2AA0000 C:\Windows\System32\crypt32.dll
-DLL Loaded: 00007FF8D2310000 C:\Windows\System32\msasn1.dll
-DLL Loaded: 00007FF8D57C0000 C:\Windows\System32\setupapi.dll
-DLL Loaded: 00007FF8D2260000 C:\Windows\System32\bcrypt.dll
-DLL Loaded: 00007FF8CF190000 C:\Windows\System32\WUDFx.dll
-DLL Loaded: 00007FF8D5D90000 C:\Windows\System32\oleaut32.dll
-DLL Loaded: 00007FF8D33A0000 C:\Windows\System32\msvcp_win.dll
-DLL Loaded: 00007FF8D1D80000 C:\Windows\System32\cryptsp.dll
-DLL Loaded: 00007FF8D17E0000 C:\Windows\System32\rsaenh.dll
-DLL Loaded: 00007FF8D1A60000 C:\Windows\System32\userenv.dll
-BCryptOpenAlgorithmProvider Algo: ??? Ptr: 0000000000000000
-DLL Loaded: 00007FF8D1DA0000 C:\Windows\System32\cryptbase.dll
-DLL Loaded: 00007FF8D1820000 C:\Windows\System32\dpapi.dll
-Thread 15C8 created, Entry: <synawudfbiousb.$LN9_1>
-Thread 15DC created, Entry: <synawudfbiousb.StartAddress>
-Thread 90C created, Entry: ntdll.00007FF8D5EE2DC0
+Thread 15AC created, Entry: <synawudfbiousb.$LN9_1>
+Thread 12DC created, Entry: <synawudfbiousb.StartAddress>
 readFromPipe
-Thread F74 created, Entry: <synawudfbiousb.sub_7FF8B04E9534>
-INT3 breakpoint at synawudfbiousb.00007FF8B05ECAC0 (00007FF8B05ECAC0)!
-$sarg4=00000248FF4922E0 (2512543884000d)
+Thread 708 created, Entry: ntdll.00007FF8D5EE2DC0
+INT3 breakpoint at synawudfbiousb.00007FF8B01DCAC0 (00007FF8B01DCAC0)!
+Thread A74 created, Entry: <synawudfbiousb.sub_7FF8B00D9534>
 readFromPipe
-INT3 breakpoint at synawudfbiousb.00007FF8B05ECAC0 (00007FF8B05ECAC0)!
-$sarg4=00000248FF4973F0 (2512543904752d)
+INT3 breakpoint at synawudfbiousb.00007FF8B01DCAC0 (00007FF8B01DCAC0)!
 readFromPipe
-INT3 breakpoint at synawudfbiousb.00007FF8B05ECAC0 (00007FF8B05ECAC0)!
+INT3 breakpoint at synawudfbiousb.00007FF8B01DCAC0 (00007FF8B01DCAC0)!
 readFromPipe
-INT3 breakpoint at synawudfbiousb.00007FF8B05ECAC0 (00007FF8B05ECAC0)!
+INT3 breakpoint at synawudfbiousb.00007FF8B01DCAC0 (00007FF8B01DCAC0)!
 readFromPipe
-INT3 breakpoint at synawudfbiousb.00007FF8B05ECAC0 (00007FF8B05ECAC0)!
+INT3 breakpoint at synawudfbiousb.00007FF8B01DCAC0 (00007FF8B01DCAC0)!
 readFromPipe
-INT3 breakpoint at synawudfbiousb.00007FF8B05ECAC0 (00007FF8B05ECAC0)!
-$sarg4=00000248FF497430 (2512543904816d)
+INT3 breakpoint at synawudfbiousb.00007FF8B01DCAC0 (00007FF8B01DCAC0)!
 readFromPipe
-INT3 breakpoint at synawudfbiousb.00007FF8B05ECAC0 (00007FF8B05ECAC0)!
-$sarg4=00000248FF498460 (2512543908960d)
-Thread FE0 created, Entry: ntdll.00007FF8D5EE2DC0
+INT3 breakpoint at synawudfbiousb.00007FF8B01DCAC0 (00007FF8B01DCAC0)!
 CryptCreateHash alg: 800C
 BCryptOpenAlgorithmProvider Algo: L"SHA256" Ptr: 0000000000000000
-CryptHashData 00000248FF49A0F0 00007FF8D17E4870
+CryptHashData 000001D3188B22A0 00007FF8D17E4870
 0000 00 
-CryptGetHashParam type : 4 ptr: 00000248FF49A0F0 00007FF8D17E4870
+CryptGetHashParam type : 4 ptr: 000001D3188B22A0 00007FF8D17E4870
 DumpGot
 0000 20 00 00 00 
-CryptGetHashParam type : 2 ptr: 00000248FF49A0F0 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188B22A0 00007FF8D17E4870
 DumpGot
 0000 6e 34 0b 9c ff b3 7a 98 9c a5 44 e6 bb 78 0a 2c 
 0010 78 90 1d 3f b3 37 38 76 85 11 a3 06 17 af a0 1d 
 CryptCreateHash alg: 800C
-CryptHashData 00000248FF49A0F0 00007FF8D17E4870
+CryptHashData 000001D3188B22A0 00007FF8D17E4870
 0000 02 84 a0 bb 26 bd fc 9f 81 d1 53 08 c0 83 5d ea 
 0010 2b 39 1d 6a bc b0 c8 1b 07 b0 cc 4b d1 68 45 9e 
 0020 69 5a 48 7c 49 55 5d 0a ea 5e d6 a7 f9 e4 b7 9e 
@@ -175,15 +74,15 @@ CryptHashData 00000248FF49A0F0 00007FF8D17E4870
 0080 4f 26 e8 55 a1 42 d8 36 ae 44 13 0a 7f 53 85 dc 
 0090 e2 13 64 73 93 9c 3b a5 e4 85 00 e7 c4 25 c0 08 
 00a0 ed 
-CryptGetHashParam type : 4 ptr: 00000248FF49A0F0 00007FF8D17E4870
+CryptGetHashParam type : 4 ptr: 000001D3188B22A0 00007FF8D17E4870
 DumpGot
 0000 20 00 00 00 
-CryptGetHashParam type : 2 ptr: 00000248FF49A0F0 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188B22A0 00007FF8D17E4870
 DumpGot
 0000 92 92 63 d6 3e c6 b7 ec 43 af 34 a8 66 3c 72 ac 
 0010 96 9e 17 ca c3 58 61 14 f3 18 05 01 c9 6b 2e 7d 
 CryptCreateHash alg: 800C
-CryptHashData 00000248FF49A0F0 00007FF8D17E4870
+CryptHashData 000001D3188B22A0 00007FF8D17E4870
 0000 17 00 00 00 20 00 00 00 57 f5 79 a6 04 12 91 30 
 0010 66 45 5f d8 c2 eb 68 96 35 00 f2 e1 aa 46 66 4b 
 0020 9f c7 49 df dd 7f fc 40 00 00 00 00 00 00 00 00 
@@ -196,15 +95,15 @@ CryptHashData 00000248FF49A0F0 00007FF8D17E4870
 0090 00 00 00 00 00 00 00 00 20 50 4a 7b b5 d3 ce 95 
 00a0 d0 49 6e 11 2e 9e 6b e7 21 bf 7d b0 56 9d 30 09 
 00b0 22 15 d8 8a 23 f2 fa 17 
-CryptGetHashParam type : 4 ptr: 00000248FF49A0F0 00007FF8D17E4870
+CryptGetHashParam type : 4 ptr: 000001D3188B22A0 00007FF8D17E4870
 DumpGot
 0000 20 00 00 00 
-CryptGetHashParam type : 2 ptr: 00000248FF49A0F0 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188B22A0 00007FF8D17E4870
 DumpGot
 0000 65 ed a7 36 0c be 6e 04 fa da d0 db 4b 65 8e f0 
 0010 2d 1a c9 0b 52 da 40 70 ef 2d 24 03 46 05 c2 ef 
 CryptCreateHash alg: 800C
-CryptHashData 00000248FF49A0F0 00007FF8D17E4870
+CryptHashData 000001D3188B22A0 00007FF8D17E4870
 0000 17 00 00 00 00 01 00 00 01 00 00 00 fc ff ff ff 
 0010 ff ff ff ff ff ff ff ff 00 00 00 00 00 00 00 00 
 0020 00 00 00 00 01 00 00 00 ff ff ff ff 00 00 00 00 
@@ -232,15 +131,15 @@ CryptHashData 00000248FF49A0F0 00007FF8D17E4870
 0180 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 0190 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 01a0 00 00 00 00 
-CryptGetHashParam type : 4 ptr: 00000248FF49A0F0 00007FF8D17E4870
+CryptGetHashParam type : 4 ptr: 000001D3188B22A0 00007FF8D17E4870
 DumpGot
 0000 20 00 00 00 
-CryptGetHashParam type : 2 ptr: 00000248FF49A0F0 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188B22A0 00007FF8D17E4870
 DumpGot
 0000 ec 5d 90 0e 5a 79 58 6d 2c db ee c6 22 40 c6 89 
 0010 9d 37 47 5e 0f 46 bb 9e fd 3f 5a 4f 32 e8 27 d2 
 CryptCreateHash alg: 800C
-CryptHashData 00000248FF49A0F0 00007FF8D17E4870
+CryptHashData 000001D3188B22A0 00007FF8D17E4870
 0000 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 0010 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 0020 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
@@ -257,15 +156,15 @@ CryptHashData 00000248FF49A0F0 00007FF8D17E4870
 00d0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 00e0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 00f0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-CryptGetHashParam type : 4 ptr: 00000248FF49A0F0 00007FF8D17E4870
+CryptGetHashParam type : 4 ptr: 000001D3188B22A0 00007FF8D17E4870
 DumpGot
 0000 20 00 00 00 
-CryptGetHashParam type : 2 ptr: 00000248FF49A0F0 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188B22A0 00007FF8D17E4870
 DumpGot
 0000 53 41 e6 b2 64 69 79 a7 0e 57 65 30 07 a1 f3 10 
 0010 16 94 21 ec 9b dd 9f 1a 56 48 f7 5a de 00 5a f1 
 CryptCreateHash alg: 800C
-CryptHashData 00000248FF49A0F0 00007FF8D17E4870
+CryptHashData 000001D3188B22A0 00007FF8D17E4870
 0000 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 0010 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 0020 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
@@ -282,15 +181,15 @@ CryptHashData 00000248FF49A0F0 00007FF8D17E4870
 00d0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 00e0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 00f0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-CryptGetHashParam type : 4 ptr: 00000248FF49A0F0 00007FF8D17E4870
+CryptGetHashParam type : 4 ptr: 000001D3188B22A0 00007FF8D17E4870
 DumpGot
 0000 20 00 00 00 
-CryptGetHashParam type : 2 ptr: 00000248FF49A0F0 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188B22A0 00007FF8D17E4870
 DumpGot
 0000 53 41 e6 b2 64 69 79 a7 0e 57 65 30 07 a1 f3 10 
 0010 16 94 21 ec 9b dd 9f 1a 56 48 f7 5a de 00 5a f1 
 CryptCreateHash alg: 800C
-CryptHashData 00000248FF49A0F0 00007FF8D17E4870
+CryptHashData 000001D3188B22A0 00007FF8D17E4870
 0000 20 00 00 00 17 00 00 00 f0 d4 55 3e 1c 7e bb 3d 
 0010 05 a5 f1 b6 c3 9c 64 e8 90 2e be ad 04 ba 1e 19 
 0020 fc 91 dd 03 4a b8 8c 66 00 00 00 00 00 00 00 00 
@@ -316,10 +215,10 @@ CryptHashData 00000248FF49A0F0 00007FF8D17E4870
 0160 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 0170 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 0180 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-CryptGetHashParam type : 4 ptr: 00000248FF49A0F0 00007FF8D17E4870
+CryptGetHashParam type : 4 ptr: 000001D3188B22A0 00007FF8D17E4870
 DumpGot
 0000 20 00 00 00 
-CryptGetHashParam type : 2 ptr: 00000248FF49A0F0 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188B22A0 00007FF8D17E4870
 DumpGot
 0000 9d 04 d2 76 08 c5 e1 19 92 c3 b7 1f ea ef 50 d4 
 0010 ff b0 76 ef a4 de d4 3f f7 b7 e2 48 9c 79 c5 a2 
@@ -327,7 +226,7 @@ CryptCreateHash alg: 800C
 BCryptOpenAlgorithmProvider Algo: L"ECDH_P256" Ptr: 0000000000000000
 BCryptOpenAlgorithmProvider Algo: L"ECDSA_P256" Ptr: 0000000000000000
 CryptCreateHash alg: 800C
-CryptHashData 00000248FF49AE30 00007FF8D17E4870
+CryptHashData 000001D3188B9190 00007FF8D17E4870
 0000 20 00 00 00 17 00 00 00 f0 d4 55 3e 1c 7e bb 3d 
 0010 05 a5 f1 b6 c3 9c 64 e8 90 2e be ad 04 ba 1e 19 
 0020 fc 91 dd 03 4a b8 8c 66 00 00 00 00 00 00 00 00 
@@ -337,24 +236,25 @@ CryptHashData 00000248FF49AE30 00007FF8D17E4870
 0060 9f 85 57 02 35 76 62 c7 96 3b 56 fe 00 00 00 00 
 0070 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 0080 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-CryptGetHashParam type : 4 ptr: 00000248FF49AE30 00007FF8D17E4870
+CryptGetHashParam type : 4 ptr: 000001D3188B9190 00007FF8D17E4870
 DumpGot
 0000 20 00 00 00 
-CryptGetHashParam type : 2 ptr: 00000248FF49AE30 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188B9190 00007FF8D17E4870
 DumpGot
-0000 bc 10 4a 58 81 a7 c6 de 56 4b c0 96 d3 24 30 95 
-0010 18 fd a8 5d d1 19 fc bf 43 0c 40 24 80 dc 2b 81 
+0000 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 BCryptOpenAlgorithmProvider Algo: L"ECDH_P256" Ptr: 0000000000000000
 BCryptOpenAlgorithmProvider Algo: L"ECDSA_P256" Ptr: 0000000000000000
 BCryptImportKeyPair \\\
 Type: L"ECCPUBLICBLOB" \\\
-Data len: FF49AE30hex
+Data len: 188B9190hex
 [rsp+28]
 0000 45 43 53 31 20 00 00 00 f7 27 65 3b 4e 16 ce 06 
 0010 65 a6 89 4d 7f 3a 30 d7 d0 a0 be 31 0d 12 92 a7 
 0020 43 67 1f df 69 f6 a8 d3 a8 55 38 f8 b6 be c5 0d 
 0030 6e ef 8b d5 f4 d0 7a 88 62 43 c5 8b 23 93 94 8d 
 0040 f7 61 a8 47 21 a6 ca 94 
+
 CryptDecodeObject struct type ???
 0000 30 46 02 21 00 cc a7 7a ea b6 80 76 15 94 66 14 
 0010 61 3b 13 a0 56 fb 81 10 90 be 85 e1 0e fb 71 97 
@@ -375,8 +275,8 @@ CryptDecodeObject struct type ???
 0030 cd 91 c4 c7 15 66 14 6f 9d ba 0b 2c ad 23 bf 24 
 0040 f1 f6 bc 43 e2 60 0b 85 
 Decoded
-0000 20 00 00 00 00 00 00 00 60 e2 49 ff 48 02 00 00 
-0010 20 00 00 00 00 00 00 00 80 e2 49 ff 48 02 00 00 
+0000 20 00 00 00 00 00 00 00 b0 c5 8b 18 d3 01 00 00 
+0010 20 00 00 00 00 00 00 00 d0 c5 8b 18 d3 01 00 00 
 0020 82 86 1d 30 63 97 71 fb 0e e1 85 be 90 10 81 fb 
 0030 56 a0 13 3b 61 14 66 94 15 76 80 b6 ea 7a a7 cc 
 0040 85 0b 60 e2 43 bc f6 f1 24 bf 23 ad 2c 0b ba 9d 
@@ -388,13 +288,15 @@ CryptImportKey
 0000 08 02 00 00 02 66 00 00 20 00 00 00 71 7c d7 2d 
 0010 09 62 bc 4a 28 46 13 8d bb 2c 24 19 25 12 a7 64 
 0020 07 06 5f 38 38 46 13 9d 4b ec 20 33 
+
+
 BCryptOpenAlgorithmProvider Algo: L"RC2" Ptr: 0000000000000000
 CryptCreateHash alg: 8009
-CryptHashData 00000248FF49CDA0 00007FF8D17E4870
+CryptHashData 000001D3188BB0F0 00007FF8D17E4870
 0000 47 57 4b 56 69 72 74 75 61 6c 42 6f 78 00 30 00 
-CryptGetHashParam type : 2 ptr: 00000248FF49CDA0 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188BB0F0 00007FF8D17E4870
 DumpGot
-CryptGetHashParam type : 2 ptr: 00000248FF49CDA0 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188BB0F0 00007FF8D17E4870
 DumpGot
 0000 bc 41 9d fc 39 c9 ba 69 a7 4d 5d 60 0a c3 5b 7b 
 0010 1a fb 2b 52 e5 d2 4a 23 04 58 67 c8 3a 98 aa 9a 
@@ -403,13 +305,13 @@ CryptImportKey
 0010 09 62 bc 4a 28 46 13 8d bb 2c 24 19 25 12 a7 64 
 0020 07 06 5f 38 38 46 13 9d 4b ec 20 33 
 CryptCreateHash alg: 8009
-CryptHashData 00000248FF49CDA0 00007FF8D17E4870
+CryptHashData 000001D3188BB0F0 00007FF8D17E4870
 0000 bc 41 9d fc 39 c9 ba 69 a7 4d 5d 60 0a c3 5b 7b 
 0010 1a fb 2b 52 e5 d2 4a 23 04 58 67 c8 3a 98 aa 9a 
 0020 47 57 4b 56 69 72 74 75 61 6c 42 6f 78 00 30 00 
-CryptGetHashParam type : 2 ptr: 00000248FF49CDA0 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188BB0F0 00007FF8D17E4870
 DumpGot
-CryptGetHashParam type : 2 ptr: 00000248FF49CDA0 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188BB0F0 00007FF8D17E4870
 DumpGot
 0000 48 78 02 70 5e 5a c4 a9 93 1c 44 aa 4d 32 25 22 
 0010 39 e0 bf 8f 0c 85 4d de 49 0c cc f6 87 ef ad 9c 
@@ -418,13 +320,13 @@ CryptImportKey
 0010 5e 5a c4 a9 93 1c 44 aa 4d 32 25 22 39 e0 bf 8f 
 0020 0c 85 4d de 49 0c cc f6 87 ef ad 9c 
 CryptCreateHash alg: 8009
-CryptHashData 00000248FF49CEC0 00007FF8D17E4870
+CryptHashData 000001D3188BB210 00007FF8D17E4870
 0000 47 57 4b 5f 53 49 47 4e 3a 4c 76 b7 6a 97 98 1d 
 0010 12 74 24 7e 16 66 10 e7 7f 4d 9c 9d 07 d3 c7 28 
 0020 e5 32 91 6b dd 28 b4 54 
-CryptGetHashParam type : 2 ptr: 00000248FF49CEC0 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188BB210 00007FF8D17E4870
 DumpGot
-CryptGetHashParam type : 2 ptr: 00000248FF49CEC0 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188BB210 00007FF8D17E4870
 DumpGot
 0000 eb 1e 63 25 2c e0 c6 bb 08 38 88 5d 0d 1e 52 86 
 0010 4e 89 7f 7b 41 cb 8d e4 dd 34 17 16 09 ef db e5 
@@ -433,15 +335,15 @@ CryptImportKey
 0010 5e 5a c4 a9 93 1c 44 aa 4d 32 25 22 39 e0 bf 8f 
 0020 0c 85 4d de 49 0c cc f6 87 ef ad 9c 
 CryptCreateHash alg: 8009
-CryptHashData 00000248FF49CEC0 00007FF8D17E4870
+CryptHashData 000001D3188BB210 00007FF8D17E4870
 0000 eb 1e 63 25 2c e0 c6 bb 08 38 88 5d 0d 1e 52 86 
 0010 4e 89 7f 7b 41 cb 8d e4 dd 34 17 16 09 ef db e5 
 0020 47 57 4b 5f 53 49 47 4e 3a 4c 76 b7 6a 97 98 1d 
 0030 12 74 24 7e 16 66 10 e7 7f 4d 9c 9d 07 d3 c7 28 
 0040 e5 32 91 6b dd 28 b4 54 
-CryptGetHashParam type : 2 ptr: 00000248FF49CEC0 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188BB210 00007FF8D17E4870
 DumpGot
-CryptGetHashParam type : 2 ptr: 00000248FF49CEC0 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188BB210 00007FF8D17E4870
 DumpGot
 0000 b7 01 5b e1 65 8f 48 d0 d3 95 4b 2c 79 fe 66 b5 
 0010 45 47 38 bd f3 a9 d4 ec e6 2e cf 7d d0 dd ba ba 
@@ -450,7 +352,7 @@ CryptImportKey
 0010 65 8f 48 d0 d3 95 4b 2c 79 fe 66 b5 45 47 38 bd 
 0020 f3 a9 d4 ec e6 2e cf 7d d0 dd ba ba 
 CryptCreateHash alg: 8009
-CryptHashData 00000248FF49AE30 00007FF8D17E4870
+CryptHashData 000001D3188B9190 00007FF8D17E4870
 0000 84 a0 bb 26 bd fc 9f 81 d1 53 08 c0 83 5d ea 2b 
 0010 39 1d 6a bc b0 c8 1b 07 b0 cc 4b d1 68 45 9e 69 
 0020 5a 48 7c 49 55 5d 0a ea 5e d6 a7 f9 e4 b7 9e 80 
@@ -459,9 +361,9 @@ CryptHashData 00000248FF49AE30 00007FF8D17E4870
 0050 5e 52 77 4a bc 53 10 60 67 0e 35 d1 e9 13 3c 9c 
 0060 89 98 45 36 fb 05 15 3d ed 46 ef c6 b5 bf d6 18 
 0070 bf 59 2e 0f 30 30 3a a1 47 a3 b6 5d 00 b2 84 4f 
-CryptGetHashParam type : 2 ptr: 00000248FF49AE30 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188B9190 00007FF8D17E4870
 DumpGot
-CryptGetHashParam type : 2 ptr: 00000248FF49AE30 00007FF8D17E4870
+CryptGetHashParam type : 2 ptr: 000001D3188B9190 00007FF8D17E4870
 DumpGot
 0000 26 e8 55 a1 42 d8 36 ae 44 13 0a 7f 53 85 dc e2 
 0010 13 64 73 93 9c 3b a5 e4 85 00 e7 c4 25 c0 08 ed 
@@ -487,3 +389,394 @@ Decrypted:
 0040 0e 5d 9d cf b1 15 67 d7 0a 80 0e a5 ee a9 99 e2 
 0050 a9 57 69 2c 5d de 8b 3b 26 5e 84 0e e4 42 5f 59 
 0060 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 
+CryptGenRandom 4
+Generated
+0000 e9 96 da 8e 
+CryptGenRandom 28
+Generated
+0000 d8 f6 8f 05 eb b0 a9 51 54 06 ee d5 d8 7d bc 7a 
+0010 b0 64 9d 25 b8 b7 07 2a e8 c3 ea f9 
+CryptHashData 000001D3188B22A0 00007FF8D17E4870
+0000 01 00 00 3f 03 03 8e da 96 e9 d8 f6 8f 05 eb b0 
+0010 a9 51 54 06 ee d5 d8 7d bc 7a b0 64 9d 25 b8 b7 
+0020 07 2a e8 c3 ea f9 07 00 00 00 00 00 00 00 00 04 
+0030 c0 05 00 3d 00 00 0a 00 04 00 02 00 17 00 0b 00 
+0040 02 01 00 
+readFromPipe
+INT3 breakpoint at synawudfbiousb.00007FF8B01DCAC0 (00007FF8B01DCAC0)!
+CryptHashData 000001D3188B22A0 00007FF8D17E4870
+0000 02 00 00 2d 03 03 00 7d f7 8c 37 b2 9c 6b 7e 3f 
+0010 47 ab 70 7f 2a dd 83 0c 7a dd 33 6d 98 5c 39 e5 
+0020 b0 d7 dc 3a 11 d0 07 54 4c 53 37 b2 9c 6b c0 05 
+0030 00 
+CryptHashData 000001D3188B22A0 00007FF8D17E4870
+0000 0d 00 00 04 01 40 00 00 
+CryptHashData 000001D3188B22A0 00007FF8D17E4870
+0000 0e 00 00 00 
+CryptHashData 000001D3188B22A0 00007FF8D17E4870
+0000 0b 00 00 c0 00 00 b8 00 00 b8 d8 f6 17 00 00 00 
+0010 20 00 00 00 57 f5 79 a6 04 12 91 30 66 45 5f d8 
+0020 c2 eb 68 96 35 00 f2 e1 aa 46 66 4b 9f c7 49 df 
+0030 dd 7f fc 40 00 00 00 00 00 00 00 00 00 00 00 00 
+0040 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0050 00 00 00 00 00 00 00 00 43 c4 33 85 89 c2 ab df 
+0060 40 65 a2 0d 69 d7 46 2b de e0 cc e0 59 6d 8d a4 
+0070 68 00 05 bd dd d1 a0 49 00 00 00 00 00 00 00 00 
+0080 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0090 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00a0 00 00 00 00 20 50 4a 7b b5 d3 ce 95 d0 49 6e 11 
+00b0 2e 9e 6b e7 21 bf 7d b0 56 9d 30 09 22 15 d8 8a 
+00c0 23 f2 fa 17 
+BCryptGenerateKeyPair ptr: 5555555100000130
+BCryptExportKey L"ECCPRIVATEBLOB"
+len: 9557B7E8E8
+BCryptExportKey L"ECCPRIVATEBLOB"
+Exported: len unknown
+0000 45 43 4b 32 20 00 00 00 45 5e 77 3a 96 12 9e 64 
+0010 a8 49 ac 08 69 5d a1 8a a0 a2 79 4e 38 f5 b5 ec 
+0020 00 bb 4e 82 37 79 1a 24 aa d7 6a 82 39 83 1b 7c 
+0030 81 ea 17 ff d2 60 0b e3 c3 45 a5 6a 06 00 55 b6 
+0040 4e cb 58 7e 44 e6 0c 55 52 cb 7d 68 08 2b 9f 0b 
+0050 da 73 de 17 ec 64 7c a8 ee d3 4a 82 a3 5d 0a 88 
+0060 a3 b9 dd 4d 73 cc ec cf 
+
+
+
+BCryptImportKeyPair \\\
+Type: L"ECCPRIVATEBLOB" \\\
+Data len: 188BC7A0hex
+[rsp+28]
+0000 45 43 4b 32 20 00 00 00 45 5e 77 3a 96 12 9e 64 
+0010 a8 49 ac 08 69 5d a1 8a a0 a2 79 4e 38 f5 b5 ec 
+0020 00 bb 4e 82 37 79 1a 24 aa d7 6a 82 39 83 1b 7c 
+0030 81 ea 17 ff d2 60 0b e3 c3 45 a5 6a 06 00 55 b6 
+0040 4e cb 58 7e 44 e6 0c 55 52 cb 7d 68 08 2b 9f 0b 
+0050 da 73 de 17 ec 64 7c a8 ee d3 4a 82 a3 5d 0a 88 
+0060 a3 b9 dd 4d 73 cc ec cf 
+
+
+BCryptImportKeyPair \\\
+Type: L"ECCPUBLICBLOB" \\\
+Data len: 188BC5E0hex
+[rsp+28]
+0000 45 43 4b 31 20 00 00 00 66 8c b8 4a 03 dd 91 fc 
+0010 19 1e ba 04 ad be 2e 90 e8 64 9c c3 b6 f1 a5 05 
+0020 3d bb 7e 1c 3e 55 d4 f0 fe 56 3b 96 c7 62 76 35 
+0030 02 57 85 9f de fe e9 a9 ed 2f f8 40 27 c1 9b 88 
+0040 2d 0d 6e 87 5d b4 25 b4 
+
+
+
+BCryptSecretAgreement
+CryptHashData 000001D3188B22A0 00007FF8D17E4870
+0000 10 00 00 41 04 45 5e 77 3a 96 12 9e 64 a8 49 ac 
+0010 08 69 5d a1 8a a0 a2 79 4e 38 f5 b5 ec 00 bb 4e 
+0020 82 37 79 1a 24 aa d7 6a 82 39 83 1b 7c 81 ea 17 
+0030 ff d2 60 0b e3 c3 45 a5 6a 06 00 55 b6 4e cb 58 
+0040 7e 44 e6 0c 55 
+BCryptDeriveKey kdf: L"TLS_PRF"
+Derived:
+0000 13 10 89 9c 8a 84 ae 6d 8a af c7 38 ad d9 6a 26 
+0010 0a 1a 35 53 54 52 91 ec 39 9e 27 56 ff 6d e8 d5 
+0020 4f 59 06 31 f7 82 fe e1 8d 2c 95 f8 55 1b 24 4a 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 13 10 89 9c 
+0010 8a 84 ae 6d 8a af c7 38 ad d9 6a 26 0a 1a 35 53 
+0020 54 52 91 ec 39 9e 27 56 ff 6d e8 d5 4f 59 06 31 
+0030 f7 82 fe e1 8d 2c 95 f8 55 1b 24 4a 
+CryptCreateHash alg: 8009
+CryptHashData 000001D3188BC760 00007FF8D17E4870
+0000 6b 65 79 20 65 78 70 61 6e 73 69 6f 6e 8e da 96 
+0010 e9 d8 f6 8f 05 eb b0 a9 51 54 06 ee d5 d8 7d bc 
+0020 7a b0 64 9d 25 b8 b7 07 2a e8 c3 ea f9 00 7d f7 
+0030 8c 37 b2 9c 6b 7e 3f 47 ab 70 7f 2a dd 83 0c 7a 
+0040 dd 33 6d 98 5c 39 e5 b0 d7 dc 3a 11 d0 
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+0000 06 e7 d8 8a 05 7c 5d c9 fa f2 11 5d 48 14 e3 f8 
+0010 1f 0c 2a ed 38 05 be 3a af 90 9e 79 a7 e6 ab 01 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 13 10 89 9c 
+0010 8a 84 ae 6d 8a af c7 38 ad d9 6a 26 0a 1a 35 53 
+0020 54 52 91 ec 39 9e 27 56 ff 6d e8 d5 4f 59 06 31 
+0030 f7 82 fe e1 8d 2c 95 f8 55 1b 24 4a 
+CryptCreateHash alg: 8009
+CryptHashData 000001D3188BC760 00007FF8D17E4870
+0000 06 e7 d8 8a 05 7c 5d c9 fa f2 11 5d 48 14 e3 f8 
+0010 1f 0c 2a ed 38 05 be 3a af 90 9e 79 a7 e6 ab 01 
+0020 6b 65 79 20 65 78 70 61 6e 73 69 6f 6e 8e da 96 
+0030 e9 d8 f6 8f 05 eb b0 a9 51 54 06 ee d5 d8 7d bc 
+0040 7a b0 64 9d 25 b8 b7 07 2a e8 c3 ea f9 00 7d f7 
+0050 8c 37 b2 9c 6b 7e 3f 47 ab 70 7f 2a dd 83 0c 7a 
+0060 dd 33 6d 98 5c 39 e5 b0 d7 dc 3a 11 d0 
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+0000 69 b3 51 3e 9c 9a 15 13 d2 c0 1a 74 5a ee e7 a5 
+0010 08 03 de b1 2d cf b9 62 80 75 f2 7c 48 9e 24 1b 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 13 10 89 9c 
+0010 8a 84 ae 6d 8a af c7 38 ad d9 6a 26 0a 1a 35 53 
+0020 54 52 91 ec 39 9e 27 56 ff 6d e8 d5 4f 59 06 31 
+0030 f7 82 fe e1 8d 2c 95 f8 55 1b 24 4a 
+CryptCreateHash alg: 8009
+CryptHashData 000001D3188BC760 00007FF8D17E4870
+0000 06 e7 d8 8a 05 7c 5d c9 fa f2 11 5d 48 14 e3 f8 
+0010 1f 0c 2a ed 38 05 be 3a af 90 9e 79 a7 e6 ab 01 
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+0000 87 f5 eb 3c 1b 27 33 1b 1b c1 0e 52 13 9b bf 11 
+0010 c1 b3 8e fc 74 9a 09 d1 0c d4 96 55 ce b9 67 cb 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 13 10 89 9c 
+0010 8a 84 ae 6d 8a af c7 38 ad d9 6a 26 0a 1a 35 53 
+0020 54 52 91 ec 39 9e 27 56 ff 6d e8 d5 4f 59 06 31 
+0030 f7 82 fe e1 8d 2c 95 f8 55 1b 24 4a 
+CryptCreateHash alg: 8009
+CryptHashData 000001D3188BC760 00007FF8D17E4870
+0000 87 f5 eb 3c 1b 27 33 1b 1b c1 0e 52 13 9b bf 11 
+0010 c1 b3 8e fc 74 9a 09 d1 0c d4 96 55 ce b9 67 cb 
+0020 6b 65 79 20 65 78 70 61 6e 73 69 6f 6e 8e da 96 
+0030 e9 d8 f6 8f 05 eb b0 a9 51 54 06 ee d5 d8 7d bc 
+0040 7a b0 64 9d 25 b8 b7 07 2a e8 c3 ea f9 00 7d f7 
+0050 8c 37 b2 9c 6b 7e 3f 47 ab 70 7f 2a dd 83 0c 7a 
+0060 dd 33 6d 98 5c 39 e5 b0 d7 dc 3a 11 d0 
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+0000 51 ca a2 46 77 24 4c 2e db 52 4a 35 b6 9e bb f9 
+0010 1a 2b 5f e9 13 40 2d a8 21 70 ab f6 ca 10 43 5d 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 13 10 89 9c 
+0010 8a 84 ae 6d 8a af c7 38 ad d9 6a 26 0a 1a 35 53 
+0020 54 52 91 ec 39 9e 27 56 ff 6d e8 d5 4f 59 06 31 
+0030 f7 82 fe e1 8d 2c 95 f8 55 1b 24 4a 
+CryptCreateHash alg: 8009
+CryptHashData 000001D3188BC760 00007FF8D17E4870
+0000 87 f5 eb 3c 1b 27 33 1b 1b c1 0e 52 13 9b bf 11 
+0010 c1 b3 8e fc 74 9a 09 d1 0c d4 96 55 ce b9 67 cb 
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+0000 4e 62 c1 39 53 94 62 0b 36 e5 9e 71 c0 88 a0 d7 
+0010 61 de 5f 70 07 95 b0 8e 6a 8e f3 d9 0b e9 04 d8 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 13 10 89 9c 
+0010 8a 84 ae 6d 8a af c7 38 ad d9 6a 26 0a 1a 35 53 
+0020 54 52 91 ec 39 9e 27 56 ff 6d e8 d5 4f 59 06 31 
+0030 f7 82 fe e1 8d 2c 95 f8 55 1b 24 4a 
+CryptCreateHash alg: 8009
+CryptHashData 000001D3188BC760 00007FF8D17E4870
+0000 4e 62 c1 39 53 94 62 0b 36 e5 9e 71 c0 88 a0 d7 
+0010 61 de 5f 70 07 95 b0 8e 6a 8e f3 d9 0b e9 04 d8 
+0020 6b 65 79 20 65 78 70 61 6e 73 69 6f 6e 8e da 96 
+0030 e9 d8 f6 8f 05 eb b0 a9 51 54 06 ee d5 d8 7d bc 
+0040 7a b0 64 9d 25 b8 b7 07 2a e8 c3 ea f9 00 7d f7 
+0050 8c 37 b2 9c 6b 7e 3f 47 ab 70 7f 2a dd 83 0c 7a 
+0060 dd 33 6d 98 5c 39 e5 b0 d7 dc 3a 11 d0 
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+0000 12 99 50 9d 8d ee 9e cf 93 e9 65 aa 23 7b aa 13 
+0010 f2 29 a9 90 83 b0 86 0a b3 6d 4b 4a 46 a5 b3 90 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 13 10 89 9c 
+0010 8a 84 ae 6d 8a af c7 38 ad d9 6a 26 0a 1a 35 53 
+0020 54 52 91 ec 39 9e 27 56 ff 6d e8 d5 4f 59 06 31 
+0030 f7 82 fe e1 8d 2c 95 f8 55 1b 24 4a 
+CryptCreateHash alg: 8009
+CryptHashData 000001D3188BC760 00007FF8D17E4870
+0000 4e 62 c1 39 53 94 62 0b 36 e5 9e 71 c0 88 a0 d7 
+0010 61 de 5f 70 07 95 b0 8e 6a 8e f3 d9 0b e9 04 d8 
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+0000 c5 ea a0 43 b9 36 2e cd 8c e3 6e ce 12 00 8b 14 
+0010 78 41 37 fc 20 c3 18 72 62 c5 90 9c 39 b0 96 99 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 13 10 89 9c 
+0010 8a 84 ae 6d 8a af c7 38 ad d9 6a 26 0a 1a 35 53 
+0020 54 52 91 ec 39 9e 27 56 ff 6d e8 d5 4f 59 06 31 
+0030 f7 82 fe e1 8d 2c 95 f8 55 1b 24 4a 
+CryptCreateHash alg: 8009
+CryptHashData 000001D3188BC760 00007FF8D17E4870
+0000 c5 ea a0 43 b9 36 2e cd 8c e3 6e ce 12 00 8b 14 
+0010 78 41 37 fc 20 c3 18 72 62 c5 90 9c 39 b0 96 99 
+0020 6b 65 79 20 65 78 70 61 6e 73 69 6f 6e 8e da 96 
+0030 e9 d8 f6 8f 05 eb b0 a9 51 54 06 ee d5 d8 7d bc 
+0040 7a b0 64 9d 25 b8 b7 07 2a e8 c3 ea f9 00 7d f7 
+0050 8c 37 b2 9c 6b 7e 3f 47 ab 70 7f 2a dd 83 0c 7a 
+0060 dd 33 6d 98 5c 39 e5 b0 d7 dc 3a 11 d0 
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+CryptGetHashParam type : 2 ptr: 000001D3188BC760 00007FF8D17E4870
+DumpGot
+0000 c9 fb be 32 7c 10 1d ac 07 90 0f 83 75 17 a9 7d 
+0010 b6 23 f1 19 a9 0f 8a 24 58 19 8f 29 96 b0 d3 07 
+INT3 breakpoint at <advapi32.CryptDuplicateHash> (00007FF8D513E360)!
+CryptDuplicateHash 000001D3188B22A0 ->
+INT3 breakpoint at cryptsp.00007FF8D1D8636B (00007FF8D1D8636B)!
+CryptDuplicateHash end 
+000001D3188BA920
+CryptGetHashParam type : 4 ptr: 000001D3188BA920 00007FF8D17E4870
+DumpGot
+0000 20 00 00 00 
+CryptGetHashParam type : 2 ptr: 000001D3188BA920 00007FF8D17E4870
+DumpGot
+0000 c1 00 e4 2c 10 68 aa 49 2a 9b c8 dd e6 1d 51 a6 
+0010 85 b0 8c b8 a0 4b 27 f0 db 66 3d 2d 46 76 01 88 
+BCryptImportKeyPair \\\
+Type: L"ECCPRIVATEBLOB" \\\
+Data len: 188BB110hex
+[rsp+28]
+0000 45 43 53 32 20 00 00 00 40 fc 7f dd df 49 c7 9f 
+0010 4b 66 46 aa e1 f2 00 35 96 68 eb c2 d8 5f 45 66 
+0020 30 91 12 04 a6 79 f5 57 49 a0 d1 dd bd 05 00 68 
+0030 a4 8d 6d 59 e0 cc e0 de 2b 46 d7 69 0d a2 65 40 
+0040 df ab c2 89 85 33 c4 43 59 5f 42 e4 0e 84 5e 26 
+0050 3b 8b de 5d 2c 69 57 a9 e2 99 a9 ee a5 0e 80 0a 
+0060 d7 67 15 b1 cf 9d 5d 0e 
+BCryptSignHash
+0000 c1 00 e4 2c 10 68 aa 49 2a 9b c8 dd e6 1d 51 a6 
+0010 85 b0 8c b8 a0 4b 27 f0 db 66 3d 2d 46 76 01 88 
+CryptEncodeObject ??? len unkown!
+0000 20 00 00 00 ca ea 00 00 90 b6 8b 18 d3 01 00 00 
+0010 20 00 00 00 00 00 00 00 e0 b6 8b 18 d3 01 00 00 
+0020 20 a9 8b 18 d3 01 00 00 18 a6 8b 18 d3 01 00 00 
+0030 18 b1 8b 18 d3 01 00 00 00 00 00 00 95 00 00 00 
+Encoded
+0000 30 44 02 20 27 c5 c6 37 38 44 70 c0 1b 0f 07 bf 
+0010 cd 6e ef a9 97 2c cb 8c 29 92 ee d2 fd cf 26 31 
+0020 75 17 d6 3c 02 20 64 25 d6 93 78 c6 5f 20 9a fc 
+0030 1d a5 c0 3d a0 0f c9 f9 08 6e 9a 8b 0a e8 54 19 
+0040 b8 bf 95 e8 7b 20 
+CryptHashData 000001D3188B22A0 00007FF8D17E4870
+0000 0f 00 00 46 30 44 02 20 27 c5 c6 37 38 44 70 c0 
+0010 1b 0f 07 bf cd 6e ef a9 97 2c cb 8c 29 92 ee d2 
+0020 fd cf 26 31 75 17 d6 3c 02 20 64 25 d6 93 78 c6 
+0030 5f 20 9a fc 1d a5 c0 3d a0 0f c9 f9 08 6e 9a 8b 
+0040 0a e8 54 19 b8 bf 95 e8 7b 20 
+INT3 breakpoint at <advapi32.CryptDuplicateHash> (00007FF8D513E360)!
+CryptDuplicateHash 000001D3188B22A0 ->
+INT3 breakpoint at cryptsp.00007FF8D1D8636B (00007FF8D1D8636B)!
+CryptDuplicateHash end 
+000001D3188BB060
+CryptGetHashParam type : 4 ptr: 000001D3188BB060 00007FF8D17E4870
+DumpGot
+0000 20 00 00 00 
+CryptGetHashParam type : 2 ptr: 000001D3188BB060 00007FF8D17E4870
+DumpGot
+0000 3c 27 68 81 2d 8b 1b eb 65 ed 3a a7 d0 8b c8 3a 
+0010 21 75 02 23 09 5e ed 94 78 a9 2f 65 e9 f6 fe d3 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 13 10 89 9c 
+0010 8a 84 ae 6d 8a af c7 38 ad d9 6a 26 0a 1a 35 53 
+0020 54 52 91 ec 39 9e 27 56 ff 6d e8 d5 4f 59 06 31 
+0030 f7 82 fe e1 8d 2c 95 f8 55 1b 24 4a 
+CryptCreateHash alg: 8009
+CryptHashData 000001D3188BB770 00007FF8D17E4870
+0000 63 6c 69 65 6e 74 20 66 69 6e 69 73 68 65 64 3c 
+0010 27 68 81 2d 8b 1b eb 65 ed 3a a7 d0 8b c8 3a 21 
+0020 75 02 23 09 5e ed 94 78 a9 2f 65 e9 f6 fe d3 
+CryptGetHashParam type : 2 ptr: 000001D3188BB770 00007FF8D17E4870
+DumpGot
+CryptGetHashParam type : 2 ptr: 000001D3188BB770 00007FF8D17E4870
+DumpGot
+0000 a1 29 50 64 93 ce c7 b3 40 af 55 a2 fe 38 15 b4 
+0010 73 8b ba 71 5b 78 f0 d1 56 25 b9 23 d2 aa 7e bf 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 30 00 00 00 13 10 89 9c 
+0010 8a 84 ae 6d 8a af c7 38 ad d9 6a 26 0a 1a 35 53 
+0020 54 52 91 ec 39 9e 27 56 ff 6d e8 d5 4f 59 06 31 
+0030 f7 82 fe e1 8d 2c 95 f8 55 1b 24 4a 
+CryptCreateHash alg: 8009
+CryptHashData 000001D3188BB770 00007FF8D17E4870
+0000 a1 29 50 64 93 ce c7 b3 40 af 55 a2 fe 38 15 b4 
+0010 73 8b ba 71 5b 78 f0 d1 56 25 b9 23 d2 aa 7e bf 
+0020 63 6c 69 65 6e 74 20 66 69 6e 69 73 68 65 64 3c 
+0030 27 68 81 2d 8b 1b eb 65 ed 3a a7 d0 8b c8 3a 21 
+0040 75 02 23 09 5e ed 94 78 a9 2f 65 e9 f6 fe d3 
+CryptGetHashParam type : 2 ptr: 000001D3188BB770 00007FF8D17E4870
+DumpGot
+CryptGetHashParam type : 2 ptr: 000001D3188BB770 00007FF8D17E4870
+DumpGot
+0000 6e 3c 89 d3 58 5f f8 d9 b0 8a 3c 72 10 81 07 56 
+0010 ef 60 4f 85 89 64 1b be 34 b8 56 c3 58 b3 42 63 
+CryptImportKey
+0000 08 02 00 00 02 66 00 00 20 00 00 00 69 b3 51 3e 
+0010 9c 9a 15 13 d2 c0 1a 74 5a ee e7 a5 08 03 de b1 
+0020 2d cf b9 62 80 75 f2 7c 48 9e 24 1b 
+CryptCreateHash alg: 8009
+CryptHashData 000001D3188BCAE0 00007FF8D17E4870
+0000 16 03 03 00 10 
+CryptHashData 000001D3188BCAE0 00007FF8D17E4870
+0000 14 00 00 0c 6e 3c 89 d3 58 5f f8 d9 b0 8a 3c 72 
+CryptGetHashParam type : 2 ptr: 000001D3188BCAE0 00007FF8D17E4870
+DumpGot
+CryptGetHashParam type : 2 ptr: 000001D3188BCAE0 00007FF8D17E4870
+DumpGot
+0000 3c 39 5e f9 55 87 b8 bb 06 58 31 13 0b a2 93 74 
+0010 8a 54 dd 5d c1 b9 7d ce 89 3a e4 79 47 67 2f 44 
+CryptGenRandom 16
+Generated
+0000 80 47 4a 88 5b ac 47 5f 10 00 54 a3 52 48 f4 59 
+CryptImportKey
+0000 08 02 00 00 10 66 00 00 20 00 00 00 12 99 50 9d 
+0010 8d ee 9e cf 93 e9 65 aa 23 7b aa 13 f2 29 a9 90 
+0020 83 b0 86 0a b3 6d 4b 4a 46 a5 b3 90 
+CryptEncrypt: len - 64
+0000 14 00 00 0c 6e 3c 89 d3 58 5f f8 d9 b0 8a 3c 72 
+0010 3c 39 5e f9 55 87 b8 bb 06 58 31 13 0b a2 93 74 
+0020 8a 54 dd 5d c1 b9 7d ce 89 3a e4 79 47 67 2f 44 
+0030 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 0f 
+Encrypted:
+0000 e7 11 c7 f0 18 13 dc 1b e5 a0 20 48 e2 0e 17 aa 
+0010 f4 97 b2 86 d3 fb 3d 56 d2 04 e2 64 52 c1 98 8b 
+0020 6e 42 4f e1 f3 91 9d d5 7d 0e 3b 8f 70 91 58 8e 
+0030 9f d1 a5 bb dd 18 ae d0 af 56 ef 24 d9 39 ed ff 
+readFromPipe
+INT3 breakpoint at synawudfbiousb.00007FF8B01DCAC0 (00007FF8B01DCAC0)!
+CryptGetHashParam type : 4 ptr: 000001D3188B22A0 00007FF8D17E4870
+DumpGot
+0000 20 00 00 00 
+CryptGetHashParam type : 2 ptr: 000001D3188B22A0 00007FF8D17E4870
+DumpGot
+0000 3c 27 68 81 2d 8b 1b eb 65 ed 3a a7 d0 8b c8 3a 
+0010 21 75 02 23 09 5e ed 94 78 a9 2f 65 e9 f6 fe d3 
+readFromPipe
+INT3 breakpoint at synawudfbiousb.00007FF8B01DCAC0 (00007FF8B01DCAC0)!
+Thread 1304 created, Entry: ntdll.00007FF8D5EE2DC0
+Thread 12DC exit
+Thread A74 exit
+Thread 15AC exit
+DLL Unloaded: 00007FF8D2330000 powrprof.dll
+DLL Unloaded: 00007FF8D2400000 shcore.dll
+DLL Unloaded: 00007FF8D2CC0000 windows.storage.dll
+DLL Unloaded: 00007FF8D3620000 shell32.dll
+DLL Unloaded: 00007FF8D5E50000 shlwapi.dll
+DLL Unloaded: 00007FF8D2310000 msasn1.dll
+DLL Unloaded: 00007FF8D1820000 dpapi.dll
+DLL Unloaded: 00007FF8D2AA0000 crypt32.dll
+DLL Unloaded: 00007FF8D57C0000 setupapi.dll
+Could not delete breakpoint 00007FF8B93E6154! (DeleteBPX)
+DLL Unloaded: 00007FF8B00C0000 synawudfbiousb.dll
+DLL Unloaded: 00007FF8CF190000 wudfx.dll
+Thread E34 exit
+Thread 1304 exit
+Thread 13F8 exit
+Thread 708 exit
+Thread 13EC exit
+Thread AB4 exit
+Thread 1704 exit
+Process stopped with exit code 0x0
+Saving database to C:\Users\Test\Desktop\release\x64\db\WUDFHost.exe.dd64 594ms
+Debugging stopped!

@@ -1031,7 +1031,21 @@ int main(int argc, char *argv[]) {
     libusb_init(NULL);
     libusb_set_debug(NULL, 3);
 
-    dev = libusb_open_device_with_vid_pid(NULL, 0x138a, 0x0090);
+    libusb_device ** dev_list;
+    int dev_cnt = libusb_get_device_list(NULL, &dev_list);
+    for (int i = 0; i < dev_cnt; i++) {
+        struct libusb_device_descriptor descriptor;
+        libusb_get_device_descriptor(dev_list[i], &descriptor);
+
+        if (descriptor.idVendor == 0x138a) {
+            printf("Found device %04x:%04x\n", descriptor.idVendor, descriptor.idProduct);
+            if (descriptor.idProduct != 0x0090) {
+                puts("This device is not supported, but lets try anyway");
+            }
+            err(libusb_open(dev_list[i], &dev));
+            break;
+        }
+    }
     if (dev == NULL) {
         return -1;
     }

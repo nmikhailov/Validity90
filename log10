@@ -275,7 +275,7 @@ Data len: 84108FB0hex
 [rsp+28]
 0000 45 43 53 31 20 00 00 00 f7 27 65 3b 4e 16 ce 06 
 0010 65 a6 89 4d 7f 3a 30 d7 d0 a0 be 31 0d 12 92 a7 
-0020 43 67 1f df 69 f6 a8 d3 a8 55 38 f8 b6 be c5 0d 
+0020 43 67 1f df 69 f6 a8 d3 a8 55 38 f8 b6 be c5 0d <----------- FROM DB
 0030 6e ef 8b d5 f4 d0 7a 88 62 43 c5 8b 23 93 94 8d 
 0040 f7 61 a8 47 21 a6 ca 94 
 CryptDecodeObject struct type ???
@@ -309,6 +309,8 @@ Decoded
 BCryptVerfySignature
 0000 5d 6c 0e 35 e8 3e 4d 4d 10 65 af d5 44 67 f7 c4 
 0010 f3 9f 7e 34 2b 58 a1 57 ec cf 68 18 ad 89 6c 2d 
+
+
 CryptImportKey
 0000 08 02 00 00 02 66 00 00 20 00 00 00 71 7c d7 2d 
 0010 09 62 bc 4a 28 46 13 8d bb 2c 24 19 25 12 a7 64 
@@ -323,6 +325,7 @@ CryptGetHashParam type : 2
 DumpGot
 0000 bc 41 9d fc 39 c9 ba 69 a7 4d 5d 60 0a c3 5b 7b 
 0010 1a fb 2b 52 e5 d2 4a 23 04 58 67 c8 3a 98 aa 9a 
+
 CryptImportKey
 0000 08 02 00 00 02 66 00 00 20 00 00 00 71 7c d7 2d 
 0010 09 62 bc 4a 28 46 13 8d bb 2c 24 19 25 12 a7 64 
@@ -426,6 +429,15 @@ Decrypted:
 0050 20 6c 86 b7 2f f9 99 dc ce d1 2d b8 06 4c 87 d6 
 
 0060 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 
+
+
+
+
+
+
+TLS STARTED
+
+
 CryptGenRandom 4
 Generated
 0000 a9 41 6c 95 
@@ -498,16 +510,27 @@ Data len: 8410CC40hex
 0050 54 4e 7a 98 f9 81 be c1 f2 1f 9a 29 65 b6 cc 29 
 0060 0c 45 d3 87 ae bf a4 d9 
 
+dump [[[$srcx]+228]+20]+25+24+a1+24+b8+24+1a4+24+100+24+100+24
 
 BCryptImportKeyPair \\\
 Type: L"ECCPUBLICBLOB" \\\
 Data len: 8410C9C0hex
 [rsp+28]
 0000 45 43 4b 31 20 00 00 00 5f 71 17 6f 76 66 55 74 
-0010 a3 86 53 53 10 f6 98 18 6f 42 9b f0 6e fa 05 9b 
+0010 a3 86 53 53 10 f6 98 18 6f 42 9b f0 6e fa 05 9b <-- how to get?
 0020 0c 3f 99 bc fe b5 d6 ce 3e 61 55 91 ab 00 99 b0 
 0030 4f 6f 4b 68 ac bd 67 81 65 b8 26 75 1d 50 e3 87 
 0040 d0 cc fd 49 5f f4 ce ca 
+
+
+5f 71 17 6f 76 66 55 74 a3 86 53 53 10 f6 98 18
+6f 42 9b f0 6e fa 05 9b 0c 3f 99 bc fe b5 d6 ce
+
+3e 61 55 91 ab 00 99 b0 4f 6f 4b 68 ac bd 67 81
+65 b8 26 75 1d 50 e3 87 d0 cc fd 49 5f f4 ce ca 
+
+
+
 BCryptSecretAgreement
 10 84 e6
 
