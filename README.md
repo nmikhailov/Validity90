@@ -18,10 +18,11 @@ Lenovo forums: [https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerpri
 4. [prototype](prototype) - Standalone prototype(extremly ugly code, would be completly rewritten for driver)
 
 ## Status
-| 		Task 			| Specification/Analysis	| Prototype    | Driver 	 |
-|-----------------------|---------------------------|--------------|-------------|
-| Initialization  		| Done 					    | Done	 	   | Not Started |
-| Crypto/Keys 			| Done 						| Done  	   | Not Started |
-| TLS Handshake	        | Done              		| Done         | Not Started |
-| Scan routine  		| In progress  				| In progress  | Not Started |
-| Image format  		| In progress  				| In progress  | Not Started |
+| 		      Task       			| Specification/Analysis  | Prototype   | Driver 	    |
+|---------------------------|-------------------------|-------------|-------------|
+| Initialization  		      | Done 					          | Done	 	    | Not Started |
+| Pre TLS pub key exchange 	| In progress 				    | Not started | Not Started |
+| TLS 			                | Done 						        | Done  	    | Not Started |
+| Operations: scan, LED, etc| In progress  			      | Scan works  | Not Started |
+| Image format  		        | In progress  			      | Done        | Not Started |
+| Image post-processing     | Not started             | Not started | Not Started |
