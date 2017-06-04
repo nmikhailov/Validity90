@@ -47,12 +47,7 @@ static const byte client_random[] = {
   0xf8, 0xac, 0xc6, 0x69, 0x24, 0x70, 0xc4, 0x2a
 };
 
-byte server_random[] = {
-  0x00, 0x4b, 0xc7, 0x66, 0x90, 0x0c, 0xb8, 0x01,
-  0x0a, 0xd5, 0x38, 0x7b, 0x72, 0x0d, 0xe6, 0x13,
-  0x08, 0x75, 0x8d, 0x94, 0x6b, 0x34, 0x94, 0x44,
-  0xdb, 0x83, 0x35, 0x9e, 0x12, 0xc4, 0x03, 0x97
-};
+byte server_random[0x40];
 
 
 void print_hex_gn(byte* data, int len, int sz) {
@@ -102,10 +97,10 @@ void compare(byte * data1, int data_len, dword * expected, int exp_len) {
     }
 
     if (fail) {
-        puts("Expected:");
+        /*puts("Expected:");
         print_hex_dw(expected, exp_len);
         puts("Got:");
-        print_hex(data1, data_len);
+        print_hex(data1, data_len);*/
     }
 }
 
@@ -140,6 +135,7 @@ void qread(byte * data, int len, int *out_len) {
 }
 
 static byte pubkey1[0x40];
+static byte ecdsa_private_key[0x60];
 
 void reverse_mem(byte * data, int size) {
     byte tmp;
@@ -148,6 +144,30 @@ void reverse_mem(byte * data, int size) {
         data[i] = data[size - 1 - i];
         data[size - 1 - i] = tmp;
     }
+}
+
+void handle_ecdsa(byte *enc_data) {
+    EVP_CIPHER_CTX *context = EVP_CIPHER_CTX_new();
+
+    errb(EVP_DecryptInit(context, EVP_aes_256_cbc(), masterkey_aes, enc_data));
+    EVP_CIPHER_CTX_set_padding(context, 0);
+
+    int res_len = 0x70;
+    int tlen1 = 0, tlen2;
+    byte *res = malloc(res_len);
+    errb(EVP_DecryptUpdate(context, res, &tlen1, enc_data + 0x10, res_len));
+
+    errb(EVP_DecryptFinal(context, res + tlen1, &tlen2));
+    EVP_CIPHER_CTX_free(context);
+
+    reverse_mem(res, 0x20);
+    reverse_mem(res + 0x20, 0x20);
+    reverse_mem(res + 0x40, 0x20);
+
+    print_hex(res, 0x70);
+    memcpy(ecdsa_private_key, res, 0x60);
+
+    free(res);
 }
 
 void init() {
@@ -169,6 +189,11 @@ void init() {
 #undef STEP
 
     if (len > 0x660 + 0x20) {
+        // ECDSA key
+        handle_ecdsa(buff + 0x52);
+        puts("ECDSA key:");
+        print_hex(ecdsa_private_key, 0x60);
+
         // Cert
         memcpy(tls_certificate + 21, buff + 0x116, 0xb8);
 
@@ -638,6 +663,8 @@ byte *sign2(EC_KEY* key, byte *data, int data_len) {
         i2d_ECDSA_SIG(sig, &f);
     } while (len != 0x48);
 
+/*
+    // test check
     char packet_bytes[] = {
       0x30, 0x46, 0x02, 0x21, 0x00, 0xa3, 0xad, 0xaa, 0x61,
       0x00, 0xe6, 0x9d, 0xbd, 0xcf, 0x48, 0x73, 0xb7,
@@ -654,7 +681,7 @@ byte *sign2(EC_KEY* key, byte *data, int data_len) {
     char* pp = packet_bytes;
 
     ECDSA_SIG *sig2 = d2i_ECDSA_SIG(NULL, &pp, 0x48);
-
+*/
 //    int status = ECDSA_do_verify(data, data_len, sig2, load_key(ecdsa_private_key, false));
 //    printf("Verified: %d", status);
 //    if (status == 1) {
@@ -770,7 +797,8 @@ memcpy(buff + 0x2c, packet_bytes, sizeof(packet_bytes));
 
 
     // copy client_random to cert
-    memcpy(tls_certificate + 0x13, client_random + 0x04, 0x02);
+//    memcpy(tls_certificate + 0x13, client_random + 0x04, 0x02);
+//    memcpy(tls_certificate + 0x13, client_random + 0x05, 0x02);
     // copy ecdhe pub to key exchange
     memcpy(tls_certificate + 0xce + 4, privkey1, 0x40);
 
@@ -818,7 +846,7 @@ memcpy(buff + 0x2c, packet_bytes, sizeof(packet_bytes));
     byte * final;
     int final_size;
     mac_then_encrypt(0x16, finished_message, 0x10, &final, &final_size);
-    memcpy(tls_certificate + 0x169, final, final_size); // TODO encrypt
+    memcpy(tls_certificate + 0x169, final, final_size);
 
     puts("final");
     print_hex(final, final_size);
@@ -1032,7 +1060,7 @@ void fingerprint() {
 }
 
 int main(int argc, char *argv[]) {
-    puts("Prototype version 3");
+    puts("Prototype version 4");
     libusb_init(NULL);
     libusb_set_debug(NULL, 3);
 

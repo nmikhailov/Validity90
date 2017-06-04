@@ -16,6 +16,21 @@ Sym key1:
 
 First 8 bytes:  
 71 7c d7 2d 09 62 bc 4a
+Second 8 bytes
+28 46 13 8d bb 2c 24 19 
+Third
+
+0000 71 7c d7 2d 09 62 bc 4a   28 46 13 8d bb 2c 24 19 
+0010 25 12 a7 64 07 06 5f 38   38 46 13 9d 4b ec 20 33 
+
+
+0000 3a 4c 76 b7 6a 97 98 1d   12 74 24 7e 16 66 10 e7
+0010 7f 4d 9c 9d 07 d3 c7 28   e5 32 91 6b dd 28 b4 54
+
+also static deviation
+b7 01 5b e1 
+0010 65 8f 48 d0 d3 95 4b 2c 79 fe 66 b5 45 47 38 bd 
+0020 f3 a9 d4 ec e6 2e cf 7d d0 dd ba ba 
 
 ## TLS Handshake
 
@@ -111,18 +126,7 @@ Modified [TLS 1.2](https://tools.ietf.org/html/rfc5246) is used as cryptographic
 	// Certificate(custom)
 	0010   		00 00 b8
 	0013-0014 	client_random[4:6]
-	0015			           17 00 00 00 20 00 00 00 ab 9d fd
-	0020   		ba 74 25 29 93 9d 2d 5d f4 77 ec 90 2e 13 b8 21
-	0030   		1a 19 70 1e 50 2f f5 6e 6e 25 ae 8c 00 00 00 00
-	0040   		00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-	0050   		00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-	0060   		00 dd f4 04 74 f0 7a e4 e0 79 d1 f1 9f ae bd a8
-	0070   		ef 1e fa 18 c2 6a 76 ae a5 aa bf c3 4f 12 94 8c
-	0080   		8f 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-	0090   		00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-	00a0   		00 00 00 00 00 00 00 00 00 00 00 00 00 a5 58 ed
-	00b0   		0f 31 33 45 63 c8 8a d5 53 d9 e4 6e 20 5d 54 3b
-	00c0   		83 99 cf 9b ef 9e a8 aa c5 eb fb 20 a2
+	0015-00c0	DATA_CERT
 
 	// TLS Handshake - Client Key exchange
 	00cd		10 00 00
@@ -203,31 +207,6 @@ BCRYPT_ECDSA_PUBLIC_P256_MAGIC 20
 0010 d0 a0 be 31 0d 12 92 a7 43 67 1f df 69 f6 a8 d3 
 0020 a8 55 38 f8 b6 be c5 0d 6e ef 8b d5 f4 d0 7a 88 
 0030 62 43 c5 8b 23 93 94 8d f7 61 a8 47 21 a6 ca 94
-```
-
-## STATIC_KEY_ECDSA_DRV_PRIV
-```
-BCRYPT_ECDSA_PRIVATE_P256_MAGIC 20
-
-0000 00 8c ae 25 6e 6e f5 2f 50 1e 70 19 1a 21 b8 13
-0010 2e 90 ec 77 f4 5d 2d 9d 93 29 25 74 ba fd 9d ab 
-
-0020 8f 8c 94 12 4f c3 bf aa a5 ae 76 6a c2 18 fa 1e 
-0030 ef a8 bd ae 9f f1 d1 79 e0 e4 7a f0 74 04 f4 dd 
-
-0040 d6 87 4c 06 b8 2d d1 ce dc 99 f9 2f b7 86 6c 20 
-0050 09 72 23 68 b9 04 1f fa ff 72 de 8e 49 52 f5 94 
-```
-
-## STATIC_KEY_ECDH_DEV_PUB
-
-```
-BCRYPT_ECDH_PUBLIC_P256_MAGIC 20
-
-0000 5f 71 17 6f 76 66 55 74 a3 86 53 53 10 f6 98 18 
-0010 6f 42 9b f0 6e fa 05 9b 0c 3f 99 bc fe b5 d6 ce 
-0020 3e 61 55 91 ab 00 99 b0 4f 6f 4b 68 ac bd 67 81 
-0030 65 b8 26 75 1d 50 e3 87 d0 cc fd 49 5f f4 ce ca
 ```
 
 ## STATIC_KEY_AES_MASTER

@@ -406,7 +406,7 @@ DumpGot
 
 
 CryptImportKey
-0000 08 02 00 00 10 66 00 00 20 00 00 00 48 78 02 70 <--- unknown key
+0000 08 02 00 00 10 66 00 00 20 00 00 00 48 78 02 70 <--- unknown key to unlock ECDSA
 0010 5e 5a c4 a9 93 1c 44 aa 4d 32 25 22 39 e0 bf 8f 
 0020 0c 85 4d de 49 0c cc f6 87 ef ad 9c 
 BCryptOpenAlgorithmProvider Algo: L"AES" Ptr: 0000000000000000
@@ -426,7 +426,7 @@ Decrypted:
 0030 1e fa 18 c2 6a 76 ae a5 aa bf c3 4f 12 94 8c 8f 
 
 0040 94 f5 52 49 8e de 72 ff fa 1f 04 b9 68 23 72 09 
-0050 20 6c 86 b7 2f f9 99 dc ce d1 2d b8 06 4c 87 d6 
+0050 20 6c 86 b7 2f f9 99 dc ce d1 2d b8 06 4c 87 d6  <--- ECDSA Key
 
 0060 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 
 
