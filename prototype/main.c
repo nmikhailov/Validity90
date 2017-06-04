@@ -49,6 +49,7 @@ static const byte client_random[] = {
 
 byte server_random[0x40];
 
+byte* TLS_PRF2(byte * secret, int secret_len, char * str, byte * seed40, int seed40_len, int required_len);
 
 void print_hex_gn(byte* data, int len, int sz) {
     for (int i = 0; i < len; i++) {
@@ -137,6 +138,18 @@ void qread(byte * data, int len, int *out_len) {
 static byte pubkey1[0x40];
 static byte ecdsa_private_key[0x60];
 
+static char masterkey_aes[0x20];
+
+void check_pad(byte *data, int len) {
+    byte pad_size = data[len - 1];
+    for(int i = 0; i < pad_size; i++) {
+        if (data[len - 1 - i] != pad_size) {
+            puts("PAD FAILED");
+            exit(-1);
+        }
+    }
+}
+
 void reverse_mem(byte * data, int size) {
     byte tmp;
     for (int i = 0; i < size / 2; i++) {
@@ -146,13 +159,22 @@ void reverse_mem(byte * data, int size) {
     }
 }
 
-void handle_ecdsa(byte *enc_data) {
+void make_aes_master() {
+    byte seed[] = {0x00, 0x30, 0x00};
+    byte *aes_master = TLS_PRF2(pre_key, 0x20, "GWKVirtualBox", seed, 3, 0x20);
+    memcpy(masterkey_aes, aes_master, 0x20);
+    free(aes_master);
+
+    puts("AES master:");
+    print_hex(masterkey_aes, 0x20);
+}
+
+void handle_ecdsa(byte *enc_data, int res_len) {
     EVP_CIPHER_CTX *context = EVP_CIPHER_CTX_new();
 
     errb(EVP_DecryptInit(context, EVP_aes_256_cbc(), masterkey_aes, enc_data));
     EVP_CIPHER_CTX_set_padding(context, 0);
 
-    int res_len = 0x70;
     int tlen1 = 0, tlen2;
     byte *res = malloc(res_len);
     errb(EVP_DecryptUpdate(context, res, &tlen1, enc_data + 0x10, res_len));
@@ -164,8 +186,11 @@ void handle_ecdsa(byte *enc_data) {
     reverse_mem(res + 0x20, 0x20);
     reverse_mem(res + 0x40, 0x20);
 
-    print_hex(res, 0x70);
+    puts("Decoded:");
+    print_hex(res, res_len);
     memcpy(ecdsa_private_key, res, 0x60);
+
+    check_pad(res, res_len);
 
     free(res);
 }
@@ -188,9 +213,10 @@ void init() {
     STEP(init_sequence_msg6, init_sequence_rsp6);
 #undef STEP
 
+    make_aes_master();
     if (len > 0x660 + 0x20) {
         // ECDSA key
-        handle_ecdsa(buff + 0x52);
+        handle_ecdsa(buff + 0x52, 0x70);
         puts("ECDSA key:");
         print_hex(ecdsa_private_key, 0x60);
 
@@ -428,11 +454,8 @@ byte* TLS_PRF2(byte * secret, int secret_len, char * str, byte * seed40, int see
     memcpy(seed, str, str_len);
     memcpy(seed + str_len, seed40, seed40_len);
     int seed_len = str_len + seed40_len;
-
-
     byte* res = malloc(required_len);
     byte *a = hmac_compute(secret, secret_len, seed, seed_len);
-
     while (total_len < required_len) {
         byte buff[0x20 + seed_len];
         memcpy(buff, a, 0x20);
@@ -1060,7 +1083,7 @@ void fingerprint() {
 }
 
 int main(int argc, char *argv[]) {
-    puts("Prototype version 4");
+    puts("Prototype version 5");
     libusb_init(NULL);
     libusb_set_debug(NULL, 3);
 
