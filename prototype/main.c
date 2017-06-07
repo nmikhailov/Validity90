@@ -51,6 +51,8 @@ byte server_random[0x40];
 
 byte* TLS_PRF2(byte * secret, int secret_len, char * str, byte * seed40, int seed40_len, int required_len);
 
+byte gLabel[13];
+
 void print_hex_gn(byte* data, int len, int sz) {
     for (int i = 0; i < len; i++) {
         if ((i % 16) == 0) {
@@ -140,13 +142,20 @@ static byte ecdsa_private_key[0x60];
 
 static char masterkey_aes[0x20];
 
-void check_pad(byte *data, int len) {
+bool check_pad_b(byte *data, int len) {
     byte pad_size = data[len - 1];
     for(int i = 0; i < pad_size; i++) {
         if (data[len - 1 - i] != pad_size) {
-            puts("PAD FAILED");
-            exit(-1);
+            return false;
         }
+    }
+    return true;
+}
+
+void check_pad(byte *data, int len) {
+    if (!check_pad_b(data, len)) {
+        puts("PAD FAILED");
+        exit(-1);
     }
 }
 
@@ -159,9 +168,16 @@ void reverse_mem(byte * data, int size) {
     }
 }
 
-void make_aes_master() {
-    byte seed[] = {0x00, 0x30, 0x00};
-    byte *aes_master = TLS_PRF2(pre_key, 0x20, "GWKVirtualBox", seed, 3, 0x20);
+void make_aes_master(byte * label) {
+    byte seed[] = {0x00};
+    byte wholeLabel[16] = "GWK";
+    wholeLabel[15] = 0;
+    memcpy(wholeLabel + 3, label, 12);
+
+    puts("prf label");
+    print_hex(wholeLabel, 16);
+
+    byte *aes_master = TLS_PRF2(pre_key, 0x20, "", wholeLabel, 0x10, 0x20);
     memcpy(masterkey_aes, aes_master, 0x20);
     free(aes_master);
 
@@ -169,7 +185,7 @@ void make_aes_master() {
     print_hex(masterkey_aes, 0x20);
 }
 
-void handle_ecdsa(byte *enc_data, int res_len) {
+bool handle_ecdsa(byte *enc_data, int res_len) {
     EVP_CIPHER_CTX *context = EVP_CIPHER_CTX_new();
 
     errb(EVP_DecryptInit(context, EVP_aes_256_cbc(), masterkey_aes, enc_data));
@@ -190,9 +206,12 @@ void handle_ecdsa(byte *enc_data, int res_len) {
     print_hex(res, res_len);
     memcpy(ecdsa_private_key, res, 0x60);
 
-    check_pad(res, res_len);
+    bool resb;
+    resb = check_pad_b(res, res_len);
 
     free(res);
+
+    return resb;
 }
 
 void init() {
@@ -213,10 +232,23 @@ void init() {
     STEP(init_sequence_msg6, init_sequence_rsp6);
 #undef STEP
 
-    make_aes_master();
+    byte vbox[13] = "VirtualBox";
+    vbox[12] = 0;
+    vbox[11] = 0x30;
+    vbox[10] = 0;
+
     if (len > 0x660 + 0x20) {
+
+        make_aes_master(gLabel);
+        if (!handle_ecdsa(buff + 0x52, 0x70)) {
+            make_aes_master(vbox);
+            if (!handle_ecdsa(buff + 0x52, 0x70)) {
+                puts("PAD FAILED");
+                exit(EXIT_FAILURE);
+            }
+        }
+
         // ECDSA key
-        handle_ecdsa(buff + 0x52, 0x70);
         puts("ECDSA key:");
         print_hex(ecdsa_private_key, 0x60);
 
@@ -1083,7 +1115,7 @@ void fingerprint() {
 }
 
 int main(int argc, char *argv[]) {
-    puts("Prototype version 6");
+    puts("Prototype version 7");
     libusb_init(NULL);
     libusb_set_debug(NULL, 3);
 
@@ -1118,6 +1150,11 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < 256; i++) {
         int size = libusb_get_string_descriptor_ascii(dev, i, description, 256);
         if (size > 0) {
+            if (i == 1 && size < 13) {
+                memcpy(gLabel, description, size);
+                gLabel[12] = 0;
+                puts("[C]");
+            }
             printf("Index %d, size %d\n", i, size);
             print_hex(description, size);
         }
