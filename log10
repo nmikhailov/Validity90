@@ -313,18 +313,20 @@ BCryptVerfySignature
 
 CryptImportKey
 0000 08 02 00 00 02 66 00 00 20 00 00 00 71 7c d7 2d 
-0010 09 62 bc 4a 28 46 13 8d bb 2c 24 19 25 12 a7 64 
+0010 09 62 bc 4a 28 46 13 8d bb 2c 24 19 25 12 a7 64  << pre MAIN AES KEY
 0020 07 06 5f 38 38 46 13 9d 4b ec 20 33 
 BCryptOpenAlgorithmProvider Algo: L"RC2" Ptr: 0000000000000000
 CryptCreateHash alg: 8009
 CryptHashData
-0000 47 57 4b 56 69 72 74 75 61 6c 42 6f 78 00 30 00 
+0000 47 57 4b 56 69 72 74 75 61 6c 42 6f 78 00 30 00 << GWKVritualBox
 CryptGetHashParam type : 2
 DumpGot
 CryptGetHashParam type : 2
 DumpGot
 0000 bc 41 9d fc 39 c9 ba 69 a7 4d 5d 60 0a c3 5b 7b 
 0010 1a fb 2b 52 e5 d2 4a 23 04 58 67 c8 3a 98 aa 9a 
+
+
 
 CryptImportKey
 0000 08 02 00 00 02 66 00 00 20 00 00 00 71 7c d7 2d 
@@ -334,7 +336,7 @@ CryptCreateHash alg: 8009
 CryptHashData
 0000 bc 41 9d fc 39 c9 ba 69 a7 4d 5d 60 0a c3 5b 7b 
 0010 1a fb 2b 52 e5 d2 4a 23 04 58 67 c8 3a 98 aa 9a 
-0020 47 57 4b 56 69 72 74 75 61 6c 42 6f 78 00 30 00 
+0020 47 57 4b 56 69 72 74 75 61 6c 42 6f 78 00 30 00 << GWKVritualBox
 CryptGetHashParam type : 2
 DumpGot
 CryptGetHashParam type : 2

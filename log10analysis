@@ -152,8 +152,9 @@ SESSION_AES_ENCRYPT
 0010 1b e3 6c 85 f3 4e 3e 47 6d a9 c7 7d 71 7c 85 6c 
 0020 66 90 59 98 97 23 bc fd 9c 45 0d 13 
 
+3e6b4c971be36c85f34e3e476da9c77d717c856c669059989723bcfd9c450d13 
 
 DECRYPT
-18 d8 5f 3b 
-0010 9b cd 67 36 2a fe 83 72 76 88 7b a2 6f 3e 2d ca 
-0020 59 64 ac 61 68 ab bb cb fa bf d5 8d 
+18 d8 5f 3b 9b cd 67 36 2a fe 83 72 76 88 7b a2 6f 3e 2d ca 59 64 ac 61 68 ab bb cb fa bf d5 8d 
+
+18d85f3b9bcd67362afe837276887ba26f3e2dca5964ac6168abbbcbfabfd58d

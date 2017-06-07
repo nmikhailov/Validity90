@@ -1083,11 +1083,13 @@ void fingerprint() {
 }
 
 int main(int argc, char *argv[]) {
-    puts("Prototype version 5");
+    puts("Prototype version 6");
     libusb_init(NULL);
     libusb_set_debug(NULL, 3);
 
+    struct libusb_config_descriptor descr;
     libusb_device ** dev_list;
+
     int dev_cnt = libusb_get_device_list(NULL, &dev_list);
     for (int i = 0; i < dev_cnt; i++) {
         struct libusb_device_descriptor descriptor;
@@ -1098,17 +1100,28 @@ int main(int argc, char *argv[]) {
             if (descriptor.idProduct != 0x0090) {
                 puts("This device is not supported, but lets try anyway");
             }
+            err(libusb_get_device_descriptor(dev_list[i], &descr));
             err(libusb_open(dev_list[i], &dev));
             break;
         }
     }
     if (dev == NULL) {
+        puts("No devices found");
         return -1;
     }
 
     err(libusb_reset_device(dev));
     err(libusb_set_configuration(dev, 1));
     err(libusb_claim_interface(dev, 0));
+
+    char description[256];
+    for (int i = 0; i < 256; i++) {
+        int size = libusb_get_string_descriptor_ascii(dev, i, description, 256);
+        if (size > 0) {
+            printf("Index %d, size %d\n", i, size);
+            print_hex(description, size);
+        }
+    }
 
     SECStatus status = NSS_NoDB_Init(".");
     if (status != SECSuccess) {
