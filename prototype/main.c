@@ -172,7 +172,7 @@ void reverse_mem(byte * data, int size) {
 
 void make_aes_master(byte * seed, int seed_len) {
     puts("prf seed");
-    print_hex(seed, 13);
+    print_hex(seed, seed_len);
 
     byte *aes_master = TLS_PRF2(pre_key, 0x20, "GWK", seed, seed_len, 0x20);
     memcpy(masterkey_aes, aes_master, 0x20);
@@ -1140,7 +1140,7 @@ void fingerprint() {
 }
 
 int main(int argc, char *argv[]) {
-    puts("Prototype version 7");
+    puts("Prototype version 8");
     libusb_init(NULL);
     libusb_set_debug(NULL, 3);
 
