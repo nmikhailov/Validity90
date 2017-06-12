@@ -14,6 +14,8 @@
 #include <secmodt.h>
 #include <sechash.h>
 #include <pk11pub.h>
+#include <err.h>
+#include <errno.h>
 
 #include <openssl/ec.h>
 #include <openssl/evp.h>
@@ -168,16 +170,11 @@ void reverse_mem(byte * data, int size) {
     }
 }
 
-void make_aes_master(byte * label) {
-    byte seed[] = {0x00};
-    byte wholeLabel[16] = "GWK";
-    wholeLabel[15] = 0;
-    memcpy(wholeLabel + 3, label, 12);
+void make_aes_master(byte * seed, int seed_len) {
+    puts("prf seed");
+    print_hex(seed, 13);
 
-    puts("prf label");
-    print_hex(wholeLabel, 16);
-
-    byte *aes_master = TLS_PRF2(pre_key, 0x20, "", wholeLabel, 0x10, 0x20);
+    byte *aes_master = TLS_PRF2(pre_key, 0x20, "GWK", seed, seed_len, 0x20);
     memcpy(masterkey_aes, aes_master, 0x20);
     free(aes_master);
 
@@ -214,6 +211,33 @@ bool handle_ecdsa(byte *enc_data, int res_len) {
     return resb;
 }
 
+byte mainSeed[1024];
+int mainSeedLength;
+
+void loadBiosData() {
+    char name[1024], serial[1024];
+    FILE *nameFile, *serialFile;
+    if (!(nameFile = fopen("/sys/class/dmi/id/product_name", "r"))) {
+        perror("Can't open /sys/class/dmi/id/product_name");
+        exit(EXIT_FAILURE);
+    }
+    if (!(serialFile = fopen("/sys/class/dmi/id/product_serial", "r"))) {
+        perror("Can't open /sys/class/dmi/id/product_serial");
+        exit(EXIT_FAILURE);
+    }
+
+    fscanf(nameFile, "%s", name);
+    fscanf(serialFile, "%s", serial);
+
+    int len1 = strlen(name), len2 = strlen(serial);
+    memcpy(mainSeed, name, len1 + 1);
+    memcpy(mainSeed + len1 + 1, serial, len2 + 1);
+    mainSeedLength = len1 + len2 + 2;
+
+    fclose(nameFile);
+    fclose(serialFile);
+}
+
 void init() {
     int len;
     byte buff[1024 * 1024];
@@ -239,9 +263,10 @@ void init() {
 
     if (len > 0x660 + 0x20) {
 
-        make_aes_master(gLabel);
+        make_aes_master(mainSeed, mainSeedLength);
+
         if (!handle_ecdsa(buff + 0x52, 0x70)) {
-            make_aes_master(vbox);
+            make_aes_master(vbox, 13);
             if (!handle_ecdsa(buff + 0x52, 0x70)) {
                 puts("PAD FAILED");
                 exit(EXIT_FAILURE);
@@ -1153,12 +1178,15 @@ int main(int argc, char *argv[]) {
             if (i == 1 && size < 13) {
                 memcpy(gLabel, description, size);
                 gLabel[12] = 0;
-                puts("[C]");
             }
             printf("Index %d, size %d\n", i, size);
             print_hex(description, size);
         }
     }
+
+    loadBiosData();
+
+    puts("");
 
     SECStatus status = NSS_NoDB_Init(".");
     if (status != SECSuccess) {
