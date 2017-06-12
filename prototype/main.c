@@ -256,22 +256,28 @@ void init() {
     STEP(init_sequence_msg6, init_sequence_rsp6);
 #undef STEP
 
-    byte vbox[13] = "VirtualBox";
-    vbox[12] = 0;
-    vbox[11] = 0x30;
-    vbox[10] = 0;
+    byte test_data[] = "VirtualBox\00";
+
+//    byte test_data[] = "5Test5\0DmiSystemSerial";
 
     if (len > 0x660 + 0x20) {
 
         make_aes_master(mainSeed, mainSeedLength);
 
         if (!handle_ecdsa(buff + 0x52, 0x70)) {
-            make_aes_master(vbox, 13);
+            make_aes_master(test_data, sizeof(test_data));
             if (!handle_ecdsa(buff + 0x52, 0x70)) {
                 puts("PAD FAILED");
                 exit(EXIT_FAILURE);
             }
         }
+        memset(ecdsa_private_key, 0, 0x40);
+        // 97 doesn't have XY in private key
+        memcpy(ecdsa_private_key, buff + 0x11e, 0x20);
+        reverse_mem(ecdsa_private_key, 0x20);
+
+        memcpy(ecdsa_private_key + 0x20, buff + 0x162, 0x20);
+        reverse_mem(ecdsa_private_key + 0x20, 0x20);
 
         // ECDSA key
         puts("ECDSA key:");
@@ -1141,7 +1147,7 @@ void fingerprint() {
 }
 
 int main(int argc, char *argv[]) {
-    puts("Prototype version 8");
+    puts("Prototype version 9");
     libusb_init(NULL);
     libusb_set_debug(NULL, 3);
 
