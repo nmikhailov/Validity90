@@ -126,14 +126,14 @@ void res_errb(int result, char* where) {
 
 void qwrite(byte * data, int len) {
     int send;
-    err(libusb_bulk_transfer(dev, 0x01, data, len, &send, 1000));
+    err(libusb_bulk_transfer(dev, 0x01, data, len, &send, 10000));
 
     puts("usb write:");
     print_hex(data, len);
 }
 
 void qread(byte * data, int len, int *out_len) {
-    err(libusb_bulk_transfer(dev, 0x81, data, len, out_len, 1000));
+    err(libusb_bulk_transfer(dev, 0x81, data, len, out_len, 10000));
 
     puts("usb read:");
     print_hex(data, *out_len);
@@ -1147,7 +1147,7 @@ void fingerprint() {
 }
 
 int main(int argc, char *argv[]) {
-    puts("Prototype version 9");
+    puts("Prototype version 10");
     libusb_init(NULL);
     libusb_set_debug(NULL, 3);
 
