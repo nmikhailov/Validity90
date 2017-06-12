@@ -293,6 +293,7 @@ void init() {
         puts("Invalid rsp6, can't get public key");
         exit(-1);
     }
+    fflush(stdout);
 }
 
 
