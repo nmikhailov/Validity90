@@ -4,10 +4,9 @@ This project aims on reverse engineering protocol of Validity 138a:0090, 138a:00
 
 ## Discussions
 
-Gitter chat: [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Validity90/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+Main chat of this project: [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Validity90/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 
-libfrprint bug: [https://bugs.freedesktop.org/show_bug.cgi?id=94536](https://bugs.freedesktop.org/show_bug.cgi?id=94536)
-
+libfrprint issue: [https://bugs.freedesktop.org/show_bug.cgi?id=94536](https://bugs.freedesktop.org/show_bug.cgi?id=94536)
 Lenovo forums: [https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerprint-Reader-Linux/td-p/3352145](https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerprint-Reader-Linux/td-p/3352145)
 
 ## Notable files
@@ -16,6 +15,10 @@ Lenovo forums: [https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerpri
 2. [dissector.lua](dissector.lua) - Wireshark dissector for decrypting communication after key exchange.
 3. [libfprint directory](libfprint) - libfprint repo with this driver integrated
 4. [prototype](prototype) - Standalone prototype(extremly ugly code, would be completly rewritten for driver)
+
+## Testing
+
+[Prototype](prototype) testers are needed, please share your result and join us in our [Gitter](https://gitter.im/Validity90/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link).
 
 ## Status
 | 		      Task       			| Specification/Analysis  | Prototype   | Driver 	    |
@@ -28,3 +31,9 @@ Lenovo forums: [https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerpri
 | 97: Ops: enroll, check, reset, LED, etc| Not Started  			      | Not Started  | Not Started |
 | Image format  		        | In progress  			      | Done        | Not Started |
 | Image post-processing     | Not started             | Not started | Not Started |
+
+## Donations
+
+With paypal: [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/nmikhailov)  
+With BTC: 1AsoCUGNVniBSBS359u2wKrA2CZiTgKZkM  
+With ETH: 0x005D8d9b5609b9A3Ec8B3cBd463a949405A8d621  
