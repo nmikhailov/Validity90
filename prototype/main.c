@@ -256,7 +256,7 @@ void init() {
     STEP(init_sequence_msg6, init_sequence_rsp6);
 #undef STEP
 
-    byte test_data[] = "VirtualBox\00";
+    byte test_data[] = "VirtualBox\0" "0";
 
 //    byte test_data[] = "5Test5\0DmiSystemSerial";
 
@@ -1147,7 +1147,7 @@ void fingerprint() {
 }
 
 int main(int argc, char *argv[]) {
-    puts("Prototype version 10");
+    puts("Prototype version 10b");
     libusb_init(NULL);
     libusb_set_debug(NULL, 3);
 
