@@ -27,7 +27,9 @@
 #include <openssl/tls1.h>
 #include <openssl/ecdh.h>
 #include <png.h>
+
 #include "constants.h"
+#include "validity90/validity90.h"
 
 
 #define xstr(a) str(a)
@@ -255,6 +257,13 @@ void init() {
     STEP(init_sequence_msg5, init_sequence_rsp5);
     STEP(init_sequence_msg6, init_sequence_rsp6);
 #undef STEP
+
+    validity90 * ctx = validity90_create();
+    byte_array * rsp6 = byte_array_create_from_data(buff, len);
+    validity90_parse_rsp6(ctx, buff);
+
+    byte_array_free(rsp6);
+    validity90_free(ctx);
 
     byte test_data[] = "VirtualBox\0" "0";
 

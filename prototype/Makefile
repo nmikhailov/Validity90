@@ -1,7 +1,7 @@
-CFLAGS = -c -w -g
+CFLAGS = -c -Wall -g
 LDFLAGS = 
  
-SOURCES = main.c
+SOURCES = main.c validity90/validity90.c
 OBJECTS = $(SOURCES:.c=.o)
  
 EXECUTABLE = prototype

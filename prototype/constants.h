@@ -1,7 +1,8 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#define byte unsigned char
+#include "validity90/validity90.h"
+
 #define dword unsigned int
 
 #define MASK_VARIABLE (1 << 30)
@@ -955,4 +956,5 @@ static char pre_key[] = {
     0x38, 0x46, 0x13, 0x9d, 0x4b, 0xec, 0x20, 0x33,
 };
 
+#undef byte
 #endif // CONSTANTS_H
