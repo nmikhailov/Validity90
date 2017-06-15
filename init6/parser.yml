@@ -1,116 +1,142 @@
 meta:
-  id: init6
+  id: validity90init4096
+  file-extension: v90i4096
 
 seq:
-  - id: const1
-    contents: [0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 1]
+  - id: const0
+    contents: [0, 0]
     
-  - id: hash1
-    type: hash
-    doc: Hash of 00
-  
-  - id: const2
-    contents: [0x1d, 0x00, 0x04, 0x00, 0xa1, 0x00]
+  - id: packet_len
+    type: u2le
 
-  - id: data2_hash
-    type: hash
-    doc: Hash of data2
+  - id: const1
+    contents: [0, 0, 0, 0]
     
-  - id: data2
-    type: data2
-    size: 0xa1
-    
-  - id: const3
-    contents: [3, 0, 184, 0]
-    size: 0x04
-    
-  - id: data3_hash
-    type: hash
-    
-  - id: data3
-    type: data3
-    size: 0xb8
-    
-  - id: const4
-    contents: [0x05, 0x00, 0xa4, 0x01]
-    
-  - id: data4_hash
-    type: hash
-    
-  - id: data4
-    size: 0x1a4
-    
-  - id: const5
-    contents: [0x01, 0x00, 0x00, 0x01]
-    
-  - id: data5_hash
-    type: hash
-    
-  - id: data5
-    size: 0x100
-    doc: Zeroes
-    
-  - id: const6
-    contents: [0x02, 0x00, 0x00, 0x01]
-    
-  - id: data6_hash
-    type: hash
+  - id: packet_data1
+    type: packet_data1
   
-  - id: data6
-    size: 0x100
-    doc: Zeroes
+  - id: packet_enc_ecdsa_priv
+    type: packet_enc_ecdsa_priv
     
-  - id: const7
-    contents: [0x06, 0x00, 0x90, 0x01]
+  - id: packet_tls_cert
+    type: packet_tls_cert
     
-  - id: data7_hash
-    type: hash
+  - id: packet_data4
+    type: packet_data4
     
-  - id: data7
-    size: 0x190
-    type: data7
+  - id: packet_data5
+    type: packet_data5
+    
+  - id: packet_data6
+    type: packet_data6
+    
+  - id: packet_ecdsa_pub
+    type: packet_ecdsa_pub
 
 types:
   hash:
     seq:
       - id: hash
         size: 0x20
-  data2:
-    seq:
-      - id: data1
-        size: 0x11
-      - id: encrypted
-        size: 0x70
-        doc: >
-          Encrypted & padded data of
-          data3.data1 + data3.data2 +
-          0040 94 f5 52 49 8e de 72 ff fa 1f 04 b9 68 23 72 09 
-          0050 20 6c 86 b7 2f f9 99 dc ce d1 2d b8 06 4c 87 d6 
-      - id: data2
-        size: 0x20
         
-  data3:
+  packet_enc_ecdsa_priv:
+    seq:
+      - id: packet_header
+        type: packet_header
+      
+      - id: constant1
+        size: 0x1
+        
+      - id: encrypted_ecdsa_priv
+        size: 0xa0
+        doc: >
+          Encrypted ECDSA private key(elements reversed, XY might be missing)
+
+  packet_tls_cert:
+    seq:
+      - id: packet_header
+        type: packet_header
+    
+      - id: packet_tls_cert_data
+        type: packet_tls_cert_data
+        size: 0xb8
+        
+  packet_tls_cert_data:
     seq:
       - id: header
         size: 0x8
-      - id: data1
+      - id: ecdsa_x
         size: 0x20
       - id: pad1
         size: 0x24
-      - id: data2
+      - id: ecdsa_y
         size: 0x20
       - id: pad2
         size: 0x2c
       - id: data3
         size: 0x20
         
-  data7:
+  packet_header:
     seq:
-      - id: part1
+      - id: type
+        type: u2le
+      - id: packet_len
+        type: u2le
+      - id: data_hash
+        size: 0x20
+
+  packet_ecdsa_pub:
+    seq:
+      - id: packet_header
+        type: packet_header
+        
+      - id: packet_ecdsa_pub_data
+        size: 0x190
+        type: packet_ecdsa_pub_data
+        
+  packet_ecdsa_pub_data:
+    seq:
+      - id: header_and_pubkey
         size: 0x90
+
       - id: signature
         size: 0x4c
-        doc: CryptDecodeObject encodded signature
+        doc: CryptDecodeObject encodded signature of 
+
       - id: part2
         size-eos: true
         doc: Zeroes
+        
+  packet_data6:
+    seq:
+      - id: packet_header
+        type: packet_header
+        
+      - id: data6
+        size: 0x100
+        doc: Zeroes
+        
+  packet_data5:
+    seq:
+      - id: packet_header
+        type: packet_header
+      
+      - id: data5
+        size: 0x100
+        doc: Zeroes
+        
+  packet_data4:
+    seq:
+      - id: packet_header
+        type: packet_header
+        
+      - id: data4
+        size: 0x1a4
+        
+  packet_data1:
+    seq:
+      - id: packet_header
+        type: packet_header
+        
+      - id: data
+        contents: [0x00]
