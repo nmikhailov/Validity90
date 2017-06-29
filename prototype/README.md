@@ -12,7 +12,9 @@ make
 ```
 ./prototype
 ```
-If you get permission denied error, do ```sudo chmod a+rwx /dev/bus/usb/<your device path>
+If you get permission denied error, do  
+```
+sudo chmod a+rwx /dev/bus/usb/<your device path>
 sudo chmod a+r /sys/class/dmi/id/product_serial
 
 ```

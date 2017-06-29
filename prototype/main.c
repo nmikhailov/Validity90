@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <nss.h>
-#include <nss/keyhi.h>
-#include <nss/keythi.h>
+#include <keyhi.h>
+#include <keythi.h>
 #include <secoid.h>
 #include <secmodt.h>
 #include <sechash.h>
