@@ -21,7 +21,9 @@ Lenovo forums: [https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerpri
 [Prototype](prototype) testers are needed, please share your result and join us in our [Gitter](https://gitter.im/Validity90/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link).
 
 ## Status
-| Device | Status |
+
+|   Device  | Status |
+|-----------|--------|
 | 138a:0090 | Fingeprint capture works in prototype |
 | 138a:0091 | Seems like different protocol, doesn't work |
 | 138a:0094 | Doesn't work yet, but looks promising |
