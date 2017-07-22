@@ -1,6 +1,6 @@
 # Validity90
 
-This project aims on reverse engineering protocol of Validity 138a:0090, 138a:0091, 138a:0094, 138a:0097 fingerprint readers, creating specification and FLOSS libfprint driver.
+This project aims on reverse engineering protocol of Validity 138a:0090, 138a:0094, 138a:0097 fingerprint readers, creating specification and FLOSS libfprint driver.
 
 ## Discussions
 
@@ -21,6 +21,12 @@ Lenovo forums: [https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerpri
 [Prototype](prototype) testers are needed, please share your result and join us in our [Gitter](https://gitter.im/Validity90/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link).
 
 ## Status
+| Device | Status |
+| 138a:0090 | Fingeprint capture works in prototype |
+| 138a:0091 | Seems like different protocol, doesn't work |
+| 138a:0094 | Doesn't work yet, but looks promising |
+| 138a:0097 | All crypto and capture operations work in prototype, no image because it stores them internaly |
+
 | 		      Task       			| Specification/Analysis  | Prototype   | Driver 	    |
 |---------------------------|-------------------------|-------------|-------------|
 | Initialization  		      | Done 					          | Done	 	    | Not Started |
