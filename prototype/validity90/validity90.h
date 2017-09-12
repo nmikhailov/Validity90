@@ -2,6 +2,7 @@
 #define VALIDITY90_H
 
 #include <stdint.h>
+#include <glib.h>
 
 typedef unsigned char byte;
 
