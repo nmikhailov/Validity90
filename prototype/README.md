@@ -6,6 +6,7 @@ This is a PoC test sandbox for prototyping and testing device communication.
 nss, openssl, libpng and libusb are required.
 ```
 make
+make permissions # Will set required permissions
 ```
 
 ## Running
