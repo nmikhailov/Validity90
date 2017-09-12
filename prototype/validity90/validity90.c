@@ -68,19 +68,19 @@ guint validity90_tls_prf_raw(const guint8 *secret, const gsize secret_len, const
     guint8 *hmac_data = gcry_xmalloc_secure(seed_len + 0x20);
 
     gcry_buffer_t hmac_buffs[2] = {
-        {.size = secret_len, .off = 0, .len = secret_len, .data = secret},
+        {.size = secret_len, .off = 0, .len = secret_len, .data = (guint8*) secret},
         {.size = seed_len + 0x20, .off = 0x20, .len = seed_len, .data = hmac_data},
     };
     memcpy(hmac_data + 0x20, seed, seed_len);
 
     if (required_len % 0x20 != 0) {
-        err = -2;
+        res = -2;
         goto err;
     }
 
     while (written_bytes < required_len) {
         // Gen A[i]
-        if (!gcry_md_hash_buffers(GCRY_MD_SHA256, GCRY_MD_FLAG_HMAC, hmac_data, buffs, 2)) {
+        if (!gcry_md_hash_buffers(GCRY_MD_SHA256, GCRY_MD_FLAG_HMAC, hmac_data, hmac_buffs, 2)) {
             res = -1;
             goto err;
         }
@@ -89,7 +89,7 @@ guint validity90_tls_prf_raw(const guint8 *secret, const gsize secret_len, const
         hmac_buffs[1].off = 0;
         hmac_buffs[1].len = seed_len + 0x20;
 
-        if (!gcry_md_hash_buffers(GCRY_MD_SHA256, GCRY_MD_FLAG_HMAC, out_buff + written_bytes, buffs, 2)) {
+        if (!gcry_md_hash_buffers(GCRY_MD_SHA256, GCRY_MD_FLAG_HMAC, out_buff + written_bytes, hmac_buffs, 2)) {
             res = -1;
             goto err;
         }
@@ -110,7 +110,7 @@ guint validity90_tls_prf(const guint8 *secret, const gsize secret_len, const cha
     gsize label_len = strlen(label);
     guint8 *label_seed = gcry_xmalloc_secure(label_len + seed_len);
 
-    memcpy(label_seed, str, label_len);
+    memcpy(label_seed, label, label_len);
     memcpy(label_seed + label_len, seed, seed_len);
 
     gsize label_seed_len = label_len + seed_len;
@@ -126,19 +126,13 @@ enum rsp6_error {
     ERR_RSP6_INVALID_SIZE = -1,
 };
 
-typedef struct rsp6_info {
-    GByteArray *tls_cert_raw;
-    gcry_sexp_t *tls_server_pubkey;
-    gcry_sexp_t *tls_client_privkey;
-} rsp6_data;
-
-int v90_parse_rsp6(GByteArray *rsp6_data, GByteArray *serial_number, rsp6_info **info_out) {
+int validity90_parse_rsp6(GByteArray *rsp6_data, GByteArray *serial_number, rsp6_info **info_out) {
     if (!rsp6_data || rsp6_data->len < 8) {
         return ERR_RSP6_INVALID_SIZE;
     }
 
-    gcry_md_hd_t md_handle;
-    gsize pos = 8; // Skip first 8 bytes - unkown header
+    // gcry_md_hd_t md_handle;
+    // gsize pos = 8; // Skip first 8 bytes - unkown header
     bstream *stream = bstream_create(rsp6_data->data, rsp6_data->len);
     rsp6_info *info = g_malloc(sizeof(rsp6_info));
     info->tls_cert_raw = g_byte_array_new();
@@ -150,7 +144,8 @@ int v90_parse_rsp6(GByteArray *rsp6_data, GByteArray *serial_number, rsp6_info *
     while (bstream_remaining(stream) > 0) {
         // Header
         guint16 type, size;
-        guint8 hash[0x20], calc_hash[0x20];
+        guint8 *hash;
+        guint8 calc_hash[0x20];
         guint8 *data;
 
         // Read header
@@ -169,22 +164,20 @@ int v90_parse_rsp6(GByteArray *rsp6_data, GByteArray *serial_number, rsp6_info *
         }
 
         // Check hash
-        if (!gcry_md_hash_buffer(GCRY_MD_SHA256, &calc_hash, data, size)) {
-            goto err;
-        }
+        gcry_md_hash_buffer(GCRY_MD_SHA256, calc_hash, data, size);
 
-        if (!memcmp(calc_hash, hash)) {
+        if (!memcmp(calc_hash, hash, 0x20)) {
             goto err;
         }
 
         if (type == 0x0003) { // TLS Cert
-            g_byte_array_append(info->tls_cert_raw, info->tls_cert_raw, size);
+            g_byte_array_append(info->tls_cert_raw, data, size);
             //
         } else if (type == 0x0004) { // ECDSA private key
             //
         }
 
-        switch (header->type) {
+        switch (type) {
         case 0x0001:
             break;
         case 0x0002:
@@ -193,8 +186,8 @@ int v90_parse_rsp6(GByteArray *rsp6_data, GByteArray *serial_number, rsp6_info *
         case 0x0004:
         case 0x0006:
             puts("");
-            printf("Packet %d, size: %x\n", header->type, header->length);
-            print_array_(data->data + index + sizeof(rsp6_record_header), header->length);
+            printf("Packet %d, size: %x\n", type, size);
+            print_array_(data, size);
             puts("");
             break;
         case 0x0005:
@@ -205,14 +198,12 @@ int v90_parse_rsp6(GByteArray *rsp6_data, GByteArray *serial_number, rsp6_info *
         default:
             break;
         }
-        index += sizeof(rsp6_record_header) + header->length;
     }
     return 0;
 
 err:
     bstream_free(stream);
-    g_free(*info);
-    *info = NULL;
+    g_free(info);
 
     return -1;
 }

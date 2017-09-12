@@ -260,7 +260,7 @@ void init() {
 
     validity90 * ctx = validity90_create();
     byte_array * rsp6 = byte_array_create_from_data(buff, len);
-    validity90_parse_rsp6(ctx, buff);
+//    validity90_parse_rsp6(ctx, buff);
 
     byte_array_free(rsp6);
     validity90_free(ctx);

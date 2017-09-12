@@ -5,11 +5,11 @@
 
 typedef struct bstream bstream;
 
-enum bstream_error {
+typedef enum bstream_error {
     BSTREAM_NO_ERROR = 0,
     BSTREAM_ERR_INVALID_STREAM = -1,
     BSTREAM_ERR_NO_BYTES_AVAILABLE = -2
-};
+} bstream_error;
 
 bstream *bstream_create(const guint8 *data, const gsize data_size);
 void bstream_free(bstream *stream);
