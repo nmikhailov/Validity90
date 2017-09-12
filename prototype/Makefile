@@ -12,11 +12,11 @@ LDFLAGS += $(shell pkg-config --libs $(LIBS)) -lgcrypt
 
 all: $(SOURCES) $(EXECUTABLE)
  
-$(EXECUTABLE): $(OBJECTS)
+$(EXECUTABLE): $(OBJECTS) main.o
 	$(CC) $(OBJECTS) main.o -o $@ $(LDFLAGS)
  
-main.o:
-	$(CC) -c -g main.c -o $@
+main.o: main.c
+	$(CC) $(CFLAGS) -w $< -o $@
 
 .o:
 	$(CC) $(CFLAGS) $< -o $@
@@ -26,5 +26,5 @@ permissions:
 	lsusb -d 138a: | awk -F '[^0-9]+' '{ print "/dev/bus/usb/" $2 "/" $3 }' | xargs sudo chmod a+rwx 
  
 clean:
-	rm -rf $(OBJECTS) $(EXECUTABLE)
+	rm -rf $(OBJECTS) $(EXECUTABLE) main.o
 

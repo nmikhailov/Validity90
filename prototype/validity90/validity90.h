@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <glib.h>
+#include <gcrypt.h>
 
 typedef unsigned char byte;
 
