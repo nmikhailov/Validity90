@@ -106,11 +106,23 @@ function validity90_proto.dissector(buffer, pinfo, tree)
     
 
     -- Header
-    local magic_header = buf(offset, 3)
-    local magic_header4 = buf(offset, 4)
-    local magic_header1 = buf(offset, 1)
+    local magic_header
+    local magic_header4
+    local magic_header1
 
-    if magic_header1:bytes() == CONST_MAGIC_HEADER_TLS 
+    if (buf:len() > 2) then
+        magic_header = buf(offset, 3)
+    end
+
+    if (buf:len() > 3) then
+        magic_header4 = buf(offset, 4)
+    end
+
+    if (buf:len() > 0) then
+        magic_header1 = buf(offset, 1)
+    end
+
+    if magic_header1 and magic_header1:bytes() == CONST_MAGIC_HEADER_TLS 
         or magic_header1:bytes() == CONST_MAGIC_HEADER_TLS_DATA 
         or magic_header1:bytes() == CONST_MAGIC_HEADER_TLS14
         or magic_header1:bytes() == CONST_MAGIC_HEADER_TLS15
@@ -119,7 +131,7 @@ function validity90_proto.dissector(buffer, pinfo, tree)
 
         pcall(parseSsl, buf, pinfo, tree)
 
-        if magic_header:bytes() == CONST_MAGIC_HEADER then
+        if magic_header and magic_header:bytes() == CONST_MAGIC_HEADER then
             t_validity90:add(f.f_magic_header, magic_header)
 
             -- Len
@@ -165,7 +177,7 @@ function validity90_proto.dissector(buffer, pinfo, tree)
         end
 
         packetDb[pinfo.number].buf = buf:bytes()
-    elseif magic_header4:bytes() == CONST_MAGIC_HEADER_44 then
+    elseif magic_header4 and magic_header4:bytes() == CONST_MAGIC_HEADER_44 then
         offset = offset + 4
         partialBuffer = nil
         pcall(parseSsl, buf:bytes(offset):tvb("44 data"), pinfo, tree)
