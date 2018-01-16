@@ -21,9 +21,9 @@ f.f_length = ProtoField.uint16("validity90.length", "Packet length bytes", base.
 f.f_iv = ProtoField.bytes("validity90.iv", "Encryption AES IV")
 f.f_data = ProtoField.bytes("validity90.data", "Encrypted data")
 f.f_dec_data = ProtoField.bytes("validity90.dec_data", "Decrypted data")
-f.f_particial = ProtoField.bool("validity90.partial", "Is partial", base.NONE, {[0] = "no", [1] = "yes"})
+f.f_particial = ProtoField.bool("validity90.partial", "Is partial", base.NONE, {[1] = "no", [2] = "yes"})
 
-local f_direction = Field.new("usb.endpoint_number.direction")
+local f_direction = Field.new("usb.endpoint_address.direction")
 
 local CONST_MAGIC_HEADER_44 = ByteArray.new("44000000")
 local CONST_MAGIC_HEADER = ByteArray.new("170303")
