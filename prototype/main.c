@@ -1109,11 +1109,18 @@ void fingerprint() {
 
     byte interrupt[0x100]; int interrupt_len;
 
-    byte desired_interrupt_v97[] = { 0x03, 0x42, 0x04, 0x00, 0x40 };
-    byte desired_interrupt[] = { 0x03, 0x43, 0x04, 0x00, 0x41 };
-    byte scan_failed_interrupt[] = { 0x03, 0x20, 0x07, 0x00, 0x00 }; // 03 60 07 00 40
-    byte scan_failed_interrupt_moved[] = { 0x03, 0x60, 0x07, 0x00, 0x40 };
-    byte scan_failed_interrupt_moved2[] = { 0x03, 0x61, 0x07, 0x00, 0x41 };
+    const byte waiting_finger[] = { 0x00, 0x00, 0x00, 0x00, 0x00 };
+    const byte finger_down[] = { 0x02, 0x00, 0x40, 0x10, 0x00 };
+    const byte finger_down2[] = { 0x02, 0x00, 0x40, 0x06, 0x06 };
+    const byte scanning_prints[] = { 0x03, 0x40, 0x01, 0x00, 0x00 };
+    const byte scan_completed[] = { 0x03, 0x41, 0x03, 0x00, 0x40 };
+
+    const byte desired_interrupt[] = { 0x03, 0x43, 0x04, 0x00, 0x41 };
+    const byte desired_interrupt_v97[] = { 0x03, 0x42, 0x04, 0x00, 0x40 };
+    const byte low_quality_scan_interrupt[] = { 0x03, 0x42, 0x04, 0x00, 0x40 };
+    const byte scan_failed_too_short_interrupt[] = { 0x03, 0x60, 0x07, 0x00, 0x40 };
+    const byte scan_failed_too_short2_interrupt[] = { 0x03, 0x61, 0x07, 0x00, 0x41 };
+    const byte scan_failed_too_fast_interrupt[] = { 0x03, 0x20, 0x07, 0x00, 0x00 };
 
     puts("Awaiting fingerprint:");
     while (true) {
@@ -1123,29 +1130,53 @@ void fingerprint() {
             print_hex(interrupt, interrupt_len);
             fflush(stdout);
 
+            if (sizeof(waiting_finger) == interrupt_len &&
+                memcmp(waiting_finger, interrupt, interrupt_len) == 0) {
+                puts("Waiting for finger...");
+            }
+            if ((sizeof(finger_down) == interrupt_len &&
+                 memcmp(finger_down, interrupt, interrupt_len) == 0) ||
+                (sizeof(finger_down2) == interrupt_len &&
+                 memcmp(finger_down2, interrupt, interrupt_len) == 0)) {
+                puts("Finger is on the sensor...");
+            }
+            if (sizeof(scanning_prints) == interrupt_len &&
+                memcmp(scanning_prints, interrupt, interrupt_len) == 0) {
+                puts("Scan in progress...");
+            }
+            if (sizeof(scan_completed) == interrupt_len &&
+                memcmp(scan_completed, interrupt, interrupt_len) == 0) {
+                puts("Fingerprint scan completed...");
+            }
+            if (sizeof(scan_failed_too_short_interrupt) == interrupt_len &&
+                memcmp(scan_failed_too_short_interrupt, interrupt, interrupt_len) == 0) {
+                puts("Impossible to read fingerprint, keep it in the sensor");
+                return;
+            }
+            if (sizeof(scan_failed_too_short2_interrupt) == interrupt_len &&
+                memcmp(scan_failed_too_short2_interrupt, interrupt, interrupt_len) == 0) {
+                puts("Impossible to read fingerprint, keep it in the sensor (2)");
+                return;
+            }
+            if (sizeof(scan_failed_too_fast_interrupt) == interrupt_len &&
+                memcmp(scan_failed_too_fast_interrupt, interrupt, interrupt_len) == 0) {
+                puts("Impossible to read fingerprint, movement was too fast");
+                return;
+            }
             if (sizeof(desired_interrupt) == interrupt_len &&
-                    memcmp(desired_interrupt, interrupt, sizeof(desired_interrupt)) == 0) {
+                memcmp(desired_interrupt, interrupt, interrupt_len) == 0) {
+                puts("Scan succeeded!");
                 break;
             }
-
             if (sizeof(desired_interrupt_v97) == interrupt_len &&
-                    memcmp(desired_interrupt_v97, interrupt, sizeof(desired_interrupt_v97)) == 0) {
+                memcmp(desired_interrupt_v97, interrupt, interrupt_len) == 0) {
+                puts("Scan succeeded! (v97)");
                 break;
             }
-            if (sizeof(scan_failed_interrupt) == interrupt_len &&
-                    memcmp(scan_failed_interrupt, interrupt, sizeof(desired_interrupt)) == 0) {
-                puts("scan failed");
-                return;
-            }
-            if (sizeof(scan_failed_interrupt_moved) == interrupt_len &&
-                    memcmp(scan_failed_interrupt_moved, interrupt, sizeof(scan_failed_interrupt_moved)) == 0) {
-                puts("scan failed - finger moved");
-                return;
-            }
-            if (sizeof(scan_failed_interrupt_moved2) == interrupt_len &&
-                    memcmp(scan_failed_interrupt_moved2, interrupt, sizeof(scan_failed_interrupt_moved2)) == 0) {
-                puts("scan failed - finger moved2");
-                return;
+            if (sizeof(low_quality_scan_interrupt) == interrupt_len &&
+                memcmp(low_quality_scan_interrupt, interrupt, interrupt_len) == 0) {
+                puts("Scan succeeded! Low quality.");
+                break;
             }
         }
     }
