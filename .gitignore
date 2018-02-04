@@ -4,4 +4,5 @@
 *.files
 *.includes
 *.swp
+*.user
 __pycache__

@@ -1,14 +1,7 @@
-$$ $$>a< \\VBOXSVR\VM_Shared\windbg\tracer2.txt
-$$ $$>a< C:\cygwin64\home\Test\tracer2.txt init
+$$ $$>a< C:\cygwin64\home\Test\tracer.txt init
 
 .catch
 {
-	.if ${/d:$arg1} == 0
-	{
-        .printf "Usage: bp_displayfn.wds init|APIName bUnicode FileNamePtrIndex [ApiId]";
-        .leave;
-	}
-
 	.if '${$arg1}' == 'init'
 	{
         $$ DONE
@@ -37,6 +30,7 @@ $$ $$>a< C:\cygwin64\home\Test\tracer2.txt init
 
         $$ bm BCrypt!BCryptImportKeyPair 		@"$$>a<${$arg0} BCryptImportKeyPair";
 
+        .logopen "log.txt"
 
         $$ Ignore some debug events (to lessen output pollution)
         sxi ld;
@@ -48,6 +42,7 @@ $$ $$>a< C:\cygwin64\home\Test\tracer2.txt init
 	}
 
 	$$ Display API name
+    .echotime
 	.printf "${$arg1}:\n";
 
     $$ BOOL WINAPI CryptHashData(_In_ HCRYPTHASH hHash, _In_ BYTE *pbData,_In_ DWORD dwDataLen, _In_ DWORD dwFlags);
