@@ -1,0 +1,112 @@
+$$ $$>a< \\VBOXSVR\VM_Shared\windbg\tracer2.txt
+$$ $$>a< C:\cygwin64\home\Test\tracer2.txt init
+
+.catch
+{
+	.if ${/d:$arg1} == 0
+	{
+        .printf "Usage: bp_displayfn.wds init|APIName bUnicode FileNamePtrIndex [ApiId]";
+        .leave;
+	}
+
+	.if '${$arg1}' == 'init'
+	{
+        $$ DONE
+        $$bm CRYPTSP!CryptHashData 			@"$$>a<${$arg0} CryptHashData";
+        $$bm CRYPTSP!CryptGetHashParam        @"$$>a<${$arg0} CryptGetHashParam";
+        $$bm WINUSB!WinUsb_ReadPipe           @"$$>a<${$arg0} WinUsb_ReadPipe"; 
+        $$bm WINUSB!WinUsb_WritePipe          @"$$>a<${$arg0} WinUsb_WritePipe"; $$ Untested
+        $$bm WINUSB!WinUsb_ControlTransfer    @"$$>a<${$arg0} WinUsb_ControlTransfer"; $$ Untested
+        
+
+        $$ TODO
+        $$ bm CRYPTSP!CryptDestroyHash 		@"$$>a<${$arg0} CryptDestroyHash";
+        $$ bm CRYPTSP!CryptGetUserKey 			@"$$>a<${$arg0} CryptGetUserKey";
+        $$ bm CRYPTSP!CryptGenKey 				@"$$>a<${$arg0} CryptGenKey";
+        $$ bm CRYPTSP!CryptGetKeyParam 		@"$$>a<${$arg0} CryptGetKeyParam";
+        $$ bm CRYPTSP!CryptDestroyKey			@"$$>a<${$arg0} CryptDestroyKey";
+        $$ bm CRYPTSP!CryptEncrypt 			@"$$>a<${$arg0} CryptEncrypt";
+        $$ bm CRYPTSP!CryptDecrypt 			@"$$>a<${$arg0} CryptDecrypt";
+        $$ bm CRYPTSP!CryptSetHashParam  		@"$$>a<${$arg0} CryptSetHashParam";
+        $$ bm CRYPTSP!CryptSignHashW 	 		@"$$>a<${$arg0} CryptSignHashW";
+        $$ bm CRYPTSP!CryptSignHashA 			@"$$>a<${$arg0} CryptSignHashA";
+        $$ bm CRYPTSP!CryptVerifySignatureW  	@"$$>a<${$arg0} CryptVerifySignatureW"; 
+        $$ bm CRYPTSP!CryptVerifySignatureA  	@"$$>a<${$arg0} CryptVerifySignatureA";
+        $$ bm CRYPTSP!CryptImportKey 			@"$$>a<${$arg0} CryptImportKey";
+        $$ bm CRYPTSP!CryptExportKey 			@"$$>a<${$arg0} CryptExportKey";
+
+        $$ bm BCrypt!BCryptImportKeyPair 		@"$$>a<${$arg0} BCryptImportKeyPair";
+
+
+        $$ Ignore some debug events (to lessen output pollution)
+        sxi ld;
+
+        $$ Display the list of the newly installed breakpoints
+        bl;
+
+        .leave;		
+	}
+
+	$$ Display API name
+	.printf "${$arg1}:\n";
+
+    $$ BOOL WINAPI CryptHashData(_In_ HCRYPTHASH hHash, _In_ BYTE *pbData,_In_ DWORD dwDataLen, _In_ DWORD dwFlags);
+	.if '${$arg1}' == 'CryptHashData'
+	{
+        .printf "Handle: %#x, Data length: %#x(%#d), Flags: %#x\n", @rcx, @r8, @r8, @r9;
+        db /c 10 @rdx L@r8;
+	}
+
+    $$ BOOL WINAPI CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ BYTE *pbData, _Inout_ DWORD *pdwDataLen, _In_ DWORD dwFlags);
+    .if ('${$arg1}' == 'CryptGetHashParam') {
+        .printf "Handle: %#x, Param: %#x, Flags: %#x, Len: %#x\n", @rcx, @rdx, poi(@rsp+28), poi(@r9)
+        r $t0 = @r8; $$ out data
+        r $t1 = @r9; $$ size
+
+        pt @"$$>a<${$arg0} CryptGetHashParam$Return";
+    }
+    .if ('${$arg1}' == 'CryptGetHashParam$Return') {
+        .printf "Result len: %#x\n", poi($t1);
+        .if (($t0) != 0) {
+            db /c 10 $t0 L(poi($t1) & 0xFFFFFFFF);
+        }
+    }
+
+
+    $$ BOOL __stdcall WinUsb_ReadPipe(_In_ WINUSB_INTERFACE_HANDLE InterfaceHandle, _In_ UCHAR PipeID, _Out_ PUCHAR Buffer,
+    $$                                              _In_ ULONG BufferLength, _Out_opt_ PULONG LengthTransferred, _In_opt_ LPOVERLAPPED Overlapped);
+    .if ('${$arg1}' == 'WinUsb_ReadPipe') {
+        .printf "Interface handle: %#x, Pipe: #%x, Buffer len: #%x\n", @rcx, @rdx, @r9;
+        r $t0 = @r8; $$ out data
+        r $t1 = @r9; $$ size
+        pt @"$$>a<${$arg0} WinUsb_ReadPipe$Return";
+
+    }
+    .if ('${$arg1}' == 'WinUsb_ReadPipe$Return') {
+        .if (($t0) != 0) {
+            db /c 10 $t0 L($t1 & 0xFFFFFFFF);
+        }
+    }
+
+
+    $$ BOOL __stdcall WinUsb_WritePipe(_In_ WINUSB_INTERFACE_HANDLE InterfaceHandle, _In_ UCHAR PipeID, _In_ PUCHAR Buffer, _In_ ULONG BufferLength,
+    $$                                          _Out_opt_ PULONG LengthTransferred, _In_opt_ LPOVERLAPPED Overlapped);
+    .if ('${$arg1}' == 'WinUsb_WritePipe') {
+        .printf "Interface handle: %#x, Pipe: #%x, Buffer len: #%x\n", @rcx, @rdx, @r9;
+        db /c 10 $r8 L($r9 & 0xFFFFFFFF);
+    }
+
+
+    $$ BOOL __stdcall WinUsb_ControlTransfer(_In_ WINUSB_INTERFACE_HANDLE InterfaceHandle, _In_ WINUSB_SETUP_PACKET SetupPacket, _Out_ PUCHAR Buffer,
+    $$                               _In_ ULONG BufferLength,  _Out_opt_ PULONG LengthTransferred, _In_opt_ LPOVERLAPPED Overlapped);
+    .if ('${$arg1}' == 'WinUsb_ControlTransfer') {
+        .printf "Interface handle: %#x, Pipe: #%x, Buffer len: #%x\n", @rcx, @rdx, @r9;
+        db /c 10 $r8 L($r9 & 0xFFFFFFFF);
+    }
+
+
+    .printf "\n";
+
+	$$ Continue after breakpoint
+	g;
+}
