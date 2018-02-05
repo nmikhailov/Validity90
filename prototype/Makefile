@@ -2,6 +2,7 @@ CFLAGS = -c -Wall -g
 LDFLAGS = 
  
 SOURCES = validity90/validity90.c validity90/utils.c
+HEADERS = constants.h
 OBJECTS = $(SOURCES:.c=.o)
  
 EXECUTABLE = prototype
@@ -15,10 +16,10 @@ all: $(SOURCES) $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS) main.o
 	$(CC) $(OBJECTS) main.o -o $@ $(LDFLAGS)
  
-main.o: main.c
+main.o: main.c $(HEADERS)
 	$(CC) $(CFLAGS) -w $< -o $@
 
-.o:
+.o: $(HEADERS)
 	$(CC) $(CFLAGS) $< -o $@
 
 permissions:

@@ -43,6 +43,7 @@
 
 static libusb_device_handle * dev;
 
+int idProduct = 0;
 
 static const byte client_random[] = {
   0x95, 0x6c, 0x41, 0xa9, 0x12, 0x86, 0x8a, 0xda,
@@ -1056,7 +1057,6 @@ int writeImage(char* filename, int width, int height, float *buffer) {
 }
 
 void fingerprint() {
-
     byte data1[] = {
         0x08, 0x5c, 0x20, 0x00, 0x80, 0x07, 0x00, 0x00, 0x00, 0x04
     };
@@ -1079,6 +1079,9 @@ void fingerprint() {
 
     byte response[1024 * 1024];
     int response_len = 0;
+
+    tls_write(led_green_on, sizeof(led_green_on));
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
 
     tls_write(data1, sizeof(data1));
     tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
@@ -1146,17 +1149,84 @@ void fingerprint() {
     memcpy(image + image_len, response + 0x06, response_len - 0x06);
     image_len += response_len - 0x06;
 
-    printf("total len  %d\n", image_len);
-    writeImage("img.png", 144, 144, image);
-    puts("Image written - img.png, img.raw");
+    if (idProduct != 0x97) {
+        printf("total len  %d\n", image_len);
+        writeImage("img.png", 144, 144, image);
+        puts("Image written - img.png, img.raw");
 
-    FILE *f = fopen("img.raw", "wb");
-    fwrite(image, 144, 144, f);
-    fclose(f);
+        FILE *f = fopen("img.raw", "wb");
+        fwrite(image, 144, 144, f);
+        fclose(f);
+    }
+    puts("Done");
+}
+
+void led_test() {
+    byte response[1024 * 1024];
+    int response_len = 0;
+
+    puts("Green on");
+    tls_write(led_green_on, sizeof(led_green_on));
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+
+    sleep(2);
+
+    puts("Red blink x3 then off");
+    tls_write(led_red_blink, sizeof(led_red_blink));
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+
+    sleep(2);
+
+    puts("Green blink");
+    tls_write(led_green_blink, sizeof(led_green_blink));
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+
+    char led_script[] = {
+        0x39, // packet type?
+
+        0xff, 0x10, 0x00, 0x00, // Script len
+
+        0xff, 0x03, // part len
+        0x00, 0x00, 0x01, 0xff, 0x00, 0x20, 0x00,
+        0x00, 0x00,
+        0x00,
+
+        0xff, // V green
+        0xff, // V2 green ?
+        0x0, 0x0,
+        0xff, // V red
+        0xff, // V2 red ?
+        0x00, 0x00,
+
+        0xff, 0x03,
+        0x00, 0x00, 0x01, 0xff, 0x00, 0x20, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00,
+
+        0xff, 0x03,
+        0x00, 0x00, 0x01, 0xff, 0x00, 0x20, 0x00, 0x00, 0x00,
+        0x00, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+
+        0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+
+        0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+
+        0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    };
+
+    sleep(2);
+    puts("Custom script");
+    tls_write(led_script, sizeof(led_script));
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
 }
 
 int main(int argc, char *argv[]) {
-    puts("Prototype version 12");
+    puts("Prototype version 13");
     libusb_init(NULL);
     libusb_set_debug(NULL, 3);
 
@@ -1182,6 +1252,7 @@ int main(int argc, char *argv[]) {
             } else {
                 puts("Unknown device, lets try anyway");
             }
+            idProduct = descriptor.idProduct;
 
             err(libusb_get_device_descriptor(dev_list[i], &descr));
             err(libusb_open(dev_list[i], &dev));
@@ -1229,7 +1300,24 @@ int main(int argc, char *argv[]) {
     printf("OUT: "); print_hex_string(key_block + 0x40, 0x20);
 
     fflush(stdout);
-    fingerprint();
+
+    while(true) {
+        puts("");
+        puts("1 - Scan fingerprint");
+        puts("2 - Test leds");
+        puts("0 - Exit");
+
+        char x[1024];
+        scanf("%s", x);
+
+        if (x[0] == '1') {
+            fingerprint();
+        } else if (x[0] == '2') {
+            led_test();
+        } else if (x[0] == '0') {
+            exit(EXIT_SUCCESS);
+        }
+    }
 
 //    test_crypto_hash();
 //    puts("hmac");
