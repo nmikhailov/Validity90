@@ -10,7 +10,7 @@ if [[ "$1" == "step2" ]]; then
 	pid=`ps -W | grep WUDFHost | tail -n 1 | awk '{ print $1 }'`
 	echo Attaching to $pid
 
-	si2cce.exe cdb.exe -p $pid -c '$$>a< tracer.txt init;g'
+	si2cce.exe "${CDB_EXE}" -p $pid -c '$$>a< tracer.txt init;g'
 	#si2cce.exe cdb.exe -p $pid
 	#si2cce.exe "${CDB_EXE}" -c '.logopen log.txt' notepad
 else
@@ -20,9 +20,11 @@ else
 
 	ssh -t $TARGET $TARGET_DIR/attach.sh step2 "$TARGET_DIR"
 
-	read -e -p 'Save to: ' -i "$DEFAULT_NAME" FILENAME
-	scp $TARGET:$TARGET_DIR/log.txt ../logs/"$FILENAME"
+	LOG=$(ssh $TARGET cat "$TARGET_DIR/log.txt")
 
 	echo Cleanup
 	ssh $TARGET rm -rf $TARGET_DIR
+
+	read -e -p 'Save to: ' -i "$DEFAULT_NAME" FILENAME
+	echo $LOG > "../logs/$FILENAME"
 fi

@@ -5,30 +5,43 @@ $$ $$>a< C:\cygwin64\home\Test\tracer.txt init
 	.if '${$arg1}' == 'init'
 	{
         $$ DONE
-        $$bm CRYPTSP!CryptHashData 			@"$$>a<${$arg0} CryptHashData";
-        $$bm CRYPTSP!CryptGetHashParam        @"$$>a<${$arg0} CryptGetHashParam";
-        $$bm WINUSB!WinUsb_ReadPipe           @"$$>a<${$arg0} WinUsb_ReadPipe"; 
-        $$bm WINUSB!WinUsb_WritePipe          @"$$>a<${$arg0} WinUsb_WritePipe"; $$ Untested
-        $$bm WINUSB!WinUsb_ControlTransfer    @"$$>a<${$arg0} WinUsb_ControlTransfer"; $$ Untested
-        
+        bm CRYPTSP!CryptHashData 			@"$$>a<${$arg0} CryptHashData";
+        bm CRYPTSP!CryptGetHashParam        @"$$>a<${$arg0} CryptGetHashParam";
+        bm CRYPTSP!CryptDecrypt             @"$$>a<${$arg0} CryptDecrypt";
+        bm CRYPTSP!CryptEncrypt             @"$$>a<${$arg0} CryptEncrypt";
+        bm CRYPTSP!CryptGenKey              @"$$>a<${$arg0} CryptGenKey";
+        bm CRYPTSP!CryptImportKey           @"$$>a<${$arg0} CryptImportKey";
+        bm CRYPTSP!CryptExportKey           @"$$>a<${$arg0} CryptExportKey";
+        bm CRYPTSP!CryptCreateHash          @"$$>a<${$arg0} CryptCreateHash";
+        bm CRYPTSP!CryptGenRandom           @"$$>a<${$arg0} CryptGenRandom";
+        bm CRYPTSP!CryptDuplicateHash       @"$$>a<${$arg0} CryptDuplicateHash"
+        bm CRYPTSP!CryptEncodeObject        @"$$>a<${$arg0} CryptEncodeObject"
+        bm WINUSB!WinUsb_ReadPipe           @"$$>a<${$arg0} WinUsb_ReadPipe"; 
+        bm WINUSB!WinUsb_WritePipe          @"$$>a<${$arg0} WinUsb_WritePipe";
+        bm WINUSB!WinUsb_ControlTransfer    @"$$>a<${$arg0} WinUsb_ControlTransfer";
+        bm BCRYPT!BCryptDeriveKey           @"$$>a<${$arg0} BCryptDeriveKey"
 
         $$ TODO
-        $$ bm CRYPTSP!CryptDestroyHash 		@"$$>a<${$arg0} CryptDestroyHash";
-        $$ bm CRYPTSP!CryptGetUserKey 			@"$$>a<${$arg0} CryptGetUserKey";
-        $$ bm CRYPTSP!CryptGenKey 				@"$$>a<${$arg0} CryptGenKey";
-        $$ bm CRYPTSP!CryptGetKeyParam 		@"$$>a<${$arg0} CryptGetKeyParam";
-        $$ bm CRYPTSP!CryptDestroyKey			@"$$>a<${$arg0} CryptDestroyKey";
-        $$ bm CRYPTSP!CryptEncrypt 			@"$$>a<${$arg0} CryptEncrypt";
-        $$ bm CRYPTSP!CryptDecrypt 			@"$$>a<${$arg0} CryptDecrypt";
-        $$ bm CRYPTSP!CryptSetHashParam  		@"$$>a<${$arg0} CryptSetHashParam";
-        $$ bm CRYPTSP!CryptSignHashW 	 		@"$$>a<${$arg0} CryptSignHashW";
-        $$ bm CRYPTSP!CryptSignHashA 			@"$$>a<${$arg0} CryptSignHashA";
-        $$ bm CRYPTSP!CryptVerifySignatureW  	@"$$>a<${$arg0} CryptVerifySignatureW"; 
-        $$ bm CRYPTSP!CryptVerifySignatureA  	@"$$>a<${$arg0} CryptVerifySignatureA";
-        $$ bm CRYPTSP!CryptImportKey 			@"$$>a<${$arg0} CryptImportKey";
-        $$ bm CRYPTSP!CryptExportKey 			@"$$>a<${$arg0} CryptExportKey";
+        bm BCRYPT!BCryptExportKey               @"$$>a<${$arg0} BCryptExportKey"
+        bm BCRYPT!BCryptGenerateKeyPair         @"$$>a<${$arg0} BCryptGenerateKeyPair"
+        bm BCRYPT!BCryptImportKeyPair           @"$$>a<${$arg0} BCryptImportKeyPair"
+        bm BCRYPT!BCryptOpenAlgorithmProvider   @"$$>a<${$arg0} BCryptOpenAlgorithmProvider"
+        bm BCRYPT!BCryptSecretAgreement         @"$$>a<${$arg0} BCryptSecretAgreement"
+        bm BCRYPT!BCryptSignHash                @"$$>a<${$arg0} BCryptSignHash"
+        bm BCRYPT!BCryptVerfySignature          @"$$>a<${$arg0} BCryptVerfySignature"
 
-        $$ bm BCrypt!BCryptImportKeyPair 		@"$$>a<${$arg0} BCryptImportKeyPair";
+        $$ TODO 2
+        bm CRYPTSP!CryptDecodeObject        @"$$>a<${$arg0} CryptDecodeObject"
+        bm CRYPTSP!CryptDestroyHash         @"$$>a<${$arg0} CryptDestroyHash";
+        bm CRYPTSP!CryptGetUserKey          @"$$>a<${$arg0} CryptGetUserKey";
+        bm CRYPTSP!CryptGetKeyParam         @"$$>a<${$arg0} CryptGetKeyParam";
+        bm CRYPTSP!CryptDestroyKey          @"$$>a<${$arg0} CryptDestroyKey";
+        bm CRYPTSP!CryptSetHashParam        @"$$>a<${$arg0} CryptSetHashParam";
+        bm CRYPTSP!CryptSignHashW           @"$$>a<${$arg0} CryptSignHashW";
+        bm CRYPTSP!CryptSignHashA           @"$$>a<${$arg0} CryptSignHashA";
+        bm CRYPTSP!CryptVerifySignatureW    @"$$>a<${$arg0} CryptVerifySignatureW"; 
+        bm CRYPTSP!CryptVerifySignatureA    @"$$>a<${$arg0} CryptVerifySignatureA";
+
 
         .logopen "log.txt"
 
@@ -54,17 +67,29 @@ $$ $$>a< C:\cygwin64\home\Test\tracer.txt init
 
     $$ BOOL WINAPI CryptGetHashParam(_In_ HCRYPTHASH hHash, _In_ DWORD dwParam, _Out_ BYTE *pbData, _Inout_ DWORD *pdwDataLen, _In_ DWORD dwFlags);
     .if ('${$arg1}' == 'CryptGetHashParam') {
-        .printf "Handle: %#x, Param: %#x, Flags: %#x, Len: %#x\n", @rcx, @rdx, poi(@rsp+28), poi(@r9)
+        .printf "Handle: %#x, Param: %#x, Flags: %#x, Len: ", @rcx, @rdx, poi(@rsp+28);
+        .if ((@r9) != 0) {
+            .printf "%#x\n", poi(@r9);
+        } .else {
+            .printf "NULL\n";
+        }
         r $t0 = @r8; $$ out data
         r $t1 = @r9; $$ size
 
-        pt @"$$>a<${$arg0} CryptGetHashParam$Return";
-    }
-    .if ('${$arg1}' == 'CryptGetHashParam$Return') {
-        .printf "Result len: %#x\n", poi($t1);
-        .if (($t0) != 0) {
-            db /c 10 $t0 L(poi($t1) & 0xFFFFFFFF);
+        gu;
+        .printf "\nRETURN:\n";
+
+        .if (($t1) != 0) {
+            .printf "Result len: %#x\n", poi($t1);
+            .if (($t0) != 0) {
+                db /c 10 $t0 L(poi($t1) & 0xFFFFFFFF);
+            }
+        } .else {
+            .printf "No result\n";
         }
+
+        .printf "\n\n";
+        g;
     }
 
 
@@ -74,13 +99,16 @@ $$ $$>a< C:\cygwin64\home\Test\tracer.txt init
         .printf "Interface handle: %#x, Pipe: #%x, Buffer len: #%x\n", @rcx, @rdx, @r9;
         r $t0 = @r8; $$ out data
         r $t1 = @r9; $$ size
-        pt @"$$>a<${$arg0} WinUsb_ReadPipe$Return";
 
-    }
-    .if ('${$arg1}' == 'WinUsb_ReadPipe$Return') {
+        gu;
+        .printf "\nRETURN:\n";
+
         .if (($t0) != 0) {
-            db /c 10 $t0 L($t1 & 0xFFFFFFFF);
+            db /c 10 $t0 L($t1);
         }
+
+        .printf "\n\n";
+        g;
     }
 
 
@@ -88,20 +116,174 @@ $$ $$>a< C:\cygwin64\home\Test\tracer.txt init
     $$                                          _Out_opt_ PULONG LengthTransferred, _In_opt_ LPOVERLAPPED Overlapped);
     .if ('${$arg1}' == 'WinUsb_WritePipe') {
         .printf "Interface handle: %#x, Pipe: #%x, Buffer len: #%x\n", @rcx, @rdx, @r9;
-        db /c 10 $r8 L($r9 & 0xFFFFFFFF);
+        db /c 10 @r8 L(@r9 & 0xFFFFFFFF);
     }
 
 
     $$ BOOL __stdcall WinUsb_ControlTransfer(_In_ WINUSB_INTERFACE_HANDLE InterfaceHandle, _In_ WINUSB_SETUP_PACKET SetupPacket, _Out_ PUCHAR Buffer,
     $$                               _In_ ULONG BufferLength,  _Out_opt_ PULONG LengthTransferred, _In_opt_ LPOVERLAPPED Overlapped);
     .if ('${$arg1}' == 'WinUsb_ControlTransfer') {
-        .printf "Interface handle: %#x, Pipe: #%x, Buffer len: #%x\n", @rcx, @rdx, @r9;
-        db /c 10 $r8 L($r9 & 0xFFFFFFFF);
+        .printf "Interface handle: %#x\n", @rcx;
     }
 
 
-    .printf "\n";
+    $$ BOOL WINAPI CryptDecrypt(_In_ HCRYPTKEY hKey1, _In_ HCRYPTHASH hHash2, _In_ BOOL Final3, _In_ DWORD dwFlags4, _Inout_ BYTE *pbData5, _Inout_ DWORD *pdwDataLen6);
+    .if ('${$arg1}' == 'CryptDecrypt') {
+        .printf "Key handle: %#x, Hash handle: %#x, Final: %#x, Flags: %#x, Len: %#x\n", @rcx, @rdx, @r8, @r9, poi(poi(@rsp+30))
+        r $t0 = poi(@rsp+28); $$ out data
+        r $t1 = poi(@rsp+30); $$ size
+
+        .if (($t0) != 0) {
+            db /c 10 $t0 L(poi($t1) & 0xFFFFFFFF);
+        }
+
+        gu;
+        .printf "\nRETURN:\n";
+    
+        .printf "Result len: %#x\n", poi($t1);
+        .if (($t0) != 0) {
+            db /c 10 $t0 L(poi($t1) & 0xFFFFFFFF);
+        }
+
+        .printf "\n\n";
+        g;
+    }
+
+
+    $$ BOOL WINAPI BOOL WINAPI CryptEncrypt(_In_ HCRYPTKEY hKey1, _In_ HCRYPTHASH hHash2, _In_ BOOL Final3, _In_ DWORD dwFlags4, _Inout_ BYTE *pbData5,
+    $$                                                                                                                  _Inout_ DWORD *pdwDataLen6, _In_ DWORD dwBufLen7);
+    .if ('${$arg1}' == 'CryptEncrypt') {
+        .printf "Key handle: %#x, Hash handle: %#x, Final: %#x, Flags: %#x, Len: %#x\n", @rcx, @rdx, @r8, @r9, poi(poi(@rsp+30))
+        r $t0 = poi(@rsp+28); $$ out data
+        r $t1 = poi(@rsp+30); $$ size
+
+        .if (($t0) != 0) {
+            db /c 10 $t0 L(poi($t1) & 0xFFFFFFFF);
+        }
+
+        gu;
+        .printf "\nRETURN:\n";
+
+        .printf "Result len: %#x\n", poi($t1);
+        .if (($t0) != 0) {
+            db /c 10 $t0 L(poi($t1) & 0xFFFFFFFF);
+        }
+
+        .printf "\n\n";
+        g;
+    }
+
+    $$ BOOL WINAPI CryptGenKey(_In_ HCRYPTPROV hProv1, _In_ ALG_ID Algid2, _In_ DWORD dwFlags3, _Out_ HCRYPTKEY *phKey4);
+    .if ('${$arg1}' == 'CryptGenKey') {
+        .printf "Prov handle: %#x, Alg id: %#x, Flags: %#x, Key handle: %#x\n", @rcx, @rdx, @r8, @r9);
+    }
+
+    $$ BOOL WINAPI CryptImportKey(_In_ HCRYPTPROV hProv1, _In_ BYTE *pbData2, _In_ DWORD dwDataLen3, _In_ HCRYPTKEY hPubKey4, _In_ DWORD dwFlags5, _Out_ HCRYPTKEY *phKey6);
+    .if ('${$arg1}' == 'CryptImportKey') {
+        .printf "Prov handle: %#x, Data len: %#x, Pubkey handle: %#x, Flags: %#x\n", @rcx, @r8, @r9, poi(@rsp+28)
+        db /c 10 @rdx L(@r8);
+    }
+
+    $$ BOOL WINAPI CryptExportKey(_In_ HCRYPTKEY hKey1, _In_ HCRYPTKEY hExpKey2, _In_ DWORD dwBlobType3, _In_ DWORD dwFlags4, _Out_ BYTE *pbData5, _Inout_ DWORD *pdwDataLen6);
+    .if ('${$arg1}' == 'CryptExportKey') {
+        .printf "Prov handle: %#x, Data len: %#x, Pubkey handle: %#x, Flags: %#x\n", @rcx, @r8, @r9, poi(@rsp+28)
+
+        r $t0 = poi(@rsp+28); $$ out data
+        r $t1 = poi(@rsp+30); $$ size
+
+        gu;
+        .printf "\nRETURN:\n";
+
+        .printf "Result len: %#x\n", poi($t1);
+        .if (($t0) != 0) {
+            db /c 10 $t0 L(poi($t1) & 0xFFFFFFFF);
+        }
+
+        .printf "\n\n";
+        g;
+    }
+
+
+    $$ BOOL WINAPI CryptCreateHash(_In_ HCRYPTPROV hProv1, _In_ ALG_ID Algid2, _In_ HCRYPTKEY hKey3, _In_ DWORD dwFlags4, _Out_ HCRYPTHASH *phHash);
+    .if ('${$arg1}' == 'CryptCreateHash') {
+        .printf "Prov handle: %#x, Alg id: %#x, Key handle: %#x, Flags: %#x\n", @rcx, @rdx, @r8, @r9;
+    }
+
+    
+    $$ BOOL WINAPI CryptGenRandom(_In_ HCRYPTPROV hProv, _In_ DWORD dwLen, _Inout_ BYTE *pbBuffer);
+    .if ('${$arg1}' == 'CryptGenRandom') {
+        .printf "Prov handle: %#x, Len: %#x\n", @rcx, @rdx;
+        r $t0 = @r8; $$ out data
+        r $t1 = @rdx; $$ size
+
+        gu;
+        .printf "\nRETURN:\n";
+
+        .if (($t0) != 0) {
+            db /c 10 $t0 L($t1 & 0xFFFFFFFF);
+        }
+
+        .printf "\n\n";
+        g;
+    }
+
+
+    $$ BOOL WINAPI CryptDuplicateHash(_In_ HCRYPTHASH hHash, _In_ DWORD *pdwReserved, _In_ DWORD dwFlags, _Out_ HCRYPTHASH *phHash);
+    .if ('${$arg1}' == 'CryptDuplicateHash') {
+        .printf "Hash handle: %#x, Flags: %#x\n", @rcx, @r8);
+        r $t0 = @r9; $$ out data
+
+        gu;
+        .printf "\nRETURN:\n";
+
+        .if (($t0) != 0) {
+            .printf "Hash duplicate handle: %#x\n", poi(@t0);
+        }
+
+        .printf "\n\n";
+        g;
+    }
+
+    $$ BOOL WINAPI CryptEncodeObject(_In_ DWORD dwCertEncodingType1, _In_ LPCSTR lpszStructType2, _In_ const void *pvStructInfo3, _Out_ BYTE *pbEncoded4, _Inout_ DWORD *pcbEncoded5);
+    .if ('${$arg1}' == 'CryptEncodeObject') {
+        .printf "Enc type: %#x, Struct type: %#s, Flags: %#x\n", @rcx, @rdx);
+        r $t0 = @r9; $$ out data
+        r $t1 = poi(@rsp+28); $$ size
+
+        gu;
+        .printf "\nRETURN:\n";
+
+        .if (($t0) != 0) {
+            .printf "Len: %#x\n", poi(@t1);
+            db /c 10 $t0 L(poi($t1) & 0xFFFFFFFF);
+        }
+
+        .printf "\n\n";
+        g;
+    }
+
+
+    $$ NTSTATUS WINAPI BCryptDeriveKey(_In_ BCRYPT_SECRET_HANDLE hSharedSecret1, _In_ LPCWSTR pwszKDF2, _In_opt_ BCryptBufferDesc *pParameterList3,
+    $$                                                                      _Out_opt_ PUCHAR pbDerivedKey4, _In_ ULONG cbDerivedKey5, _Out_ ULONG *pcbResult6, _In_ ULONG dwFlags7);
+    .if ('${$arg1}' == 'BCryptDeriveKey') {
+        .printf "Secret handle: %#x, KDF: %#s, Len required: %#x, Flags: %#x\n", @rcx, @rdx);
+        r $t0 = @r9; $$ out data
+        r $t1 = poi(@rsp+28); $$ size
+
+        gu;
+        .printf "\nRETURN:\n";
+
+        .if (($t0) != 0) {
+            .printf "Len: %#x\n", poi(@t1);
+            db /c 10 $t0 L(poi($t1) & 0xFFFFFFFF);
+        }
+
+        .printf "\n\n";
+        g;
+    }
+
+    .printf "\n\n";
 
 	$$ Continue after breakpoint
-	g;
+	g;    
 }
