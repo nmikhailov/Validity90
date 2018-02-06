@@ -35,8 +35,8 @@ Lenovo forums: [https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerpri
 | Configuration/Reconfig    | In progress 	          | In progress | Not Started |
 | Pre TLS key exchange 	    | In progress 				    | Done        | Not Started |
 | TLS 			                | Done 						        | Done  	    | Not Started |
-| 90: Ops: scan, LED, etc| In progress  			      | Scan works  | Not Started |
-| 97: Ops: enroll, check, reset, LED, etc| Not Started  			      | Not Started  | Not Started |
+| 90: Ops: scan, LED, etc| In progress  			      | Scan, LED works  | Not Started |
+| 97: Ops: enroll, check, reset, LED, etc| Check works  			      | Not Started  | Not Started |
 | Image format  		        | In progress  			      | Done        | Not Started |
 | Image post-processing     | Not started             | Not started | Not Started |
 
