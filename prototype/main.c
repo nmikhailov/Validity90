@@ -1100,14 +1100,16 @@ void fingerprint() {
     }
 
 
-    tls_write(scan_matrix2, sizeof(scan_matrix2));
-    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+    /*tls_write(scan_matrix2, sizeof(scan_matrix2));
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);*/
 
-    tls_write(scan_matrix1, sizeof(scan_matrix1));
-    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+    // Check DB
+    tls_write(scan_matrix1, sizeof(scan_matrix1));tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+    //tls_write(v97_scan_matrix2, sizeof(v97_scan_matrix2)); tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
 
     byte interrupt[0x100]; int interrupt_len;
 
+    byte desired_interrupt_v97[] = { 0x03, 0x42, 0x04, 0x00, 0x40 };
     byte desired_interrupt[] = { 0x03, 0x43, 0x04, 0x00, 0x41 };
     byte scan_failed_interrupt[] = { 0x03, 0x20, 0x07, 0x00, 0x00 }; // 03 60 07 00 40
 
@@ -1123,6 +1125,11 @@ void fingerprint() {
                     memcmp(desired_interrupt, interrupt, sizeof(desired_interrupt)) == 0) {
                 break;
             }
+
+            if (sizeof(desired_interrupt_v97) == interrupt_len &&
+                    memcmp(desired_interrupt_v97, interrupt, sizeof(desired_interrupt_v97)) == 0) {
+                break;
+            }
             if (sizeof(scan_failed_interrupt) == interrupt_len &&
                     memcmp(scan_failed_interrupt, interrupt, sizeof(desired_interrupt)) == 0) {
                 puts("scan failed");
@@ -1135,19 +1142,43 @@ void fingerprint() {
     int image_len = 0;
 
     tls_write(data10, sizeof(data10));
-    tls_read(response, &response_len);
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
     memcpy(image, response + 0x12, response_len - 0x12);
     image_len += response_len - 0x12;
 
     tls_write(data10, sizeof(data10));
-    tls_read(response, &response_len);
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
     memcpy(image + image_len, response + 0x06, response_len - 0x06);
     image_len += response_len - 0x06;
 
     tls_write(data10, sizeof(data10));
-    tls_read(response, &response_len);
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
     memcpy(image + image_len, response + 0x06, response_len - 0x06);
     image_len += response_len - 0x06;
+
+
+
+    // NG
+    char packet1[] = { 0x5e, 0x02, 0xff, 0x03, 0x00, 0x05, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+    tls_write(packet1, sizeof(packet1));
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+
+    while (true) {
+        int status = libusb_interrupt_transfer(dev, 0x83, interrupt, 0x100, &interrupt_len, 5 * 1000);
+        if (status == 0) {
+            puts("interrupt:");
+            print_hex(interrupt, interrupt_len);
+            fflush(stdout);
+
+            printf("\n\nFingerprint %s!\n\n", interrupt[0] == 0x03 ? "MATCHES DB" : "UNKNOWN");
+            break;
+        } else if (status == LIBUSB_ERROR_TIMEOUT) {
+            puts("\nValidation check timeout - try restarting prototype\n");
+            break;
+        }
+    }
+
 
     if (idProduct != 0x97) {
         printf("total len  %d\n", image_len);
@@ -1226,7 +1257,7 @@ void led_test() {
 }
 
 int main(int argc, char *argv[]) {
-    puts("Prototype version 13");
+    puts("Prototype version 14");
     libusb_init(NULL);
     libusb_set_debug(NULL, 3);
 
