@@ -3,7 +3,7 @@
 This is a PoC test sandbox for prototyping and testing device communication.
 
 ## Building
-Depending on distribution packages like nss(-devel), openssl(-devel), libpng, gnutls(-devel), glib2(-devel) and libusb(-devel) are required.
+Depending on distribution packages like nss(-devel), openssl(-devel), libpng, gnutls(-devel), glib2(-devel) and libusb(-devel) might be needed.
 ```
 make
 make permissions # Will set required permissions
