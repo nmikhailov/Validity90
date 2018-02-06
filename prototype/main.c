@@ -1083,18 +1083,18 @@ void fingerprint() {
     tls_write(led_green_on, sizeof(led_green_on));
     tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
 
-    tls_write(data1, sizeof(data1));
+    tls_write(data1, sizeof(data1)); // not required
     tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
 
-    tls_write(data2, sizeof(data2));
+    tls_write(data2, sizeof(data2)); // not required
     tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
 
-    for (int i =0; i < 3; i++ ){
+    for (int i =0; i < 3; i++ ){ // not required
         tls_write(data345, sizeof(data345));
         tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
     }
 
-    for (int i =0; i < 2; i++ ){
+    for (int i =0; i < 2; i++ ){ // not required
         tls_write(data67, sizeof(data67));
         tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
     }
@@ -1203,7 +1203,14 @@ void fingerprint() {
         fclose(f);
     }
     puts("Done");
-    printf("\n\nFingerprint %s!\n", validated ? "MATCHES DB" : "UNKNOWN");
+    if (validated != -1) {
+        printf("\n\nFingerprint %s!\n", validated ? "MATCHES DB" : "UNKNOWN");
+        if (validated == 1) {
+            tls_write(led_green_blink, sizeof(led_green_blink));tls_read(response, &response_len);
+        } else {
+            tls_write(led_red_blink, sizeof(led_red_blink));tls_read(response, &response_len);
+        }
+    }
 }
 
 void led_test() {
