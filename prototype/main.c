@@ -1158,20 +1158,24 @@ void fingerprint() {
 
 
 
-    // NG
-    char packet1[] = { 0x5e, 0x02, 0xff, 0x03, 0x00, 0x05, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
+    //char packet4[] = { 0x4b, 0x00, 0x00, 0x0b, 0x00, 0x53, 0x74, 0x67, 0x57, 0x69, 0x6e, 0x64, 0x73, 0x6f, 0x72, 0x00 };
+    //tls_write(packet4, sizeof(packet4));
+    //tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+
+    // Check against db packet
+    char packet1[] = { 0x5e, 0x02, 0xff, 0x03, 0x00, 0x05, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 };
     tls_write(packet1, sizeof(packet1));
     tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
 
+    int validated = -1;
     while (true) {
         int status = libusb_interrupt_transfer(dev, 0x83, interrupt, 0x100, &interrupt_len, 5 * 1000);
         if (status == 0) {
             puts("interrupt:");
             print_hex(interrupt, interrupt_len);
             fflush(stdout);
-
-            printf("\n\nFingerprint %s!\n\n", interrupt[0] == 0x03 ? "MATCHES DB" : "UNKNOWN");
+            validated = interrupt[0] == 0x03 ? 1 : 0;
             break;
         } else if (status == LIBUSB_ERROR_TIMEOUT) {
             puts("\nValidation check timeout - try restarting prototype\n");
@@ -1179,6 +1183,15 @@ void fingerprint() {
         }
     }
 
+    // Properly reset so consequtive calls work 1
+    char packet2[] = { 0x60, 0x00, 0x00, 0x00, 0x00 };
+    tls_write(packet2, sizeof(packet2));
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+
+    // Properly reset so consequtive calls work 2
+    char packet3[] = { 0x62, 0x00, 0x00, 0x00, 0x00 };
+    tls_write(packet3, sizeof(packet3));
+    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
 
     if (idProduct != 0x97) {
         printf("total len  %d\n", image_len);
@@ -1190,6 +1203,7 @@ void fingerprint() {
         fclose(f);
     }
     puts("Done");
+    printf("\n\nFingerprint %s!\n", validated ? "MATCHES DB" : "UNKNOWN");
 }
 
 void led_test() {
