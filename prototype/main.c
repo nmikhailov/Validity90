@@ -1210,6 +1210,8 @@ void fingerprint() {
             tls_write(led_red_blink, sizeof(led_red_blink));tls_read(response, &response_len);
         }
         printf("\n\nFingerprint %s!\n", validated ? "MATCHES DB" : "UNKNOWN");
+    } else {
+        puts("Fingerprint check procedure didn't worked");
     }
 }
 
