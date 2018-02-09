@@ -1112,6 +1112,8 @@ void fingerprint() {
     byte desired_interrupt_v97[] = { 0x03, 0x42, 0x04, 0x00, 0x40 };
     byte desired_interrupt[] = { 0x03, 0x43, 0x04, 0x00, 0x41 };
     byte scan_failed_interrupt[] = { 0x03, 0x20, 0x07, 0x00, 0x00 }; // 03 60 07 00 40
+    byte scan_failed_interrupt_moved[] = { 0x03, 0x60, 0x07, 0x00, 0x40 };
+    byte scan_failed_interrupt_moved2[] = { 0x03, 0x61, 0x07, 0x00, 0x41 };
 
     puts("Awaiting fingerprint:");
     while (true) {
@@ -1133,6 +1135,16 @@ void fingerprint() {
             if (sizeof(scan_failed_interrupt) == interrupt_len &&
                     memcmp(scan_failed_interrupt, interrupt, sizeof(desired_interrupt)) == 0) {
                 puts("scan failed");
+                return;
+            }
+            if (sizeof(scan_failed_interrupt_moved) == interrupt_len &&
+                    memcmp(scan_failed_interrupt_moved, interrupt, sizeof(scan_failed_interrupt_moved)) == 0) {
+                puts("scan failed - finger moved");
+                return;
+            }
+            if (sizeof(scan_failed_interrupt_moved2) == interrupt_len &&
+                    memcmp(scan_failed_interrupt_moved2, interrupt, sizeof(scan_failed_interrupt_moved2)) == 0) {
+                puts("scan failed - finger moved2");
                 return;
             }
         }
@@ -1168,14 +1180,17 @@ void fingerprint() {
     tls_write(packet1, sizeof(packet1));
     tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
 
-    int validated = -1;
+    int validated_finger_id = -1;
     while (true) {
         int status = libusb_interrupt_transfer(dev, 0x83, interrupt, 0x100, &interrupt_len, 5 * 1000);
         if (status == 0) {
             puts("interrupt:");
             print_hex(interrupt, interrupt_len);
             fflush(stdout);
-            validated = interrupt[0] == 0x03 ? 1 : 0;
+            validated_finger_id = interrupt[0] == 0x03 ? interrupt[2] : 0;
+            // interrupt [1] == 0
+            // interrupt [2] == finger id
+            //
             break;
         } else if (status == LIBUSB_ERROR_TIMEOUT) {
             puts("\nValidation check timeout - try restarting prototype\n");
@@ -1203,13 +1218,17 @@ void fingerprint() {
         fclose(f);
     }
     puts("Done");
-    if (validated != -1) {
-        if (validated == 1) {
+    if (validated_finger_id != -1) {
+        if (validated_finger_id == 1) {
             tls_write(led_green_blink, sizeof(led_green_blink));tls_read(response, &response_len);
         } else {
             tls_write(led_red_blink, sizeof(led_red_blink));tls_read(response, &response_len);
         }
-        printf("\n\nFingerprint %s!\n", validated ? "MATCHES DB" : "UNKNOWN");
+        if (validated_finger_id > 0) {
+            printf("\n\nFingerprint MATCHES DB Finger id: %d!\n", validated_finger_id);
+        } else {
+            printf("\n\nFingerprint UNKNOWN!\n");
+        }
     } else {
         puts("Fingerprint check procedure didn't worked");
     }
@@ -1280,7 +1299,7 @@ void led_test() {
 }
 
 int main(int argc, char *argv[]) {
-    puts("Prototype version 14");
+    puts("Prototype version 15");
     libusb_init(NULL);
     libusb_set_debug(NULL, 3);
 
