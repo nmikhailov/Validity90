@@ -318,6 +318,56 @@ void init_steps(byte *buff, int len, int *out_len)
     *out_len = len;
 }
 
+void setup() {
+    int len;
+    byte buff[1024 * 1024];
+    byte *keys_buff;
+
+    static const byte setup_sequence_msg13[] = { 0x1a };
+    static const dword setup_sequence_rsp13[] = { 0x00, 0x00 };
+
+    puts("step 2");STEP(init_sequence_msg2, init_sequence_rsp2);
+    print_hex(buff, len);
+
+    puts("step 4");STEP(init_sequence_msg4, init_sequence_rsp4);
+    print_hex(buff, len);
+
+    puts("step 5");STEP(init_sequence_msg5, setup_sequence_rsp5);
+    print_hex(buff, len);
+
+    puts("step 6");STEP(setup_sequence_msg6, setup_sequence_rsp6);
+    print_hex(buff, len);
+
+    puts("step 7");STEP(setup_sequence_msg7, setup_sequence_rsp7);
+    print_hex(buff, len);
+
+    puts("step 8");STEP(setup_sequence_msg8, setup_sequence_rsp8);
+    print_hex(buff, len);
+
+    puts("step 9");STEP(setup_sequence_config_data, setup_sequence_config_data_rsp);
+    print_hex(buff, len);
+
+    puts("step 5");STEP(init_sequence_msg5, setup_sequence_rsp5);
+    print_hex(buff, len);
+
+    puts("step 10");STEP(setup_sequence_msg10, setup_sequence_rsp10);
+    print_hex(buff, len);
+
+    puts("step 11");STEP(setup_sequence_msg11, setup_sequence_rsp11);
+    print_hex(buff, len);
+
+    puts("step 12");STEP(setup_sequence_msg12, setup_sequence_rsp12);
+    print_hex(buff, len);
+
+    puts("step 13");STEP(setup_sequence_msg13, setup_sequence_rsp13);
+    print_hex(buff, len);
+
+    // We need to find a way to retrieve ecdsa_private_key, once we've that
+    // we're all set and we can start a TLS session...
+    puts("Incomplete reverse engineering");
+    exit(EXIT_FAILURE);
+}
+
 void init() {
     int len;
     byte buff[1024 * 1024];
@@ -348,6 +398,7 @@ void init() {
         printf("Sensor not initialized, init byte is 0x%x (expected 0x02)\n",
                buff[len-1]);
 
+        setup();
         exit(EXIT_FAILURE);
     } else {
         init_steps(buff, len, &len);
