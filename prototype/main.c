@@ -88,7 +88,7 @@ void print_hex_dw(dword* data, int len) {
     print_hex_gn(data, len, 4);
 }
 
-void compare(byte * data1, int data_len, dword * expected, int exp_len) {
+bool compare(byte * data1, int data_len, dword * expected, int exp_len) {
     bool fail = false;
 
     if (data_len != exp_len) {
@@ -110,6 +110,8 @@ void compare(byte * data1, int data_len, dword * expected, int exp_len) {
         puts("Got:");
         print_hex(data1, data_len);*/
     }
+
+    return data_len == exp_len;
 }
 
 void res_err(int result, char* where) {
@@ -241,24 +243,18 @@ void loadBiosData() {
     fclose(serialFile);
 }
 
-void init() {
-    int len;
-    byte buff[1024 * 1024];
+bool do_step(byte *data, int data_len, byte *buff, int *buf_len, byte *expected, int expected_len)
+{
+    qwrite(data, data_len);
+    qread(buff, 1024 * 1024, buf_len);
 
-#define STEP(a,b) { \
-    qwrite(a, sizeof(a) / sizeof(byte)); \
-    qread(buff, 1024 * 1024, &len); \
-    compare(buff, len, b, sizeof(b) / sizeof(dword)); \
+    return compare(buff, *buf_len, expected, expected_len);
 }
 
-    STEP(init_sequence_msg1, init_sequence_rsp1);
-    STEP(init_sequence_msg2, init_sequence_rsp2);
-    STEP(init_sequence_msg3, init_sequence_rsp3);
-    STEP(init_sequence_msg4, init_sequence_rsp4);
-    STEP(init_sequence_msg5, init_sequence_rsp5);
-    STEP(init_sequence_msg6, init_sequence_rsp6);
-#undef STEP
 
+#define STEP(a,b) do_step(a, sizeof(a) / sizeof(byte), buff, &len, b, sizeof(b) / sizeof(dword));
+
+void init_keys(const byte *buff, int len) {
     validity90 * ctx = validity90_create();
     byte_array * rsp6 = byte_array_create_from_data(buff, len);
 //    validity90_parse_rsp6(ctx, buff);
@@ -312,6 +308,55 @@ void init() {
     fflush(stdout);
 }
 
+void init_steps(byte *buff, int len, int *out_len)
+{
+    puts("step 2");STEP(init_sequence_msg2, init_sequence_rsp2);
+    puts("step 3");STEP(init_sequence_msg3, init_sequence_rsp3);
+    puts("step 4");STEP(init_sequence_msg4, init_sequence_rsp4);
+    puts("step 5");STEP(init_sequence_msg5, init_sequence_rsp5);
+    puts("step 6");STEP(init_sequence_msg6, init_sequence_rsp6);
+    *out_len = len;
+}
+
+void init() {
+    int len;
+    byte buff[1024 * 1024];
+
+    puts("step 1");STEP(init_sequence_msg1, init_sequence_rsp1);
+
+    if (getenv("FORCE_RESET") != NULL) {
+        puts("Sending reset commands");
+        STEP(setup_sequence_config_data, setup_sequence_config_data_rsp);
+        const byte reset_cmd[] = "\x10\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" \
+                                 "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" \
+                                 "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" \
+                                 "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" \
+                                 "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" \
+                                 "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" \
+                                 "\x00\x00";
+        qwrite(reset_cmd, sizeof(reset_cmd));
+        qread(buff, sizeof(buff), &len);
+        print_hex(buff, len);
+
+        puts("ACK");
+        STEP(setup_sequence_completed, setup_sequence_completed_rsp);
+        print_hex(buff, len);
+        exit(EXIT_SUCCESS);
+    }
+
+    if (buff[len-1] != 0x07 || getenv("FORCE_SETUP") != NULL) {
+        printf("Sensor not initialized, init byte is 0x%x (expected 0x02)\n",
+               buff[len-1]);
+
+        exit(EXIT_FAILURE);
+    } else {
+        init_steps(buff, len, &len);
+    }
+
+    init_keys(buff, len);
+}
+
+#undef STEP
 
 void test_crypto1() {
     // Gen EC p256 keypair
@@ -383,6 +428,7 @@ byte* hmac_compute(byte *key, int key_len, byte* data, int data_len) {
     byte *res = malloc(0x20);
     int len = 0x20;
     PK11_DigestFinal(context, res, &len, 0x20);
+    PK11_DestroyContext(context, PR_TRUE);
 
     return res;
 }
