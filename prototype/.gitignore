@@ -74,3 +74,4 @@ Thumbs.db
 *.raw
 *.pro
 prototype
+test/gtest

@@ -1,3 +1,22 @@
+/*
+ * Validity90 Packet operations
+ * Copyright (C) 2017-2018 Nikita Mikhailov <nikita.s.mikhailov@gmail.com>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+ */
+
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -8,6 +27,170 @@
 #include "utils.h"
 #include "validity90.h"
 
+GQuark validity90_rsp6_error_quark (void) {
+  return g_quark_from_static_string ("validity-rsp6-error-quark");
+}
+
+typedef enum rsp6_record_type {
+    RSP6_TLS_CERT = 0x0003,
+    RSP6_ECDSA_PRIV_ENCRYPTED = 0x0004,
+    RSP6_ECDH_PUB = 0x0006,
+
+    RSP6_UNKNOWN_0 = 0x0000,
+    RSP6_UNKNOWN_1 = 0x0001,
+    RSP6_UNKNOWN_2 = 0x0002,
+    RSP6_UNKNOWN_5 = 0x0005,
+
+    RSP6_END = 0xFFFF,
+} rsp6_record_type;
+
+gboolean validity90_handle_rsp6_ecdsa_packet(const guint8 *all_data, gsize all_data_len,
+                                             const guint8 *serial, gsize serial_len, rsp6_info_ptr info, GError **error) {
+    g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+    if (data_len < 0x10) {
+        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "RSP6: ecdsa packet length too small: %lx", data_len);
+        goto err;
+    }
+
+    const guint8 *iv = all_data;
+    guint8 data[all_data_len - 0x10];
+    gsize data_len = all_data_len - 0x10;
+    memcpy(data, all_data + 0x10, all_data_len - 0x10);
+
+    // Get AES master key
+    guint8 factory_key[] = {
+        0x71, 0x7c, 0xd7, 0x2d, 0x09, 0x62, 0xbc, 0x4a,
+        0x28, 0x46, 0x13, 0x8d, 0xbb, 0x2c, 0x24, 0x19,
+        0x25, 0x12, 0xa7, 0x64, 0x07, 0x06, 0x5f, 0x38,
+        0x38, 0x46, 0x13, 0x9d, 0x4b, 0xec, 0x20, 0x33,
+    };
+    guint8 master_key_aes[0x20];
+    if (!validity90_tls_prf(factory_key, G_N_ELEMENTS(factory_key), "GWK", serial, serial_len, 0x20, master_key_aes, error)) {
+        goto err;
+    }
+
+    // Decrypt
+    gcry_cipher_hd_t cipher = NULL;
+    gcry_error_t res = 0;
+    if ((res = gcry_cipher_open(&cipher, GCRY_CIPHER_AES256, GCRY_CIPHER_MODE_CBC, 0)) != 0) {
+        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "RSP6: Cipher open failed, ret: %lx", res);
+        goto err;
+    }
+    if ((res = gcry_cipher_setkey(cipher, master_key_aes, 0x20)) != 0) {
+        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "RSP6: Cipher setkey failed, ret: %lx", res);
+        goto err;
+    }
+    if ((res = gcry_cipher_setiv(cipher, iv, 0x10)) != 0) {
+        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "RSP6: Cipher setiv failed, ret: %lx", res);
+        goto err;
+    }
+    if ((res = gcry_cipher_decrypt(cipher, NULL, 0, data, data_len)) != 0) {
+        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "RSP6: Decryption failed, ret: %lx", res);
+        goto err;
+    }
+    gcry_cipher_close(cipher);
+    cipher = NULL;
+
+    // Create key
+
+    info =
+    return TRUE;
+
+err:
+    if (cipher != NULL) {
+        gcry_cipher_close(cipher);
+    }
+
+    return FALSE;
+}
+
+gboolean validity90_parse_rsp6(const guint8 *data, gsize data_len, const guint8 *serial, gsize serial_len, rsp6_info_ptr *info_out, GError **err) {
+    g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+    if (data_len < 8) {
+        g_set_error(error, VALIDITY90_RSP6_ERROR, RSP6_ERR_INVALID_LENGTH, "RSP6 length is <8 (%lx)", data_len);
+        return FALSE;
+    }
+
+    // gcry_md_hd_t md_handle;
+    // gsize pos = 8; // Skip first 8 bytes - unkown header
+    bstream *stream = bstream_create(data, data_len);
+
+    rsp6_info *info = g_malloc(sizeof(rsp6_info));
+    *info_out = info;
+
+    // Derive enc key
+    while (bstream_remaining(stream) > 0) {
+        // Header
+        guint16 type;
+        guint16 size;
+        guint8 *hash;
+        guint8 calc_hash[0x20];
+        guint8 *data;
+
+        // Read header
+        if (!bstream_read_uint16(stream, &type) ||
+            !bstream_read_uint16(stream, &size) ||
+            !bstream_read_bytes(stream, 0x20, &hash)) {
+
+            g_set_error(error, VALIDITY90_RSP6_ERROR, RSP6_ERR_INVALID_LENGTH, "RSP6 can't read packet header");
+            goto err;
+        }
+
+        // Stop parsing
+        if (type == RSP6_END) {
+            break;
+        }
+
+        if (!bstream_read_bytes(stream, size, &data)) {
+            g_set_error(error, VALIDITY90_RSP6_ERROR, RSP6_ERR_INVALID_LENGTH, "RSP6 can't read packet data");
+            goto err;
+        }
+
+        // Check hash
+        gcry_md_hash_buffer(GCRY_MD_SHA256, calc_hash, data, size);
+
+        if (!memcmp(calc_hash, hash, 0x20)) {
+            g_set_error(error, VALIDITY90_RSP6_ERROR, RSP6_ERR_HASH_MISSMATCH, "RSP6 hass missmatch for packet %x", type);
+            goto err;
+        }
+
+        switch (type) {
+        case RSP6_TLS_CERT:
+            break;
+
+        case RSP6_ECDSA_PRIV_ENCRYPTED:
+            if (!validity90_handle_rsp6_ecdsa_packet(data, size, serial, serial_len, info_out, error)) {
+                goto err;
+            }
+            break;
+
+        case RSP6_ECDH_PUB:
+            break;
+
+        case RSP6_UNKNOWN_0:
+        case RSP6_UNKNOWN_1:
+        case RSP6_UNKNOWN_2:
+        case RSP6_UNKNOWN_5:
+            break;
+        default:
+            g_debug("RSP6: Unknown tag %x", type);
+            break;
+        }
+    }
+
+    bstream_free(stream);
+    return TRUE;
+
+err:
+    bstream_free(stream);
+    g_free(info);
+
+    return FALSE;
+}
+
+/*
 void print_array_(byte* data, int len) {
     for (int i = 0; i < len; i++) {
         if ((i % 16) == 0) {
@@ -21,20 +204,6 @@ void print_array_(byte* data, int len) {
         printf("%02x ", data[i]);
     }
     puts("");
-}
-
-byte_array* byte_array_create_from_data(byte* data, uint32_t len) {
-    byte_array* res = byte_array_create(len);
-    memcpy(res->data, data, len);
-    return res;
-}
-
-byte_array* byte_array_create(uint32_t len) {
-    return malloc(sizeof(byte_array) + len);
-}
-
-void byte_array_free(byte_array* array) {
-    free(array);
 }
 
 struct validity90 {
@@ -62,151 +231,6 @@ void validity90_free(validity90 * ctx) {
     free(ctx);
 }
 
-guint validity90_tls_prf_raw(const guint8 *secret, const gsize secret_len, const guint8 *seed, const gsize seed_len, const gsize required_len, guint *out_buff) {
-    guint res = 0;
-    gsize written_bytes = 0;
-    guint8 *hmac_data = gcry_xmalloc_secure(seed_len + 0x20);
-
-    gcry_buffer_t hmac_buffs[2] = {
-        {.size = secret_len, .off = 0, .len = secret_len, .data = (guint8*) secret},
-        {.size = seed_len + 0x20, .off = 0x20, .len = seed_len, .data = hmac_data},
-    };
-    memcpy(hmac_data + 0x20, seed, seed_len);
-
-    if (required_len % 0x20 != 0) {
-        res = -2;
-        goto err;
-    }
-
-    while (written_bytes < required_len) {
-        // Gen A[i]
-        if (!gcry_md_hash_buffers(GCRY_MD_SHA256, GCRY_MD_FLAG_HMAC, hmac_data, hmac_buffs, 2)) {
-            res = -1;
-            goto err;
-        }
-
-        // Configure buff
-        hmac_buffs[1].off = 0;
-        hmac_buffs[1].len = seed_len + 0x20;
-
-        if (!gcry_md_hash_buffers(GCRY_MD_SHA256, GCRY_MD_FLAG_HMAC, out_buff + written_bytes, hmac_buffs, 2)) {
-            res = -1;
-            goto err;
-        }
-        written_bytes += 0x20;
-
-        // Configure A
-        hmac_buffs[1].off = 0;
-        hmac_buffs[1].len = 0x20;
-    };
-
-err:
-    gcry_free(hmac_data);
-
-    return res;
-}
-
-guint validity90_tls_prf(const guint8 *secret, const gsize secret_len, const char *label, const guint8 *seed, const gsize seed_len, const gsize required_len, guint *out_buff) {
-    gsize label_len = strlen(label);
-    guint8 *label_seed = gcry_xmalloc_secure(label_len + seed_len);
-
-    memcpy(label_seed, label, label_len);
-    memcpy(label_seed + label_len, seed, seed_len);
-
-    gsize label_seed_len = label_len + seed_len;
-
-    guint8 res = validity90_tls_prf_raw(secret, secret_len, label_seed, label_seed_len, required_len, out_buff);
-
-    gcry_free(label_seed);
-
-    return res;
-}
-
-enum rsp6_error {
-    ERR_RSP6_INVALID_SIZE = -1,
-};
-
-int validity90_parse_rsp6(GByteArray *rsp6_data, GByteArray *serial_number, rsp6_info **info_out) {
-    if (!rsp6_data || rsp6_data->len < 8) {
-        return ERR_RSP6_INVALID_SIZE;
-    }
-
-    // gcry_md_hd_t md_handle;
-    // gsize pos = 8; // Skip first 8 bytes - unkown header
-    bstream *stream = bstream_create(rsp6_data->data, rsp6_data->len);
-    rsp6_info *info = g_malloc(sizeof(rsp6_info));
-    info->tls_cert_raw = g_byte_array_new();
-    *info_out = info;
-
-    // Derive enc key
-
-
-    while (bstream_remaining(stream) > 0) {
-        // Header
-        guint16 type, size;
-        guint8 *hash;
-        guint8 calc_hash[0x20];
-        guint8 *data;
-
-        // Read header
-        if (!bstream_read_uint16(stream, &type) ||
-            !bstream_read_uint16(stream, &size) ||
-            !bstream_read_bytes(stream, 0x20, &hash)) {
-            goto err;
-        }
-
-        if (size == 0xFFFF && type == 0xFFFF) { // End parsing
-            break;
-        }
-
-        if (!bstream_read_bytes(stream, size, &data)) {
-            goto err;
-        }
-
-        // Check hash
-        gcry_md_hash_buffer(GCRY_MD_SHA256, calc_hash, data, size);
-
-        if (!memcmp(calc_hash, hash, 0x20)) {
-            goto err;
-        }
-
-        if (type == 0x0003) { // TLS Cert
-            g_byte_array_append(info->tls_cert_raw, data, size);
-            //
-        } else if (type == 0x0004) { // ECDSA private key
-            //
-        }
-
-        switch (type) {
-        case 0x0001:
-            break;
-        case 0x0002:
-            break;
-        case 0x0003:
-        case 0x0004:
-        case 0x0006:
-            puts("");
-            printf("Packet %d, size: %x\n", type, size);
-            print_array_(data, size);
-            puts("");
-            break;
-        case 0x0005:
-            break;
-        case 0xFFFF:
-            return 0;
-            break;
-        default:
-            break;
-        }
-    }
-    return 0;
-
-err:
-    bstream_free(stream);
-    g_free(info);
-
-    return -1;
-}
 
 int validity90_get_ceritficate(validity90* ctx, byte_array ** cert);
 
@@ -214,3 +238,4 @@ int validity90_get_driver_ecdsa_private_key(validity90* ctx, byte_array ** key);
 
 int validity90_get_device_ecdh_public_key(validity90* ctx, byte_array ** key);
 
+*/

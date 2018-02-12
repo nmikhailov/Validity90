@@ -2,6 +2,25 @@
     Warning: extremly ugly code
 */
 
+/*
+ * Validity90 Prototype
+ * Copyright (C) 2017-2018 Nikita Mikhailov <nikita.s.mikhailov@gmail.com>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+ */
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <libusb.h>
@@ -40,6 +59,7 @@
 
 #define err(x) res_err(x, xstr(x))
 #define errb(x) res_errb(x, xstr(x))
+#define byte unsigned char
 
 static libusb_device_handle * dev;
 
@@ -255,12 +275,12 @@ bool do_step(byte *data, int data_len, byte *buff, int *buf_len, byte *expected,
 #define STEP(a,b) do_step(a, sizeof(a) / sizeof(byte), buff, &len, b, sizeof(b) / sizeof(dword));
 
 void init_keys(const byte *buff, int len) {
-    validity90 * ctx = validity90_create();
-    byte_array * rsp6 = byte_array_create_from_data(buff, len);
+    //validity90 * ctx = validity90_create();
+//    byte_array * rsp6 = byte_array_create_from_data(buff, len);
 //    validity90_parse_rsp6(ctx, buff);
 
-    byte_array_free(rsp6);
-    validity90_free(ctx);
+    //byte_array_free(rsp6);
+    //validity90_free(ctx);
 
     byte test_data[] = "VirtualBox\0" "0";
 
@@ -617,7 +637,24 @@ byte* P_Hash(byte * secret, int key_len, byte * seed, int seed_len) {
     return data;
 }
 
+
+void print_hex_C(FILE *f, byte* data, int len) {
+    fprintf(f, " = {\n");
+    for (int i = 0; i < len; i++) {
+        if ((i % 16) == 0) {
+            if (i != 0) {
+                fprintf(f, "\n");
+            }
+            fprintf(f, "    ");
+        }
+        fprintf(f, "0x%02x, ", data[i]);
+    }
+    fprintf(f, "\n};\n");
+}
+
+
 byte* TLS_PRF2(byte * secret, int secret_len, char * str, byte * seed40, int seed40_len, int required_len) {
+
     int total_len = 0;
 
     int str_len = strlen(str);
@@ -643,6 +680,7 @@ byte* TLS_PRF2(byte * secret, int secret_len, char * str, byte * seed40, int see
         a = t;
     }
     free(a);
+
 
     return res;
 }
