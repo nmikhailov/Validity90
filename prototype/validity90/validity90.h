@@ -34,13 +34,15 @@ GQuark validity90_rsp6_error_quark(void);
 
 typedef struct rsp6_info {
     GByteArray *tls_cert_raw;
-    gcry_sexp_t *tls_server_pubkey;
-    gcry_sexp_t *tls_client_privkey;
+    GByteArray *tls_server_pubkey;
+    GByteArray *tls_client_privkey;
 } rsp6_info, *rsp6_info_ptr;
 
 enum validity_error_codes {
-    RSP6_ERR_INVALID_LENGTH = 0,
-    RSP6_ERR_HASH_MISSMATCH = 1,
+    RSP6_ERR_INVALID_LENGTH,
+    RSP6_ERR_HASH_MISSMATCH,
+    RSP6_ERR_NO_ECDSA_COMPONENTS,
+    RSP6_ERR_NO_ECDH_COMPONENT,
 };
 
 gboolean validity90_parse_rsp6(const guint8 *data, gsize data_len, const guint8 *serial, gsize serial_len, rsp6_info_ptr *info_out, GError **err);

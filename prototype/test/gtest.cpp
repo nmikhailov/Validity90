@@ -18,8 +18,20 @@
  */
 
 #include <gtest/gtest.h>
+#include <gcrypt.h>
 
 int main(int argc, char **argv) {
+    /* Version check should be the very first call because it
+    makes sure that important subsystems are initialized. */
+    if (!gcry_check_version (GCRYPT_VERSION)) {
+        fputs ("libgcrypt version mismatch\n", stderr);
+        exit (2);
+    }
+    /* Disable secure memory. */
+    gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
+    /* Tell Libgcrypt that initialization has completed. */
+    gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
+
     ::testing::InitGoogleTest(&argc, argv); 
     return RUN_ALL_TESTS();
 }            

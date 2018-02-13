@@ -1,7 +1,7 @@
 CFLAGS = -c -Wall -g -DG_LOG_DOMAIN=\"Validity90\"
 LDFLAGS = 
  
-SOURCES = 
+SOURCES = validity90/utils.c validity90/validity90.c
 SOURCES_GTEST = test/gtest.cpp test/rsp6-test.cpp test/utils-test.cpp
 
 HEADERS = constants.h validity90/validity90.h

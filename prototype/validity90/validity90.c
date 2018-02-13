@@ -44,81 +44,106 @@ typedef enum rsp6_record_type {
     RSP6_END = 0xFFFF,
 } rsp6_record_type;
 
-gboolean validity90_handle_rsp6_ecdsa_packet(const guint8 *all_data, gsize all_data_len,
-                                             const guint8 *serial, gsize serial_len, rsp6_info_ptr info, GError **error) {
+gboolean validity90_handle_rsp6_ecdsa_packet(const guint8 *data, gsize data_len,
+                                             const guint8 *serial, gsize serial_len, GByteArray** d_mpi_component, GError **error) {
     g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-    if (data_len < 0x10) {
-        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "RSP6: ecdsa packet length too small: %lx", data_len);
-        goto err;
-    }
+    gboolean result = TRUE;
 
-    const guint8 *iv = all_data;
-    guint8 data[all_data_len - 0x10];
-    gsize data_len = all_data_len - 0x10;
-    memcpy(data, all_data + 0x10, all_data_len - 0x10);
+    if (data_len < 0x80) {
+        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "RSP6: ecdsa packet length too small: %lx", data_len);
+        result = FALSE;
+        goto end;
+    }
 
     // Get AES master key
     guint8 factory_key[] = {
-        0x71, 0x7c, 0xd7, 0x2d, 0x09, 0x62, 0xbc, 0x4a,
-        0x28, 0x46, 0x13, 0x8d, 0xbb, 0x2c, 0x24, 0x19,
-        0x25, 0x12, 0xa7, 0x64, 0x07, 0x06, 0x5f, 0x38,
-        0x38, 0x46, 0x13, 0x9d, 0x4b, 0xec, 0x20, 0x33,
+        0x71, 0x7c, 0xd7, 0x2d, 0x09, 0x62, 0xbc, 0x4a, 0x28, 0x46, 0x13, 0x8d, 0xbb, 0x2c, 0x24, 0x19,
+        0x25, 0x12, 0xa7, 0x64, 0x07, 0x06, 0x5f, 0x38, 0x38, 0x46, 0x13, 0x9d, 0x4b, 0xec, 0x20, 0x33,
     };
     guint8 master_key_aes[0x20];
+
     if (!validity90_tls_prf(factory_key, G_N_ELEMENTS(factory_key), "GWK", serial, serial_len, 0x20, master_key_aes, error)) {
-        goto err;
+        result = FALSE;
+        goto end;
     }
 
     // Decrypt
-    gcry_cipher_hd_t cipher = NULL;
-    gcry_error_t res = 0;
-    if ((res = gcry_cipher_open(&cipher, GCRY_CIPHER_AES256, GCRY_CIPHER_MODE_CBC, 0)) != 0) {
-        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "RSP6: Cipher open failed, ret: %lx", res);
-        goto err;
-    }
-    if ((res = gcry_cipher_setkey(cipher, master_key_aes, 0x20)) != 0) {
-        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "RSP6: Cipher setkey failed, ret: %lx", res);
-        goto err;
-    }
-    if ((res = gcry_cipher_setiv(cipher, iv, 0x10)) != 0) {
-        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "RSP6: Cipher setiv failed, ret: %lx", res);
-        goto err;
-    }
-    if ((res = gcry_cipher_decrypt(cipher, NULL, 0, data, data_len)) != 0) {
-        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "RSP6: Decryption failed, ret: %lx", res);
-        goto err;
-    }
-    gcry_cipher_close(cipher);
-    cipher = NULL;
+    GByteArray *ecdsa_key = NULL;
 
-    // Create key
-
-    info =
-    return TRUE;
-
-err:
-    if (cipher != NULL) {
-        gcry_cipher_close(cipher);
+    g_assert_cmphex(data[0], ==, 0x02);
+    if (!validity90_aes_decrypt(data + 1, 0x80, master_key_aes, 0x20, &ecdsa_key, error)) {
+        result = FALSE;
+        goto end;
     }
 
-    return FALSE;
+    // Reverse parts
+    // X, Y components
+    reverse_mem(ecdsa_key->data, 0x20);
+    reverse_mem(ecdsa_key->data + 0x20, 0x20);
+
+    // d component
+    reverse_mem(ecdsa_key->data + 0x40, 0x20);
+
+    // Assign key
+    (*d_mpi_component) = g_byte_array_sized_new(0x20);
+    g_byte_array_append(*d_mpi_component, ecdsa_key->data + 0x40, 0x20);
+
+end:
+    g_clear_pointer(&ecdsa_key, g_byte_array_free_to_bytes);
+
+    return result;
 }
 
-gboolean validity90_parse_rsp6(const guint8 *data, gsize data_len, const guint8 *serial, gsize serial_len, rsp6_info_ptr *info_out, GError **err) {
+gboolean validity90_handle_rsp6_pubkey_packet(const guint8 *data, gsize data_len, GByteArray **q_component, GError **error) {
     g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-    if (data_len < 8) {
-        g_set_error(error, VALIDITY90_RSP6_ERROR, RSP6_ERR_INVALID_LENGTH, "RSP6 length is <8 (%lx)", data_len);
-        return FALSE;
+    gboolean result = TRUE;
+
+    if (data_len < 0x6c) {
+        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "RSP6: pubkey packet length too small: %lx", data_len);
+        result = FALSE;
+        goto end;
     }
 
-    // gcry_md_hd_t md_handle;
-    // gsize pos = 8; // Skip first 8 bytes - unkown header
+    *q_component = g_byte_array_sized_new(0x40);
+    // X component
+    g_byte_array_append(*q_component, data + 0x08, 0x20);
+    reverse_mem((*q_component)->data, 0x20);
+
+    // Y component
+    g_byte_array_append(*q_component, data + 0x4c, 0x20);
+    reverse_mem((*q_component)->data + 0x20, 0x20);
+
+end:
+    if (!result) {
+        g_clear_pointer(q_component, g_byte_array_free_to_bytes);
+    }
+
+    return result;
+}
+
+gboolean validity90_parse_rsp6(const guint8 *data, gsize data_len, const guint8 *serial, gsize serial_len, rsp6_info_ptr *info_out, GError **error) {
+    g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+    gboolean result = TRUE;
+
     bstream *stream = bstream_create(data, data_len);
 
     rsp6_info *info = g_malloc(sizeof(rsp6_info));
     *info_out = info;
+    GByteArray *ecdsa_d = NULL;
+    GByteArray *ecdsa_q = NULL;
+    GByteArray *ecdh = NULL;
+
+    if (data_len < 8) {
+        g_set_error(error, VALIDITY90_RSP6_ERROR, RSP6_ERR_INVALID_LENGTH, "RSP6 length is <8 (%lx)", data_len);
+        result = FALSE;
+        goto end;
+    }
+
+    // Skip header
+    bstream_set_pos(stream, 8);
 
     // Derive enc key
     while (bstream_remaining(stream) > 0) {
@@ -135,7 +160,8 @@ gboolean validity90_parse_rsp6(const guint8 *data, gsize data_len, const guint8 
             !bstream_read_bytes(stream, 0x20, &hash)) {
 
             g_set_error(error, VALIDITY90_RSP6_ERROR, RSP6_ERR_INVALID_LENGTH, "RSP6 can't read packet header");
-            goto err;
+            result = FALSE;
+            goto end;
         }
 
         // Stop parsing
@@ -145,28 +171,42 @@ gboolean validity90_parse_rsp6(const guint8 *data, gsize data_len, const guint8 
 
         if (!bstream_read_bytes(stream, size, &data)) {
             g_set_error(error, VALIDITY90_RSP6_ERROR, RSP6_ERR_INVALID_LENGTH, "RSP6 can't read packet data");
-            goto err;
+            result = FALSE;
+            goto end;
         }
 
         // Check hash
         gcry_md_hash_buffer(GCRY_MD_SHA256, calc_hash, data, size);
 
-        if (!memcmp(calc_hash, hash, 0x20)) {
+        if (memcmp(calc_hash, hash, 0x20) != 0) {
             g_set_error(error, VALIDITY90_RSP6_ERROR, RSP6_ERR_HASH_MISSMATCH, "RSP6 hass missmatch for packet %x", type);
-            goto err;
+            result = FALSE;
+            goto end;
         }
 
         switch (type) {
         case RSP6_TLS_CERT:
+            if (!validity90_handle_rsp6_pubkey_packet(data, size, &ecdsa_q, error)) {
+                result = FALSE;
+                goto end;
+            }
+            info->tls_cert_raw = g_byte_array_new();
+            g_byte_array_append(info->tls_cert_raw, data, size);
+
             break;
 
         case RSP6_ECDSA_PRIV_ENCRYPTED:
-            if (!validity90_handle_rsp6_ecdsa_packet(data, size, serial, serial_len, info_out, error)) {
-                goto err;
+            if (!validity90_handle_rsp6_ecdsa_packet(data, size, serial, serial_len, &ecdsa_d, error)) {
+                result = FALSE;
+                goto end;
             }
             break;
 
         case RSP6_ECDH_PUB:
+            if (!validity90_handle_rsp6_pubkey_packet(data, size, &ecdh, error)) {
+                result = FALSE;
+                goto end;
+            }
             break;
 
         case RSP6_UNKNOWN_0:
@@ -180,32 +220,43 @@ gboolean validity90_parse_rsp6(const guint8 *data, gsize data_len, const guint8 
         }
     }
 
-    bstream_free(stream);
-    return TRUE;
+    if (ecdsa_d == NULL || ecdsa_q == NULL) {
+        g_set_error(error, VALIDITY90_RSP6_ERROR, RSP6_ERR_NO_ECDSA_COMPONENTS,
+                    "RSP6 missing ecdsa components, priv: %d, pub: %d", ecdsa_d != NULL, ecdsa_q != NULL);
+        result = FALSE;
+        goto end;
+    }
 
-err:
-    bstream_free(stream);
-    g_free(info);
+    if (ecdh == NULL) {
+        g_set_error(error, VALIDITY90_RSP6_ERROR, RSP6_ERR_NO_ECDH_COMPONENT, "RSP6 missing ecdh component");
+        result = FALSE;
+        goto end;
+    }
 
-    return FALSE;
+    // Set ECDSA private key
+    info->tls_client_privkey = g_byte_array_new();
+    g_byte_array_append(info->tls_client_privkey, ecdsa_q->data, ecdsa_q->len);
+    g_byte_array_append(info->tls_client_privkey, ecdsa_d->data, ecdsa_d->len);
+
+    // Set ECDH pub key
+    info->tls_server_pubkey = g_byte_array_new();
+    g_byte_array_append(info->tls_server_pubkey, ecdh->data, ecdh->len);
+
+end:
+    if (!result) {
+        g_clear_pointer(&info->tls_cert_raw, g_byte_array_free_to_bytes);
+        g_clear_pointer(&info->tls_client_privkey, g_byte_array_free_to_bytes);
+        g_clear_pointer(&info->tls_server_pubkey, g_byte_array_free_to_bytes);
+        g_clear_pointer(&info, g_free);
+    }
+    bstream_free(stream);
+    g_clear_pointer(&ecdsa_d, g_byte_array_free_to_bytes);
+    g_clear_pointer(&ecdsa_q, g_byte_array_free_to_bytes);
+
+    return result;
 }
 
 /*
-void print_array_(byte* data, int len) {
-    for (int i = 0; i < len; i++) {
-        if ((i % 16) == 0) {
-            if (i != 0) {
-                printf("\n");
-            }
-            printf("%04x ", i);
-        } else if ((i % 8) == 0) {
-            printf(" ");
-        }
-        printf("%02x ", data[i]);
-    }
-    puts("");
-}
-
 struct validity90 {
     byte_array* tls_driver_ecdsa_private_key;
     byte_array* tls_device_ecdh_public_key;

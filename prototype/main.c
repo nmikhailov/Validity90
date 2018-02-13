@@ -186,15 +186,6 @@ void check_pad(byte *data, int len) {
     }
 }
 
-void reverse_mem(byte * data, int size) {
-    byte tmp;
-    for (int i = 0; i < size / 2; i++) {
-        tmp = data[i];
-        data[i] = data[size - 1 - i];
-        data[size - 1 - i] = tmp;
-    }
-}
-
 void make_aes_master(byte * seed, int seed_len) {
     puts("prf seed");
     print_hex(seed, seed_len);

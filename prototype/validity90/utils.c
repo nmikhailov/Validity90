@@ -57,31 +57,39 @@ gsize bstream_remaining(bstream *stream) {
     return stream->data_size - stream->pos;
 }
 
-bstream_result bstream_read_uint8(bstream *stream, guint8 *res) {
+void bstream_set_pos(bstream *stream, gsize pos) {
+    stream->pos = pos;
+}
+
+gsize bstream_get_pos(bstream *stream) {
+    return stream->pos;
+}
+
+gboolean bstream_read_uint8(bstream *stream, guint8 *res) {
     if (stream->pos + 1 < stream->data_size) {
         *res = stream->data[stream->pos++];
-        return BSTREAM_OK;
+        return TRUE;
     }
-    return BSTREAM_ERR_NO_BYTES_AVAILABLE;
+    return FALSE;
 }
 
-bstream_result bstream_read_uint16(bstream *stream, guint16 *res) {
+gboolean bstream_read_uint16(bstream *stream, guint16 *res) {
     if (stream->pos + 2 < stream->data_size) {
-        *res = stream->data[stream->pos] | (stream->data[stream->pos] << 8);
+        *res = stream->data[stream->pos] | (stream->data[stream->pos + 1] << 8);
         stream->pos += 2;
-        return BSTREAM_OK;
+        return TRUE;
     }
-    return BSTREAM_ERR_NO_BYTES_AVAILABLE;
+    return FALSE;
 }
 
-bstream_result bstream_read_bytes(bstream *stream, gsize size, guint8 **res) {
+gboolean bstream_read_bytes(bstream *stream, gsize size, guint8 **res) {
     if (stream->pos + size < stream->data_size) {
         *res = g_malloc(size);
         memcpy(*res, stream->data + stream->pos, size);
         stream->pos += size;
-        return BSTREAM_OK;
+        return TRUE;
     }
-    return BSTREAM_ERR_NO_BYTES_AVAILABLE;
+    return FALSE;
 }
 
 /*
@@ -91,62 +99,79 @@ bstream_result bstream_read_bytes(bstream *stream, gsize size, guint8 **res) {
 gboolean validity90_check_aes_padding(const guint8 *data, const gsize data_len, gsize *real_len) {
     guint8 pad_size = data[data_len - 1];
 
-    real_len = data_len - pad_size;
+    if (pad_size > data_len || pad_size > 0x10) {
+        return FALSE;
+    }
+
+    if (real_len != NULL) {
+        *real_len = data_len - pad_size;
+    }
 
     for (int i = 0; i < pad_size; i++) {
-        if (data[len - 1 - i] != pad_size) {
+        if (data[data_len - 1 - i] != pad_size) {
             return FALSE;
         }
     }
     return TRUE;
 }
 
-gboolean validity90_aes_decrypt(const guint8 *data, const gsize data_len, const guint8 **out_data, guint8 *out_len, GError **error) {
+gboolean validity90_aes_decrypt(const guint8 *data, const gsize data_len, const guint8 *key, const gsize key_len,
+                                GByteArray **out_data, GError **error) {
     g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
     gcry_cipher_hd_t cipher = NULL;
-    gcry_error_t res = 0;
-    if ((res = gcry_cipher_open(&cipher, GCRY_CIPHER_AES256, GCRY_CIPHER_MODE_CBC, 0)) != 0) {
-        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "AES Decrypt: Cipher open failed, ret: %lx", res);
-        goto err;
-    }
-    if ((res = gcry_cipher_setkey(cipher, master_key_aes, 0x20)) != 0) {
-        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "AES Decrypt: Cipher setkey failed, ret: %lx", res);
-        goto err;
-    }
-    if ((res = gcry_cipher_setiv(cipher, iv, 0x10)) != 0) {
-        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "AES Decrypt: Cipher setiv failed, ret: %lx", res);
-        goto err;
-    }
-    if ((res = gcry_cipher_decrypt(cipher, NULL, 0, data, data_len)) != 0) {
-        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "AES Decrypt: Decryption failed, ret: %lx", res);
-        goto err;
-    }
-    gcry_cipher_close(cipher);
-    cipher = NULL;
+    gcry_error_t cmd_res = 0;
+    gboolean result = TRUE;
+    guint8 out_buff[data_len - 0x10];
 
-    *out_len = 0;
-    if (!validity90_check_aes_padding(data, data_len, out_len)) {
-        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "AES Decrypt: Decryption failed, inconsistent padding");
-        goto err;
+    if ((cmd_res = gcry_cipher_open(&cipher, GCRY_CIPHER_AES256, GCRY_CIPHER_MODE_CBC, 0)) != 0) {
+        g_set_error(error, VALIDITY90_UTILS_ERROR, VALIDITY90_ERROR_CODE_AES_CIPHER_FAILED,
+                    "AES Decrypt: Cipher open failed, ret: %x - %s", cmd_res, gcry_strerror(cmd_res));
+        result = FALSE;
+        goto end;
     }
-
-    out_data = g_malloc(*out_len);
-    memcpy(out_data, data, *out_len);
-
-    return TRUE;
-
-err:
-    if (cipher != NULL) {
-        gcry_cipher_close(cipher);
+    if ((cmd_res = gcry_cipher_setkey(cipher, key, key_len)) != 0) {
+        g_set_error(error, VALIDITY90_UTILS_ERROR, VALIDITY90_ERROR_CODE_AES_CIPHER_FAILED,
+                    "AES Decrypt: Cipher setkey failed, ret: %x - %s", cmd_res, gcry_strerror(cmd_res));
+        result = FALSE;
+        goto end;
+    }
+    if ((cmd_res = gcry_cipher_setiv(cipher, data, 0x10)) != 0) {
+        g_set_error(error, VALIDITY90_UTILS_ERROR, VALIDITY90_ERROR_CODE_AES_CIPHER_FAILED,
+                    "AES Decrypt: Cipher setiv failed, ret: %x - %s", cmd_res, gcry_strerror(cmd_res));
+        result = FALSE;
+        goto end;
+    }
+    if ((cmd_res = gcry_cipher_decrypt(cipher, out_buff, data_len - 0x10, data + 0x10, data_len - 0x10)) != 0) {
+        g_set_error(error, VALIDITY90_UTILS_ERROR, VALIDITY90_ERROR_CODE_AES_DECRYPTION_FAILED,
+                    "AES Decrypt: Decryption failed, ret: %x - %s", cmd_res, gcry_strerror(cmd_res));
+        result = FALSE;
+        goto end;
     }
 
-    return FALSE;
+    gsize out_len = 0;
+
+    if (!validity90_check_aes_padding(out_buff, data_len - 0x10, &out_len)) {
+        g_set_error(error, VALIDITY90_UTILS_ERROR, VALIDITY90_ERROR_CODE_AES_PADDING_FAILED,
+                    "AES Decrypt: Decryption failed, inconsistent padding");
+        result = FALSE;
+        goto end;
+    }
+
+    *out_data = g_byte_array_sized_new(out_len);
+    g_byte_array_append(*out_data, out_buff, out_len);
+
+end:
+    g_clear_pointer(&cipher, gcry_cipher_close);
+
+    return result;
 }
 
 gboolean validity90_tls_prf_raw(const guint8 *secret, const gsize secret_len, const guint8 *seed, const gsize seed_len,
                                 const gsize required_len, guint8 *out_buff, GError **error) {
     g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+    gboolean result = TRUE;
 
     gsize written_bytes = 0;
     guint8 iteration_buff[0x20];
@@ -163,7 +188,8 @@ gboolean validity90_tls_prf_raw(const guint8 *secret, const gsize secret_len, co
         gpg_error_t res = 0;
         if ((res = gcry_md_hash_buffers(GCRY_MD_SHA256, GCRY_MD_FLAG_HMAC, hmac_data, hmac_buffs, 2)) != 0) {
             g_set_error(error, VALIDITY90_UTILS_ERROR, 0, "TLS_PRF_RAW: gen A[i] hash failed, cause: 0x%x", res);
-            goto err;
+            result = FALSE;
+            goto end;
         }
 
         // Configure buff
@@ -172,7 +198,8 @@ gboolean validity90_tls_prf_raw(const guint8 *secret, const gsize secret_len, co
 
         if ((res = gcry_md_hash_buffers(GCRY_MD_SHA256, GCRY_MD_FLAG_HMAC, iteration_buff, hmac_buffs, 2)) != 0) {
             g_set_error(error, VALIDITY90_UTILS_ERROR, 1, "TLS_PRF_RAW: hash failed, cause: 0x%x", res);
-            goto err;
+            result = FALSE;
+            goto end;
         }
         memcpy(out_buff + written_bytes, iteration_buff, MIN(0x20, required_len - written_bytes));
         written_bytes += 0x20;
@@ -182,12 +209,10 @@ gboolean validity90_tls_prf_raw(const guint8 *secret, const gsize secret_len, co
         hmac_buffs[1].len = 0x20;
     };
 
+end:
     gcry_free(hmac_data);
-    return TRUE;
 
-err:
-    gcry_free(hmac_data);
-    return FALSE;
+    return result;
 }
 
 gboolean validity90_tls_prf(const guint8 *secret, const gsize secret_len, const char *label, const guint8 *seed, const gsize seed_len,
@@ -207,4 +232,28 @@ gboolean validity90_tls_prf(const guint8 *secret, const gsize secret_len, const 
     gcry_free(label_seed);
 
     return res;
+}
+
+void reverse_mem(guint8* data, gsize size) {
+   guint8 tmp;
+   for (gsize i = 0; i < size / 2; i++) {
+       tmp = data[i];
+       data[i] = data[size - 1 - i];
+       data[size - 1 - i] = tmp;
+   }
+}
+
+void print_array_(const guint8* data, gsize len) {
+    for (int i = 0; i < len; i++) {
+        if ((i % 16) == 0) {
+            if (i != 0) {
+                printf("\n");
+            }
+            printf("%04x ", i);
+        } else if ((i % 8) == 0) {
+            printf(" ");
+        }
+        printf("%02x ", data[i]);
+    }
+    puts("");
 }
