@@ -306,7 +306,7 @@ TEST(Intialization_rsp6_parsing, Valid97) {
 
     rsp6_info_ptr out = NULL;
 
-    GError *error = NULL;
+    //GError *error = NULL;
     ASSERT_TRUE(validity90_parse_rsp6(rsp6, G_N_ELEMENTS(rsp6), serial, G_N_ELEMENTS(serial), &out, NULL));
 
     ASSERT_THAT(std::vector<guint8>(out->tls_client_privkey->data, out->tls_client_privkey->data + out->tls_client_privkey->len),
@@ -618,7 +618,7 @@ TEST(Intialization_rsp6_parsing, Valid94) {
 */
 
 
-TEST(Intialization_rsp6_parsing, Valid94) {
+/*TEST(Intialization_rsp6_parsing, Valid94) {
     uint8_t rsp6[] = {
         0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x6e, 0x34, 0x0b, 0x9c,
         0xff, 0xb3, 0x7a, 0x98, 0x9c, 0xa5, 0x44, 0xe6, 0xbb, 0x78, 0x0a, 0x2c, 0x78, 0x90, 0x1d, 0x3f,
@@ -915,3 +915,4 @@ TEST(Intialization_rsp6_parsing, Valid94) {
 
     g_free(out);
 }
+*/

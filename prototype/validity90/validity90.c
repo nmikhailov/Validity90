@@ -72,6 +72,12 @@ gboolean validity90_handle_rsp6_ecdsa_packet(const guint8 *data, gsize data_len,
     GByteArray *ecdsa_key = NULL;
 
     g_assert_cmphex(data[0], ==, 0x02);
+    if (data[0] != 0x02) {
+        g_set_error(error, VALIDITY90_RSP6_ERROR, 0, "RSP6: ecdsa packet invalid prefix format");
+        result = FALSE;
+        goto end;
+    }
+
     if (!validity90_aes_decrypt(data + 1, 0x80, master_key_aes, 0x20, &ecdsa_key, error)) {
         result = FALSE;
         goto end;

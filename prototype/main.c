@@ -49,6 +49,7 @@
 
 #include "constants.h"
 #include "validity90/validity90.h"
+#include "validity90/utils.h"
 
 
 #define xstr(a) str(a)
@@ -59,7 +60,7 @@
 
 #define err(x) res_err(x, xstr(x))
 #define errb(x) res_errb(x, xstr(x))
-#define byte unsigned char
+#define byte guint8
 
 static libusb_device_handle * dev;
 
@@ -73,10 +74,6 @@ static const byte client_random[] = {
 };
 
 byte server_random[0x40];
-
-byte* TLS_PRF2(byte * secret, int secret_len, char * str, byte * seed40, int seed40_len, int required_len);
-
-byte gLabel[13];
 
 void print_hex_gn(byte* data, int len, int sz) {
     for (int i = 0; i < len; i++) {
@@ -169,66 +166,8 @@ static byte ecdsa_private_key[0x60];
 
 static char masterkey_aes[0x20];
 
-bool check_pad_b(byte *data, int len) {
-    byte pad_size = data[len - 1];
-    for(int i = 0; i < pad_size; i++) {
-        if (data[len - 1 - i] != pad_size) {
-            return false;
-        }
-    }
-    return true;
-}
-
-void check_pad(byte *data, int len) {
-    if (!check_pad_b(data, len)) {
-        puts("PAD FAILED");
-        exit(-1);
-    }
-}
-
-void make_aes_master(byte * seed, int seed_len) {
-    puts("prf seed");
-    print_hex(seed, seed_len);
-
-    byte *aes_master = TLS_PRF2(pre_key, 0x20, "GWK", seed, seed_len, 0x20);
-    memcpy(masterkey_aes, aes_master, 0x20);
-    free(aes_master);
-
-    puts("AES master:");
-    print_hex(masterkey_aes, 0x20);
-}
-
-bool handle_ecdsa(byte *enc_data, int res_len) {
-    EVP_CIPHER_CTX *context = EVP_CIPHER_CTX_new();
-
-    errb(EVP_DecryptInit(context, EVP_aes_256_cbc(), masterkey_aes, enc_data));
-    EVP_CIPHER_CTX_set_padding(context, 0);
-
-    int tlen1 = 0, tlen2;
-    byte *res = malloc(res_len);
-    errb(EVP_DecryptUpdate(context, res, &tlen1, enc_data + 0x10, res_len));
-
-    errb(EVP_DecryptFinal(context, res + tlen1, &tlen2));
-    EVP_CIPHER_CTX_free(context);
-
-    reverse_mem(res, 0x20);
-    reverse_mem(res + 0x20, 0x20);
-    reverse_mem(res + 0x40, 0x20);
-
-    puts("Decoded:");
-    print_hex(res, res_len);
-    memcpy(ecdsa_private_key, res, 0x60);
-
-    bool resb;
-    resb = check_pad_b(res, res_len);
-
-    free(res);
-
-    return resb;
-}
-
-byte mainSeed[1024];
-int mainSeedLength;
+byte system_serial[1024];
+int system_serial_len;
 
 void loadBiosData() {
     char name[1024], serial[1024];
@@ -246,9 +185,9 @@ void loadBiosData() {
     fscanf(serialFile, "%s", serial);
 
     int len1 = strlen(name), len2 = strlen(serial);
-    memcpy(mainSeed, name, len1 + 1);
-    memcpy(mainSeed + len1 + 1, serial, len2 + 1);
-    mainSeedLength = len1 + len2 + 2;
+    memcpy(system_serial, name, len1 + 1);
+    memcpy(system_serial + len1 + 1, serial, len2 + 1);
+    system_serial_len = len1 + len2 + 2;
 
     fclose(nameFile);
     fclose(serialFile);
@@ -266,56 +205,25 @@ bool do_step(byte *data, int data_len, byte *buff, int *buf_len, byte *expected,
 #define STEP(a,b) do_step(a, sizeof(a) / sizeof(byte), buff, &len, b, sizeof(b) / sizeof(dword));
 
 void init_keys(const byte *buff, int len) {
-    //validity90 * ctx = validity90_create();
-//    byte_array * rsp6 = byte_array_create_from_data(buff, len);
-//    validity90_parse_rsp6(ctx, buff);
+    byte vbox_serial[] = "VirtualBox\0" "0";
 
-    //byte_array_free(rsp6);
-    //validity90_free(ctx);
-
-    byte test_data[] = "VirtualBox\0" "0";
-
-//    byte test_data[] = "5Test5\0DmiSystemSerial";
-
-    if (len > 0x660 + 0x20) {
-
-        make_aes_master(mainSeed, mainSeedLength);
-
-        if (!handle_ecdsa(buff + 0x52, 0x70)) {
-            make_aes_master(test_data, sizeof(test_data));
-            if (!handle_ecdsa(buff + 0x52, 0x70)) {
-                puts("PAD FAILED");
-                exit(EXIT_FAILURE);
-            }
-        }
-        memset(ecdsa_private_key, 0, 0x40);
-        // 97 doesn't have XY in private key
-        memcpy(ecdsa_private_key, buff + 0x11e, 0x20);
-        reverse_mem(ecdsa_private_key, 0x20);
-
-        memcpy(ecdsa_private_key + 0x20, buff + 0x162, 0x20);
-        reverse_mem(ecdsa_private_key + 0x20, 0x20);
-
-        // ECDSA key
-        puts("ECDSA key:");
-        print_hex(ecdsa_private_key, 0x60);
-
-        // Cert
-        memcpy(tls_certificate + 21, buff + 0x116, 0xb8);
-
-        // Pubkey
-        memcpy(pubkey1, buff + 0x600 + 10, 0x20);
-        memcpy(pubkey1 + 0x20, buff + 0x640 + 0xe, 0x20);
-
-        reverse_mem(pubkey1, 0x20);
-        reverse_mem(pubkey1 + 0x20, 0x20);
-
-        puts("pub key:");
-        print_hex(pubkey1, 0x40);
-    } else {
-        puts("Invalid rsp6, can't get public key");
+    rsp6_info_ptr info = NULL;
+    GError *error = NULL;
+    if (!validity90_parse_rsp6(buff, len, vbox_serial, G_N_ELEMENTS(vbox_serial), &info, NULL) &&
+            !validity90_parse_rsp6(buff, len, system_serial, system_serial_len, &info, &error)) {
+        printf("Failed to handle RSP6: %s\n", error->message);
         exit(-1);
     }
+
+    memcpy(ecdsa_private_key, info->tls_client_privkey->data, info->tls_client_privkey->len);
+    memcpy(tls_certificate + 21, info->tls_cert_raw->data, info->tls_cert_raw->len);
+    memcpy(pubkey1, info->tls_server_pubkey->data, info->tls_server_pubkey->len);
+
+    g_byte_array_free_to_bytes(info->tls_cert_raw);
+    g_byte_array_free_to_bytes(info->tls_client_privkey);
+    g_byte_array_free_to_bytes(info->tls_server_pubkey);
+    g_free(info);
+
     fflush(stdout);
 }
 
@@ -420,50 +328,6 @@ void init() {
 
 #undef STEP
 
-void test_crypto1() {
-    // Gen EC p256 keypair
-    SECKEYPublicKey* pub_key = NULL;
-    SECKEYPrivateKey* priv_key = NULL;
-//    SECItem ec_der_params;
-//    memset(&ec_der_params, 0, sizeof(ec_der_params));
-//    ec_der_params.data = kANSIX962CurveParams;
-//    ec_der_params.len = sizeof(kANSIX962CurveParams);
-//    priv_key = SECKEY_CreateECPrivateKey(&ec_der_params, &pub_key, NULL);
-
-//    PK11_ImportPublicKey()
-//    PK11_ImportPrivateKeyInfoAndReturnKey();
-//    PK11_ExportDERPrivateKeyInfo();
-//    PK11_ExportPrivKeyInfo()
-
-    SECOidData* oid_data = SECOID_FindOIDByTag(SEC_OID_SECG_EC_SECP256R1);
-    byte * buff = malloc(oid_data->oid.len + 2);
-
-    SECKEYECParams ec_parameters = {
-        siDEROID, buff,
-        oid_data->oid.len + 2
-      };
-
-      ec_parameters.data[0] = SEC_ASN1_OBJECT_ID;
-      ec_parameters.data[1] = oid_data->oid.len;
-      memcpy(ec_parameters.data + 2, oid_data->oid.data, oid_data->oid.len);
-
-
-    PK11SlotInfo *slot
-            = PK11_GetInternalKeySlot();
-    priv_key = PK11_GenerateKeyPair(slot, CKM_EC_KEY_PAIR_GEN,
-                                   & ec_parameters, &pub_key,
-                                    PR_FALSE, PR_FALSE, NULL);
-
-//    SECKEYPrivateKeyInfo *derPriv = PK11_ExportEncryptedPrivKeyInfo(priv_key, NULL);
-//    SECKEYPrivateKeyInfo *info = PK11_ExportPrivKeyInfo(priv_key, NULL);
-//    ssl3_
-
-//    PK11_ExportEncryptedPrivKeyInfo(slot, )
-
-//    print_hex(derPriv->data, derPriv->len);
-    puts("done");
-}
-
 PK11Context* hmac_make_context(byte *key_bytes, int key_len) {
     CK_MECHANISM_TYPE hmacMech = CKM_SHA256_HMAC;
     PK11SlotInfo *slot = PK11_GetBestSlot(hmacMech, NULL);
@@ -493,47 +357,6 @@ byte* hmac_compute(byte *key, int key_len, byte* data, int data_len) {
     PK11_DestroyContext(context, PR_TRUE);
 
     return res;
-}
-
-void test_crypto_hash() {
-    byte p[] = {
-        0x71, 0x7c, 0xd7, 0x2d, 0x09, 0x62, 0xbc, 0x4a, 0x28, 0x46, 0x13, 0x8d, 0xbb, 0x2c, 0x24, 0x19,
-        0x25, 0x12, 0xa7, 0x64, 0x07, 0x06, 0x5f, 0x38, 0x38, 0x46, 0x13, 0x9d, 0x4b, 0xec, 0x20, 0x33
-    };
-
-    byte data[] = {
-        0xbc, 0x41, 0x9d, 0xfc, 0x39, 0xc9, 0xba, 0x69, 0xa7, 0x4d, 0x5d, 0x60, 0x0a, 0xc3, 0x5b, 0x7b,
-        0x1a, 0xfb, 0x2b, 0x52, 0xe5, 0xd2, 0x4a, 0x23, 0x04, 0x58, 0x67, 0xc8, 0x3a, 0x98, 0xaa, 0x9a,
-        0x47, 0x57, 0x4b, 0x56, 0x69, 0x72, 0x74, 0x75, 0x61, 0x6c, 0x42, 0x6f, 0x78, 0x00, 0x30, 0x00
-    };
-
-    PK11Context* context = hmac_make_context(p, 0x20);
-    PK11_DigestOp(context, data, 0x30);
-
-    byte res[0x20];
-    int len = 0x20;
-    PK11_DigestFinal(context, res, &len, 0x20);
-
-    print_hex(res, 0x20);
-    /*
-     * 0000 48 78 02 70 5e 5a c4 a9  93 1c 44 aa 4d 32 25 22
-     *   0010 39 e0 bf 8f 0c 85 4d de  49 0c cc f6 87 ef ad 9c
-*/
-}
-
-void test_crypto_hash_hmac() {
-    HASHContext *context = HASH_Create(HASH_AlgSHA256);
-    HASH_Begin(context);
-
-    int hashLen = HASH_ResultLen(HASH_AlgSHA256);
-    byte data[] = {0x00};
-    byte result[hashLen];
-    HASH_Update(context, data, 1);
-
-    int res_len = 0;
-    HASH_End(context, result, &res_len, hashLen);
-
-    print_hex(result, hashLen);
 }
 
 //10
@@ -628,7 +451,6 @@ byte* P_Hash(byte * secret, int key_len, byte * seed, int seed_len) {
     return data;
 }
 
-
 void print_hex_C(FILE *f, byte* data, int len) {
     fprintf(f, " = {\n");
     for (int i = 0; i < len; i++) {
@@ -643,153 +465,6 @@ void print_hex_C(FILE *f, byte* data, int len) {
     fprintf(f, "\n};\n");
 }
 
-
-byte* TLS_PRF2(byte * secret, int secret_len, char * str, byte * seed40, int seed40_len, int required_len) {
-
-    int total_len = 0;
-
-    int str_len = strlen(str);
-    byte seed[str_len + seed40_len];
-    memcpy(seed, str, str_len);
-    memcpy(seed + str_len, seed40, seed40_len);
-    int seed_len = str_len + seed40_len;
-    byte* res = malloc(required_len);
-    byte *a = hmac_compute(secret, secret_len, seed, seed_len);
-    while (total_len < required_len) {
-        byte buff[0x20 + seed_len];
-        memcpy(buff, a, 0x20);
-        memcpy(buff + 0x20, seed, seed_len);
-
-        byte * p = hmac_compute(secret, secret_len, buff, 0x20 + seed_len);
-        memcpy(res + total_len, p, min(0x20, required_len - total_len));
-        free(p);
-
-        total_len += 0x20;
-
-        byte *t = hmac_compute(secret, secret_len, a, 0x20);
-        free(a);
-        a = t;
-    }
-    free(a);
-
-
-    return res;
-}
-
-void openssl() {
-    EC_KEY *priv_key = load_key(privkey1, true);
-    EC_KEY *pub_key = load_key(pubkey1, false);
-
-    if (!priv_key || !pub_key) {
-        puts("failed to load");
-        return;
-    }
-    int status;
-
-    EC_KEY_print_fp(stdout, priv_key, 0);
-
-
-    EVP_PKEY *priv = EVP_PKEY_new(), *pub = EVP_PKEY_new();
-    status = EVP_PKEY_set1_EC_KEY(priv, priv_key);
-    status = EVP_PKEY_set1_EC_KEY(pub, pub_key);
-
-    EVP_PKEY_CTX *ctx = EVP_PKEY_CTX_new(priv, NULL);
-
-
-    status = EVP_PKEY_derive_init(ctx);
-    status = EVP_PKEY_derive_set_peer(ctx, pub);
-
-    size_t len = 0;
-    status = EVP_PKEY_derive(ctx, NULL, &len);
-
-    byte pre_master_secret[len];
-//    status = EVP_PKEY_derive(ctx, pre_master_secret, &len);
-
-    ECDH_compute_key(pre_master_secret, 0x20, EC_KEY_get0_public_key(pub_key), priv_key, NULL);
-
-    print_hex(pre_master_secret, len);
-    puts("\n");
-
-
-    char seed[0x40], expansion_seed[0x40];
-    memcpy(seed, client_random, 0x20);
-    memcpy(seed + 0x20, server_random, 0x20);
-
-    memcpy(expansion_seed + 0x20, client_random, 0x20);
-    memcpy(expansion_seed, server_random, 0x20);
-
-    puts("master secret");
-    byte * master_secret = TLS_PRF2(pre_master_secret, 0x20, "master secret", seed, 0x40, 0x30);
-    print_hex(master_secret, 0x30);
-
-
-    puts("keyblock");
-    byte * key_block = TLS_PRF2(master_secret, 0x30, "key expansion", seed, 0x40, 0x120);
-    print_hex(key_block, 0x120);
-//    EVP_PKEY_CTX_set_ecdh_kdf_md()
-
-//    EVP_PKEY_derive()
-
-    puts("ok");
-
-    return;////////////////////////////////////////////////////////////////////////////
-
-
-//CKM_TLS_MASTER_KEY_DERIVE_DH
-    CK_MECHANISM_TYPE derive_mech = CKM_NSS_TLS_MASTER_KEY_DERIVE_SHA256;
-    CK_MECHANISM_TYPE hash_mech = CKM_SHA256;
-    CK_MECHANISM_TYPE key_mech = CKM_NSS_TLS_MASTER_KEY_DERIVE_SHA256;
-    CK_VERSION      pms_version;
-
-    PK11SlotInfo *slot = PK11_GetInternalSlot();
-
-    //CK_SSL3_MASTER_KEY_DERIVE_PARAMS
-    CK_TLS12_MASTER_KEY_DERIVE_PARAMS key_derive_params;
-    key_derive_params.RandomInfo.pClientRandom = client_random;
-    key_derive_params.RandomInfo.ulClientRandomLen = 0x20;
-    key_derive_params.RandomInfo.pServerRandom = server_random;
-    key_derive_params.RandomInfo.ulServerRandomLen = 0x20;
-
-    key_derive_params.pVersion = &pms_version;
-    key_derive_params.prfHashMechanism = CKM_SHA256;
-
-    SECItem key = { .type = siBuffer, .data = pre_master_secret, .len = 0x20 };
-    SECItem params_ = {.data = &key_derive_params, .len = sizeof(key_derive_params) };
-
-    PK11SymKey * pms_ = PK11_ImportSymKey(slot, derive_mech, PK11_OriginUnwrap, CKA_DERIVE, &key, NULL);
-
-    PK11SymKey *master_nss = PK11_DeriveWithFlags(pms_, derive_mech, &params_, key_mech, CKA_DERIVE, 0, CKF_SIGN | CKF_VERIFY);
-
-
-    /*
-     * PK11SymKey *PK11_DeriveWithFlags(PK11SymKey *baseKey,
-                                 CK_MECHANISM_TYPE derive, SECItem *param, CK_MECHANISM_TYPE target,
-                                 CK_ATTRIBUTE_TYPE operation, int keySize, CK_FLAGS flags);
-     *
-    */
-    puts("NSS");
-
-
-    SECItem *master_nss_data = PK11_GetKeyData(master_nss);
-    print_hex(master_nss_data->data, master_nss_data->len);
-}
-
-void export_import_keys() {
-    EC_KEY *priv_key = load_key(privkey1, true);
-    EC_KEY *pub_key = load_key(pubkey1, false);
-
-//    EC_KEY_set_enc_flags(priv_key, );
-    int len = i2d_ECPrivateKey(priv_key, NULL);
-    byte out[len];
-    unsigned char * derkeyPtr = out;
-    i2d_ECPrivateKey(priv_key, &derkeyPtr);
-
-    print_hex(out, len);
-
-//    PEM_write_bio_ECPrivateKey(
-//    PEM_ASN1_write()
-}
-
 byte all_messages[1024 * 1024]; int all_messages_index = 0;
 void HUpdate(HASHContext *context, const unsigned char *src, unsigned int len) {
     HASH_Update(context, src, len);
@@ -800,7 +475,7 @@ void HUpdate(HASHContext *context, const unsigned char *src, unsigned int len) {
     // puts("HASHING<<");
 }
 
-byte * key_block;
+guint8 key_block[0x120];
 
 void mac_then_encrypt(byte type, byte * data, int data_len, byte **res, int *res_len) {
     byte iv[0x10] = {0x4b, 0x77, 0x62, 0xff, 0xa9, 0x03, 0xc1, 0x1e, 0x6f, 0xd8, 0x35, 0x93, 0x17, 0x2d, 0x54, 0xef};
@@ -1010,11 +685,13 @@ memcpy(buff + 0x2c, packet_bytes, sizeof(packet_bytes));
     memcpy(expansion_seed + 0x20, client_random, 0x20);
     memcpy(expansion_seed, server_random, 0x20);
 
-    byte * master_secret = TLS_PRF2(pre_master_secret, 0x20, "master secret", seed, 0x40, 0x30);
+    guint8 master_secret[0x30];
+    validity90_tls_prf(pre_master_secret, 0x20, "master secret", seed, 0x40, 0x30, master_secret, NULL);
+
     puts("master secret");
     print_hex(master_secret, 0x30);
 
-    key_block = TLS_PRF2(master_secret, 0x30, "key expansion", seed, 0x40, 0x120);
+    validity90_tls_prf(master_secret, 0x30, "key expansion", seed, 0x40, 0x120, key_block, NULL);
     puts("keyblock");
     print_hex(key_block, 0x120);
 
@@ -1060,7 +737,7 @@ memcpy(buff + 0x2c, packet_bytes, sizeof(packet_bytes));
     finished_message[1] = finished_message[2] = 0x00;
     finished_message[3] = 0x0c;
 
-    memcpy(finished_message + 0x04, TLS_PRF2(master_secret, 0x30, "client finished", handshake_messages, 0x20, 0x0c), 0x0c);
+    validity90_tls_prf(master_secret, 0x30, "client finished", handshake_messages, 0x20, 0x0c, finished_message + 0x04, NULL);
     // copy handshake protocol
 
     puts("client finished");
@@ -1374,19 +1051,19 @@ void fingerprint() {
         fwrite(image, 144, 144, f);
         fclose(f);
     }
+
     puts("Done");
+
     if (validated_finger_id != -1) {
-        if (validated_finger_id == 1) {
-            tls_write(led_green_blink, sizeof(led_green_blink));tls_read(response, &response_len);
-        } else {
-            tls_write(led_red_blink, sizeof(led_red_blink));tls_read(response, &response_len);
-        }
         if (validated_finger_id > 0) {
+            tls_write(led_green_blink, sizeof(led_green_blink));tls_read(response, &response_len);
             printf("\n\nFingerprint MATCHES DB Finger id: %d!\n", validated_finger_id);
         } else {
+            tls_write(led_red_blink, sizeof(led_red_blink));tls_read(response, &response_len);
             printf("\n\nFingerprint UNKNOWN!\n");
         }
     } else {
+        tls_write(led_red_blink, sizeof(led_red_blink));tls_read(response, &response_len);
         puts("Fingerprint check procedure didn't worked");
     }
 }
@@ -1498,19 +1175,6 @@ int main(int argc, char *argv[]) {
     err(libusb_set_configuration(dev, 1));
     err(libusb_claim_interface(dev, 0));
 
-    char description[256];
-    for (int i = 0; i < 256; i++) {
-        int size = libusb_get_string_descriptor_ascii(dev, i, description, 256);
-        if (size > 0) {
-            if (i == 1 && size < 13) {
-                memcpy(gLabel, description, size);
-                gLabel[12] = 0;
-            }
-            printf("Index %d, size %d\n", i, size);
-            print_hex(description, size);
-        }
-    }
-
     loadBiosData();
 
     puts("");
@@ -1548,20 +1212,6 @@ int main(int argc, char *argv[]) {
             exit(EXIT_SUCCESS);
         }
     }
-
-//    test_crypto_hash();
-//    puts("hmac");
-//    test_crypto_hash_hmac();
-//    test_crypto1();
-
-//    test_derivation();
-
-//    ectest_curve_pkcs11();
-
-
-//    openssl();
-//export_import_keys();
-    //test_crypto1();
 
     return 0;
 }
