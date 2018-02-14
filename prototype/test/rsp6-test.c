@@ -17,15 +17,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
 #include <glib.h>
 #include <stdlib.h>
-#include <vector>
 
 #include "validity90/validity90.h"
 
-TEST(Intialization_rsp6_parsing, Valid97) {
+void RSP6_VALID97() {
     uint8_t rsp6[] = {
         0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x6e, 0x34, 0x0b, 0x9c,
         0xff, 0xb3, 0x7a, 0x98, 0x9c, 0xa5, 0x44, 0xe6, 0xbb, 0x78, 0x0a, 0x2c, 0x78, 0x90, 0x1d, 0x3f,
@@ -307,18 +304,15 @@ TEST(Intialization_rsp6_parsing, Valid97) {
     rsp6_info_ptr out = NULL;
 
     //GError *error = NULL;
-    ASSERT_TRUE(validity90_parse_rsp6(rsp6, G_N_ELEMENTS(rsp6), serial, G_N_ELEMENTS(serial), &out, NULL));
+    g_assert(validity90_parse_rsp6(rsp6, G_N_ELEMENTS(rsp6), serial, G_N_ELEMENTS(serial), &out, NULL));
 
-    ASSERT_THAT(std::vector<guint8>(out->tls_client_privkey->data, out->tls_client_privkey->data + out->tls_client_privkey->len),
-                ::testing::ElementsAreArray(ecdsa_priv));
-
-    ASSERT_THAT(std::vector<guint8>(out->tls_server_pubkey->data, out->tls_server_pubkey->data + out->tls_server_pubkey->len),
-                ::testing::ElementsAreArray(ecdh_pub));
+    g_assert_cmpmem(out->tls_client_privkey->data, out->tls_client_privkey->len, ecdsa_priv, G_N_ELEMENTS(ecdsa_priv));
+    g_assert_cmpmem(out->tls_server_pubkey->data, out->tls_server_pubkey->len, ecdh_pub, G_N_ELEMENTS(ecdh_pub));
 
     g_free(out);
 }
-/*
-TEST(Intialization_rsp6_parsing, Valid94) {
+
+void RSP6_VALID94() {
     uint8_t rsp6[] = {
         0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x6e, 0x34, 0x0b, 0x9c,
         0xff, 0xb3, 0x7a, 0x98, 0x9c, 0xa5, 0x44, 0xe6, 0xbb, 0x78, 0x0a, 0x2c, 0x78, 0x90, 0x1d, 0x3f,
@@ -605,7 +599,7 @@ TEST(Intialization_rsp6_parsing, Valid94) {
     if (!res) {
         printf("Error: %s\n", error->message);
     }
-    ASSERT_TRUE(res);
+    g_assert(res);
 
 //    ASSERT_THAT(std::vector<guint8>(out->tls_client_privkey->data, out->tls_client_privkey->data + out->tls_client_privkey->len),
 //                ::testing::ElementsAreArray(ecdsa_priv));
@@ -615,10 +609,8 @@ TEST(Intialization_rsp6_parsing, Valid94) {
 
     g_free(out);
 }
-*/
 
-
-/*TEST(Intialization_rsp6_parsing, Valid94) {
+void RSP6_VALID81() {
     uint8_t rsp6[] = {
         0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x6e, 0x34, 0x0b, 0x9c,
         0xff, 0xb3, 0x7a, 0x98, 0x9c, 0xa5, 0x44, 0xe6, 0xbb, 0x78, 0x0a, 0x2c, 0x78, 0x90, 0x1d, 0x3f,
@@ -905,7 +897,7 @@ TEST(Intialization_rsp6_parsing, Valid94) {
     if (!res) {
         printf("Error: %s\n", error->message);
     }
-    ASSERT_TRUE(res);
+    g_assert(res);
 
 //    ASSERT_THAT(std::vector<guint8>(out->tls_client_privkey->data, out->tls_client_privkey->data + out->tls_client_privkey->len),
 //                ::testing::ElementsAreArray(ecdsa_priv));
@@ -915,4 +907,3 @@ TEST(Intialization_rsp6_parsing, Valid94) {
 
     g_free(out);
 }
-*/

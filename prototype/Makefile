@@ -2,19 +2,16 @@ CFLAGS = -c -Wall -g -DG_LOG_DOMAIN=\"Validity90\"
 LDFLAGS = 
  
 SOURCES = validity90/utils.c validity90/validity90.c
-SOURCES_GTEST = test/gtest.cpp test/rsp6-test.cpp test/utils-test.cpp
+SOURCES_GTEST = test/gtest.c test/rsp6-test.c test/utils-test.c
 
 HEADERS = constants.h validity90/validity90.h
 
 OBJECTS = $(SOURCES:.c=.o)
-OBJECTS_GTEST = $(SOURCES_GTEST:.cpp=.o)
+OBJECTS_GTEST = $(SOURCES_GTEST:.c=.o)
  
 EXECUTABLE = prototype
  
 LIBS = nss openssl libusb-1.0 libpng glib-2.0
-LIBS_GTEST = gtest gmock
-CFLAGS_GTEST = $(shell pkg-config --cflags $(LIBS_GTEST))
-LDFLAGS_GTEST = $(shell pkg-config --libs $(LIBS_GTEST))
 
 CFLAGS += $(shell pkg-config --cflags $(LIBS))
 LDFLAGS += $(shell pkg-config --libs $(LIBS)) -lgcrypt
@@ -30,14 +27,14 @@ main.o: main.c $(HEADERS)
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) $< -o $@
  
-test/%.o: test/%.cpp $(HEADERS)
-	$(CXX) $(CFLAGS) $(CFLAGS_GTEST) -I. $< -o $@
+test/%.o: test/%.c $(HEADERS)
+	$(CC) $(CFLAGS) -I. $< -o $@
 
 test/gtest: $(OBJECTS) $(OBJECTS_GTEST)
-	$(CXX) $(OBJECTS) $(OBJECTS_GTEST) -o $@ $(LDFLAGS) $(LDFLAGS_GTEST)
+	$(CC) $(OBJECTS) $(OBJECTS_GTEST) -o $@ $(LDFLAGS)
 
 test: test/gtest
-	test/gtest
+	gtester -k --verbose test/gtest
 
 permissions:
 	sudo chmod a+r /sys/class/dmi/id/product_serial

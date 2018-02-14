@@ -17,16 +17,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
 #include <glib.h>
-#include <cstdlib>
-#include <vector>
+#include <stdlib.h>
 
 #include "validity90/utils.h"
 #include "validity90/validity90.h"
 
-TEST(UTILS_TLS_PRF, TEST1) {
+void UTILS_TLS_PRF_TEST1() {
     guint8 secret[] = {
         0x71, 0x7c, 0xd7, 0x2d, 0x09, 0x62, 0xbc, 0x4a, 0x28, 0x46, 0x13, 0x8d, 0xbb, 0x2c, 0x24, 0x19,
         0x25, 0x12, 0xa7, 0x64, 0x07, 0x06, 0x5f, 0x38, 0x38, 0x46, 0x13, 0x9d, 0x4b, 0xec, 0x20, 0x33,
@@ -44,11 +41,11 @@ TEST(UTILS_TLS_PRF, TEST1) {
     };
 
     guint8 out[required_len];
-    ASSERT_TRUE(validity90_tls_prf(secret, G_N_ELEMENTS(secret), str, seed, G_N_ELEMENTS(seed), required_len, out, NULL));
-    ASSERT_THAT(std::vector<guint8>(out, out + required_len), ::testing::ElementsAreArray(expected_result));
+    g_assert(validity90_tls_prf(secret, G_N_ELEMENTS(secret), str, seed, G_N_ELEMENTS(seed), required_len, out, NULL));
+    g_assert_cmpmem(out, required_len, expected_result, G_N_ELEMENTS(expected_result));
 }
 
-TEST(UTILS_TLS_PRF, TEST2) {
+void UTILS_TLS_PRF_TEST2() {
     guint8 secret[] = {
         0x71, 0x7c, 0xd7, 0x2d, 0x09, 0x62, 0xbc, 0x4a, 0x28, 0x46, 0x13, 0x8d, 0xbb, 0x2c, 0x24, 0x19,
         0x25, 0x12, 0xa7, 0x64, 0x07, 0x06, 0x5f, 0x38, 0x38, 0x46, 0x13, 0x9d, 0x4b, 0xec, 0x20, 0x33,
@@ -65,11 +62,11 @@ TEST(UTILS_TLS_PRF, TEST2) {
     };
 
     guint8 out[required_len];
-    ASSERT_TRUE(validity90_tls_prf(secret, G_N_ELEMENTS(secret), str, seed, G_N_ELEMENTS(seed), required_len, out, NULL));
-    ASSERT_THAT(std::vector<guint8>(out, out + required_len), ::testing::ElementsAreArray(expected_result));
+    g_assert(validity90_tls_prf(secret, G_N_ELEMENTS(secret), str, seed, G_N_ELEMENTS(seed), required_len, out, NULL));
+    g_assert_cmpmem(out, required_len, expected_result, G_N_ELEMENTS(expected_result));
 }
 
-TEST(UTILS_TLS_PRF, TEST3) {
+void UTILS_TLS_PRF_TEST3() {
     guint8 secret[] = {
         0x30, 0xad, 0xd9, 0x09, 0xad, 0x08, 0x64, 0x53, 0xee, 0x1b, 0xaf, 0xc6, 0xbd, 0x4e, 0x4e, 0xce,
         0x12, 0x70, 0xa6, 0x44, 0xd0, 0x15, 0x68, 0x89, 0x56, 0xe6, 0xac, 0x79, 0x62, 0xea, 0xcd, 0xab,
@@ -90,11 +87,11 @@ TEST(UTILS_TLS_PRF, TEST3) {
     };
 
     guint8 out[required_len];
-    ASSERT_TRUE(validity90_tls_prf(secret, G_N_ELEMENTS(secret), str, seed, G_N_ELEMENTS(seed), required_len, out, NULL));
-    ASSERT_THAT(std::vector<guint8>(out, out + required_len), ::testing::ElementsAreArray(expected_result));
+    g_assert(validity90_tls_prf(secret, G_N_ELEMENTS(secret), str, seed, G_N_ELEMENTS(seed), required_len, out, NULL));
+    g_assert_cmpmem(out, required_len, expected_result, G_N_ELEMENTS(expected_result));
 }
 
-TEST(UTILS_TLS_PRF, TEST4) {
+void UTILS_TLS_PRF_TEST4() {
     guint8 secret[] = {
         0x8d, 0x05, 0xb5, 0x1e, 0x85, 0x86, 0xd9, 0xce, 0xae, 0x2e, 0x60, 0x03, 0xff, 0x4f, 0x95, 0x63,
         0xdf, 0xd9, 0x7d, 0x99, 0x1f, 0x36, 0x31, 0x17, 0x2e, 0xee, 0x84, 0xd7, 0x74, 0xc2, 0xbd, 0xa1,
@@ -130,11 +127,11 @@ TEST(UTILS_TLS_PRF, TEST4) {
         0xcd, 0x23, 0x27, 0xe3, 0x17, 0xfc, 0x38, 0x8b, 0xc2, 0xa9, 0x49, 0x1b, 0xcc, 0xed, 0x8c, 0xda,
     };
     guint8 out[required_len];
-    ASSERT_TRUE(validity90_tls_prf(secret, G_N_ELEMENTS(secret), str, seed, G_N_ELEMENTS(seed), required_len, out, NULL));
-    ASSERT_THAT(std::vector<guint8>(out, out + required_len), ::testing::ElementsAreArray(expected_result));
+    g_assert(validity90_tls_prf(secret, G_N_ELEMENTS(secret), str, seed, G_N_ELEMENTS(seed), required_len, out, NULL));
+    g_assert_cmpmem(out, required_len, expected_result, G_N_ELEMENTS(expected_result));
 }
 
-TEST(UTILS_TLS_PRF, TEST5) {
+void UTILS_TLS_PRF_TEST5() {
     guint8 secret[] = {
         0x8d, 0x05, 0xb5, 0x1e, 0x85, 0x86, 0xd9, 0xce, 0xae, 0x2e, 0x60, 0x03, 0xff, 0x4f, 0x95, 0x63,
         0xdf, 0xd9, 0x7d, 0x99, 0x1f, 0x36, 0x31, 0x17, 0x2e, 0xee, 0x84, 0xd7, 0x74, 0xc2, 0xbd, 0xa1,
@@ -152,11 +149,11 @@ TEST(UTILS_TLS_PRF, TEST5) {
     };
     
     guint8 out[required_len];
-    ASSERT_TRUE(validity90_tls_prf(secret, G_N_ELEMENTS(secret), str, seed, G_N_ELEMENTS(seed), required_len, out, NULL));
-    ASSERT_THAT(std::vector<guint8>(out, out + required_len), ::testing::ElementsAreArray(expected_result));
+    g_assert(validity90_tls_prf(secret, G_N_ELEMENTS(secret), str, seed, G_N_ELEMENTS(seed), required_len, out, NULL));
+    g_assert_cmpmem(out, required_len, expected_result, G_N_ELEMENTS(expected_result));
 }
 
-TEST(UTILS_TLS_PRF, TEST6) {
+void UTILS_TLS_PRF_TEST6() {
     guint8 factory_key[] = {
         0x71, 0x7c, 0xd7, 0x2d, 0x09, 0x62, 0xbc, 0x4a,
         0x28, 0x46, 0x13, 0x8d, 0xbb, 0x2c, 0x24, 0x19,
@@ -174,7 +171,7 @@ TEST(UTILS_TLS_PRF, TEST6) {
     guint8 master_key_aes[0x20];
 
     gsize required_len = 0x20;
-    ASSERT_TRUE(validity90_tls_prf(factory_key, G_N_ELEMENTS(factory_key), "GWK", seed, G_N_ELEMENTS(seed), required_len, master_key_aes, NULL));
-    ASSERT_THAT(std::vector<guint8>(master_key_aes, master_key_aes + required_len), ::testing::ElementsAreArray(expected_result));
+    g_assert(validity90_tls_prf(factory_key, G_N_ELEMENTS(factory_key), "GWK", seed, G_N_ELEMENTS(seed), required_len, master_key_aes, NULL));
+    g_assert_cmpmem(master_key_aes, required_len, expected_result, G_N_ELEMENTS(expected_result));
 }
 
