@@ -1,4 +1,4 @@
-AC_INIT([libfprint], [0.6.0])
+AC_INIT([libfprint], [0.7.0])
 AM_INIT_AUTOMAKE([1.11 no-dist-gzip dist-xz check-news subdir-objects])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([libfprint/core.c])
@@ -23,12 +23,13 @@ AC_SUBST(lt_major)
 AC_SUBST(lt_revision)
 AC_SUBST(lt_age)
 
-all_drivers="upekts upektc upeksonly vcom5s uru4000 fdu2000 aes1610 aes1660 aes2501 aes2550 aes2660 aes3500 aes4000 vfs101 vfs301 vfs5011 upektc_img etes603 vfs0050 vfs0090"
+all_drivers="upekts upektc upeksonly vcom5s uru4000 fdu2000 aes1610 aes1660 aes2501 aes2550 aes2660 aes3500 aes4000 vfs101 vfs301 vfs5011 upektc_img etes603 vfs0050 vfs0090 elan"
 
 require_imaging='no'
 require_aeslib='no'
 require_aesX660='no'
 require_aes3k='no'
+require_openssl='no'
 enable_upeke2='no'
 enable_upekts='no'
 enable_upektc='no'
@@ -50,6 +51,7 @@ enable_upektc_img='no'
 enable_etes603='no'
 enable_vfs0050='no'
 enable_vfs0090='no'
+enable_elan='no'
 
 AC_ARG_WITH([drivers],[AS_HELP_STRING([--with-drivers],
 	[List of drivers to enable])],
@@ -157,8 +159,13 @@ for driver in `echo ${drivers} | sed -e 's/,/ /g' -e 's/,$//g'`; do
 			enable_vfs0050="yes"
 		;;
 		vfs0090)
-		    AC_DEFINE([ENABLE_VFS0090], [], [Build Validity VFS0090 driver])
-		    enable_vfs0090="yes"
+			AC_DEFINE([ENABLE_VFS0090], [], [Build Validity VFS0090 driver])
+			enable_vfs0090="yes"
+			require_openssl="yes"
+		;;
+		elan)
+			AC_DEFINE([ENABLE_ELAN], [], [Build Elan driver])
+			enable_elan="yes"
 		;;
 	esac
 done
@@ -180,6 +187,7 @@ AM_CONDITIONAL([ENABLE_AES4000], [test "$enable_aes4000" = "yes"])
 AM_CONDITIONAL([REQUIRE_AESLIB], [test "$require_aeslib" = "yes"])
 AM_CONDITIONAL([REQUIRE_AESX660], [test "$require_aesX660" = "yes"])
 AM_CONDITIONAL([REQUIRE_AES3K], [test "$require_aes3k" = "yes"])
+AM_CONDITIONAL([REQUIRE_OPENSSL], [test "$require_openssl" = "yes"])
 AM_CONDITIONAL([ENABLE_VFS101], [test "$enable_vfs101" = "yes"])
 AM_CONDITIONAL([ENABLE_VFS301], [test "$enable_vfs301" = "yes"])
 AM_CONDITIONAL([ENABLE_VFS5011], [test "$enable_vfs5011" = "yes"])
@@ -187,6 +195,7 @@ AM_CONDITIONAL([ENABLE_UPEKTC_IMG], [test "$enable_upektc_img" = "yes"])
 AM_CONDITIONAL([ENABLE_ETES603], [test "$enable_etes603" = "yes"])
 AM_CONDITIONAL([ENABLE_VFS0050], [test "$enable_vfs0050" = "yes"])
 AM_CONDITIONAL([ENABLE_VFS0090], [test "$enable_vfs0090" = "yes"])
+AM_CONDITIONAL([ENABLE_ELAN], [test "$enable_elan" = "yes"])
 
 
 PKG_CHECK_MODULES(LIBUSB, [libusb-1.0 >= 0.9.1])
@@ -233,6 +242,13 @@ if test "$require_imaging" = "yes"; then
 	PKG_CHECK_MODULES(IMAGING, pixman-1, [pixman_found=yes], [pixman_found=no])
 	if test "$pixman_found" != "yes"; then
 		AC_MSG_ERROR([pixman is required for imaging support])
+	fi
+fi
+
+if test "$require_openssl" = "yes"; then
+	PKG_CHECK_MODULES(OPENSSL, openssl, [openssl_found=yes], [openssl_found=no])
+	if test "$openssl_found" != "yes"; then
+		AC_MSG_ERROR([openssl is required by a driver])
 	fi
 fi
 
@@ -418,6 +434,11 @@ if test x$enable_vfs0090 != xno ; then
 else
 	AC_MSG_NOTICE([   vfs0090 driver disabled])
 fi
+if test x$enable_elan != xno ; then
+	AC_MSG_NOTICE([** elan driver enabled])
+else
+	AC_MSG_NOTICE([   elan driver disabled])
+fi
 if test x$require_aeslib != xno ; then
 	AC_MSG_NOTICE([** aeslib helper functions enabled])
 else
@@ -432,6 +453,11 @@ if test x$require_aes3k != xno ; then
 	AC_MSG_NOTICE([** aes3k common routines enabled])
 else
 	AC_MSG_NOTICE([   aes3k common routines disabled])
+fi
+if test x$require_openssl != xno ; then
+	AC_MSG_NOTICE([** openssl library enabled])
+else
+	AC_MSG_NOTICE([   openssl library disabled])
 fi
 
 AC_CONFIG_FILES([libfprint.pc] [Makefile] [libfprint/Makefile] [examples/Makefile] [doc/Makefile])

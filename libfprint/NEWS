@@ -1,6 +1,28 @@
 This file lists notable changes in each release. For the full history of all
 changes, see ChangeLog.
 
+2017-05-14: v0.7.0 release
+* Drivers:
+  - Add VFS0050 driver
+  - Fix possible crash in AES3500 and AES4000
+  - Fix broken enrollment in VFS101
+  - Better verification with small sensor scanners
+  - Plenty of fixes in VFS5011
+  - Fix memory corruption in AES1610
+  - Improve calibration settings for AES1610
+  - Improve image assembling in upeksonly driver
+  - Autodetect whether image is encrypted in uru4k
+
+* Library:
+  - NBIS: Remove false minutia at the edge of partial image
+  - Introduce routines to assemble image from lines (used in VFS5011 and upeksonly)
+  - Fix a bug that can cause driver state machine to enter into endless loop. 
+
+* Udev rules:
+  - Add driver name to the USB properties
+
+* Plenty of build fixes
+
 2015-02-03: v0.6.0 release
 
 * Drivers:

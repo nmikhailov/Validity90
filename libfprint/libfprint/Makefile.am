@@ -23,6 +23,7 @@ UPEKTC_IMG_SRC = drivers/upektc_img.c drivers/upektc_img.h
 ETES603_SRC = drivers/etes603.c
 VFS0050_SRC = drivers/vfs0050.c drivers/vfs0050.h
 VFS0090_SRC = drivers/vfs0090.c drivers/vfs0090.h
+ELAN_SRC = drivers/elan.c drivers/elan.h
 
 EXTRA_DIST = \
 	$(UPEKE2_SRC)		\
@@ -45,6 +46,8 @@ EXTRA_DIST = \
 	$(UPEKTC_IMG_SRC)	\
 	$(ETES603_SRC)		\
 	$(VFS0050_SRC)		\
+	$(VFS0090_SRC)		\
+	$(ELAN_SRC)		\
 	drivers/aesx660.c	\
 	drivers/aesx660.h	\
 	drivers/aes3k.c 	\
@@ -195,10 +198,19 @@ if ENABLE_VFS0090
 DRIVER_SRC += $(VFS0090_SRC)
 endif
 
+if ENABLE_ELAN
+DRIVER_SRC += $(ELAN_SRC)
+endif
+
 if REQUIRE_PIXMAN
 OTHER_SRC += pixman.c
 libfprint_la_CFLAGS += $(IMAGING_CFLAGS)
 libfprint_la_LIBADD += $(IMAGING_LIBS)
+endif
+
+if REQUIRE_OPENSSL
+libfprint_la_CFLAGS += $(OPENSSL_CFLAGS)
+libfprint_la_LIBADD += $(OPENSSL_LIBS)
 endif
 
 if REQUIRE_AESLIB

@@ -4,8 +4,8 @@
 ; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
 ;
 [subrepo]
-	remote = git@github.com:nmikhailov/Validity90.git
-	branch = libfprint
-	commit = 347e2e321480bb421f2fa431c8638f4a42b9239c
-	parent = 9d8081050716d45bf24b49ac73b8b6e69a912915
+	remote = git@github.com:nmikhailov/libfprint.git
+	branch = vfs0090
+	commit = 4a7aefec1dcc0d5310158abd170d2fa98054f04f
+	parent = c0f80c897187f2d88e813bebd4f93fb5a8487369
 	cmdver = 0.3.0

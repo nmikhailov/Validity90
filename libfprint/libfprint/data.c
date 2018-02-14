@@ -112,7 +112,7 @@ void fpi_print_data_item_free(struct fp_print_data_item *item)
 
 struct fp_print_data_item *fpi_print_data_item_new(size_t length)
 {
-	struct fp_print_data_item *item = g_malloc(sizeof(*item) + length);
+	struct fp_print_data_item *item = g_malloc0(sizeof(*item) + length);
 	item->length = length;
 
 	return item;

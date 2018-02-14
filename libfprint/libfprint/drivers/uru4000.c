@@ -45,7 +45,7 @@
 #define IMAGE_HEIGHT		290
 #define IMAGE_WIDTH		384
 
-#define ENC_THRESHOLD		1000
+#define ENC_THRESHOLD		5000
 
 enum {
 	IRQDATA_SCANPWR_ON = 0x56aa,

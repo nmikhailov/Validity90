@@ -747,8 +747,7 @@ static void activate_loop_complete(struct fpi_ssm *ssm)
 	if (data->init_sequence.receive_buf != NULL)
 		g_free(data->init_sequence.receive_buf);
 	data->init_sequence.receive_buf = NULL;
-	/* We don't want to submit image if we're in deactivating process */
-	if (!data->deactivating) {
+	if (!data->deactivating && !r) {
 		submit_image(ssm, data);
 		fpi_imgdev_report_finger_status(dev, FALSE);
 	}
