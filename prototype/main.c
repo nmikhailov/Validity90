@@ -1145,17 +1145,21 @@ int main(int argc, char *argv[]) {
         struct libusb_device_descriptor descriptor;
         libusb_get_device_descriptor(dev_list[i], &descriptor);
 
-        if (descriptor.idVendor == 0x138a) {
+        if ((descriptor.idVendor == 0x06cb && descriptor.idProduct == 0x0081) ||
+                (descriptor.idVendor == 0x138a && descriptor.idProduct == 0x0094)) {
+            printf("Found device %04x:%04x\n", descriptor.idVendor, descriptor.idProduct);
+
+            printf("\nThis device won't work right now, but it seems like would be possible to support it the future\n");
+        } else if (descriptor.idVendor == 0x138a) {
             printf("Found device %04x:%04x\n", descriptor.idVendor, descriptor.idProduct);
             if (descriptor.idProduct == 0x0090) {
-                puts("This device is supported, it should output valid fingerprint image");
+                puts("This device is supported, it can also output fingerprint scan images");
             } else if (descriptor.idProduct == 0x0097) {
-                puts("This device support is in progress, it shouldn't print correct fingerprint image right now");
+                puts("This device is supported");
             } else if(descriptor.idProduct == 0x0091) {
-                puts("This device is UNsupported. This device doesn't use encryption and is currently out of scope for this project");
+                puts("This device is UNsupported. This device has different protocol and is currently out of scope for this project\n");
+                puts("You can try reverse engineering it yourself, it should be much easier since it looks like traffic is not encrypted\n");
                 exit(EXIT_FAILURE);
-            } else if(descriptor.idProduct == 0x0093) {
-                puts("This device moslt likely would be supported soon. Should fail on rsp6 right now");
             } else {
                 puts("Unknown device, lets try anyway");
             }
