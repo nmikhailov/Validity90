@@ -1343,12 +1343,12 @@ static void led_blink_callback_with_ssm(struct fp_img_dev *idev, int status, voi
 {
 	struct fpi_ssm *ssm = data;
 
-	if (status == LIBUSB_TRANSFER_COMPLETED) {
-		fpi_timeout_add(500, led_blink_callback_timeout, ssm);
-	} else {
+	if (status != LIBUSB_TRANSFER_COMPLETED) {
 		/* NO need to fail here, it's not a big issue... */
 		fp_err("LED blinking failed with error %d", status);
 	}
+
+	fpi_timeout_add(500, led_blink_callback_timeout, ssm);
 }
 
 struct image_download_t {
@@ -1518,8 +1518,8 @@ static void finger_scan_callback(struct fpi_ssm *ssm)
 	struct vfs_dev_t *vdev = idev->priv;
 
 	if (ssm->error) {
-		fp_err("Scan failed failed at state %d, unexpected"
-		       "device reply during initialization", ssm->cur_state);
+		fp_err("Scan failed failed at state %d, unexpected "
+		       "device reply during finger scanning", ssm->cur_state);
 		fpi_imgdev_session_error(idev, ssm->error);
 	}
 
@@ -1567,6 +1567,7 @@ static void finger_scan_ssm(struct fpi_ssm *ssm)
 			ssm->error = FP_ENROLL_RETRY_TOO_SHORT;
 			break;
 		case IMG_ACTION_VERIFY:
+		case IMG_ACTION_IDENTIFY:
 			ssm->error = FP_VERIFY_RETRY_TOO_SHORT;
 			break;
 		case IMG_ACTION_CAPTURE:
