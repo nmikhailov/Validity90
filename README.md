@@ -13,7 +13,7 @@ Lenovo forums: [https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerpri
 
 1. [spec.md](spec.md) - Specification draft, the main work goes here right now.
 2. [dissector.lua](dissector.lua) - Wireshark dissector for decrypting communication after key exchange.
-3. ~[libfprint directory](libfprint) - libfprint repo with this driver integrated~ Not ready at the moment.
+3. [libfprint directory](libfprint) - libfprint repo with this driver integrated. Can be used with initialized device(check if prototype works) on 138a:0090 scaner.
 4. [prototype](prototype) - Standalone prototype(extremly ugly code, would be completly rewritten for driver)
 
 ## Testing
@@ -33,14 +33,14 @@ Lenovo forums: [https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerpri
 
 | 		      Task       			| Specification/Analysis  | Prototype   | Driver 	    |
 |---------------------------|-------------------------|-------------|-------------|
-| Initialization  		      | Done 					          | Done	 	    | Not Started |
+| Initialization  		      | Done 					          | Done	 	    | Done |
 | Configuration/Reconfig    | In progress 	          | In progress | Not Started |
-| Pre TLS key exchange 	    | In progress 				    | Done        | Not Started |
-| TLS 			                | Done 						        | Done  	    | Not Started |
-| 90: Ops: scan, LED, etc| In progress  			      | Scan, LED works  | Not Started |
+| Pre TLS key exchange 	    | In progress 				    | Done        | Done |
+| TLS 			                | Done 						        | Done  	    | Done |
+| 90: Ops: scan, LED, etc| In progress  			      | Scan, LED works  | Done |
 | 97: Ops: enroll, check, reset, LED, etc| In progress  			      | Check works  | Not Started |
-| Image format  		        | In progress  			      | Done        | Not Started |
-| Image post-processing     | Not started             | Not started | Not Started |
+| Image format  		        | In progress  			      | Done        | Done |
+| Image post-processing     | Not started             | Not started | Donne |
 
 ## Donations
 
