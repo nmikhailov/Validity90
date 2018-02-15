@@ -40,7 +40,6 @@ Lenovo forums: [https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerpri
 | 90: Ops: scan, LED, etc| In progress  			      | Scan, LED works  | Done |
 | 97: Ops: enroll, check, reset, LED, etc| In progress  			      | Check works  | Not Started |
 | Image format  		        | In progress  			      | Done        | Done |
-| Image post-processing     | Not started             | Not started | Donne |
 
 ## Donations
 
