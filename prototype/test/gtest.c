@@ -31,6 +31,7 @@ void UTILS_TLS_PRF_TEST6();
 void RSP6_VALID97();
 void RSP6_VALID94();
 void RSP6_VALID81();
+void RSP6_FAIL97();
 
 int main(int argc, char *argv[]) {
     setlocale (LC_ALL, "");
@@ -61,6 +62,7 @@ int main(int argc, char *argv[]) {
     g_test_add_func("/rsp6/valid97", RSP6_VALID97);
 //    g_test_add_func("/rsp6/valid94", RSP6_VALID94);
 //    g_test_add_func("/rsp6/valid81", RSP6_VALID81);
+    g_test_add_func("/rsp6/fail_serial97", RSP6_FAIL97);
 
     return g_test_run();
 }

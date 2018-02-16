@@ -137,10 +137,12 @@ gboolean validity90_parse_rsp6(const guint8 *data, gsize data_len, const guint8 
     bstream *stream = bstream_create(data, data_len);
 
     rsp6_info *info = g_malloc(sizeof(rsp6_info));
+    info->tls_cert_raw = g_byte_array_new();
+    info->tls_client_privkey = g_byte_array_new();
+    info->tls_server_pubkey = g_byte_array_new();
+
     *info_out = info;
-    GByteArray *ecdsa_d = NULL;
-    GByteArray *ecdsa_q = NULL;
-    GByteArray *ecdh = NULL;
+    GByteArray *ecdsa_d = NULL, *ecdsa_q = NULL, *ecdh = NULL;
 
     if (data_len < 8) {
         g_set_error(error, VALIDITY90_RSP6_ERROR, RSP6_ERR_INVALID_LENGTH, "RSP6 length is <8 (%lx)", data_len);
@@ -154,11 +156,9 @@ gboolean validity90_parse_rsp6(const guint8 *data, gsize data_len, const guint8 
     // Derive enc key
     while (bstream_remaining(stream) > 0) {
         // Header
-        guint16 type;
-        guint16 size;
-        guint8 *hash;
+        guint16 type, size;
+        guint8 *hash, *data;
         guint8 calc_hash[0x20];
-        guint8 *data;
 
         // Read header
         if (!bstream_read_uint16(stream, &type) ||
@@ -196,7 +196,7 @@ gboolean validity90_parse_rsp6(const guint8 *data, gsize data_len, const guint8 
                 result = FALSE;
                 goto end;
             }
-            info->tls_cert_raw = g_byte_array_new();
+
             g_byte_array_append(info->tls_cert_raw, data, size);
 
             break;
@@ -240,12 +240,10 @@ gboolean validity90_parse_rsp6(const guint8 *data, gsize data_len, const guint8 
     }
 
     // Set ECDSA private key
-    info->tls_client_privkey = g_byte_array_new();
     g_byte_array_append(info->tls_client_privkey, ecdsa_q->data, ecdsa_q->len);
     g_byte_array_append(info->tls_client_privkey, ecdsa_d->data, ecdsa_d->len);
 
     // Set ECDH pub key
-    info->tls_server_pubkey = g_byte_array_new();
     g_byte_array_append(info->tls_server_pubkey, ecdh->data, ecdh->len);
 
 end:
