@@ -5,7 +5,7 @@
 ;
 [subrepo]
 	remote = git@github.com:nmikhailov/libfprint.git
-	branch = vfs0090
-	commit = 25287d7edf42cb4791438d0a2a60f035f16911dd
-	parent = c332910d0924a00ffb31dd370584f1cfca2a9007
+	branch = validity90
+	commit = d35da0ce99c11bf43d06c2400f9fec6580814919
+	parent = de3434b5addc76cc8a38994fba297b05d50199e2
 	cmdver = 0.3.0

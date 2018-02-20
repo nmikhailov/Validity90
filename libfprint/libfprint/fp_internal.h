@@ -232,7 +232,6 @@ enum fp_print_data_type fpi_driver_get_data_type(struct fp_driver *drv);
 
 /* flags for fp_img_driver.flags */
 #define FP_IMGDRV_SUPPORTS_UNCONDITIONAL_CAPTURE (1 << 0)
-#define FP_IMGDRV_NEEDS_REACTIVATION_BETWEEN_ENROLLS (1 << 1)
 
 struct fp_img_driver {
 	struct fp_driver driver;
@@ -308,9 +307,6 @@ extern struct fp_img_driver etes603_driver;
 #endif
 #ifdef ENABLE_VFS0050
 extern struct fp_img_driver vfs0050_driver;
-#endif
-#ifdef ENABLE_VFS0090
-extern struct fp_img_driver vfs0090_driver;
 #endif
 #ifdef ENABLE_ELAN
 extern struct fp_img_driver elan_driver;

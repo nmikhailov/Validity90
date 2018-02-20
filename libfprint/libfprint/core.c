@@ -401,9 +401,6 @@ static struct fp_img_driver * const img_drivers[] = {
 #ifdef ENABLE_VFS0050
 	&vfs0050_driver,
 #endif
-#ifdef ENABLE_VFS0090
-	&vfs0090_driver,
-#endif
 #ifdef ENABLE_ELAN
 	&elan_driver,
 #endif
@@ -524,7 +521,7 @@ static struct fp_dscv_dev *discover_dev(libusb_device *udev)
 
 	ddev = g_malloc0(sizeof(*ddev));
 	ddev->drv = drv;
-	ddev->udev = libusb_ref_device(udev);
+	ddev->udev = udev;
 	ddev->driver_data = usb_id->driver_data;
 	ddev->devtype = devtype;
 	return ddev;
@@ -580,7 +577,6 @@ API_EXPORTED struct fp_dscv_dev **fp_discover_devs(void)
 	}
 	list[dscv_count] = NULL; /* NULL-terminate */
 
-	libusb_free_device_list(devs, 1);
 	g_slist_free(tmplist);
 	return list;
 }
@@ -598,10 +594,8 @@ API_EXPORTED void fp_dscv_devs_free(struct fp_dscv_dev **devs)
 	if (!devs)
 		return;
 
-	for (i = 0; devs[i]; i++) {
-		libusb_unref_device(devs[i]->udev);
+	for (i = 0; devs[i]; i++)
 		g_free(devs[i]);
-	}
 	g_free(devs);
 }
 

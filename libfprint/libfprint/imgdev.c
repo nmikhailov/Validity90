@@ -27,9 +27,6 @@
 #define BOZORTH3_DEFAULT_THRESHOLD 40
 #define IMG_ENROLL_STAGES 5
 
-static int dev_activate(struct fp_img_dev *imgdev, enum fp_imgdev_state state);
-static void dev_deactivate(struct fp_img_dev *imgdev);
-
 static int img_dev_open(struct fp_dev *dev, unsigned long driver_data)
 {
 	struct fp_img_dev *imgdev = g_malloc0(sizeof(*imgdev));
@@ -127,7 +124,6 @@ void fpi_imgdev_report_finger_status(struct fp_img_dev *imgdev,
 	int r = imgdev->action_result;
 	struct fp_print_data *data = imgdev->acquire_data;
 	struct fp_img *img = imgdev->acquire_img;
-	struct fp_img_driver *imgdrv = fpi_driver_to_img_driver(imgdev->dev->drv);
 
 	fp_dbg(present ? "finger on sensor" : "finger removed");
 
@@ -162,14 +158,8 @@ void fpi_imgdev_report_finger_status(struct fp_img_dev *imgdev,
 		if (imgdev->action == IMG_ACTION_ENROLL &&
 		    r > 0 && r != FP_ENROLL_COMPLETE && r != FP_ENROLL_FAIL) {
 			imgdev->action_result = 0;
-
-			if (imgdrv->flags & FP_IMGDRV_NEEDS_REACTIVATION_BETWEEN_ENROLLS) {
-				imgdev->action_state = IMG_ACQUIRE_STATE_DEACTIVATING;
-				dev_deactivate(imgdev);
-			} else {
-				imgdev->action_state = IMG_ACQUIRE_STATE_AWAIT_FINGER_ON;
-				dev_change_state(imgdev, IMGDEV_STATE_AWAIT_FINGER_ON);
-			}
+			imgdev->action_state = IMG_ACQUIRE_STATE_AWAIT_FINGER_ON;
+			dev_change_state(imgdev, IMGDEV_STATE_AWAIT_FINGER_ON);
 		}
 		break;
 	case IMG_ACTION_VERIFY:
@@ -342,16 +332,11 @@ void fpi_imgdev_session_error(struct fp_img_dev *imgdev, int error)
 
 void fpi_imgdev_activate_complete(struct fp_img_dev *imgdev, int status)
 {
-	struct fp_img_driver *imgdrv = fpi_driver_to_img_driver(imgdev->dev->drv);
-
 	fp_dbg("status %d", status);
 
 	switch (imgdev->action) {
 	case IMG_ACTION_ENROLL:
-		if (!(imgdrv->flags & FP_IMGDRV_NEEDS_REACTIVATION_BETWEEN_ENROLLS) ||
-		    imgdev->dev->state != DEV_STATE_ENROLLING) {
-			fpi_drvcb_enroll_started(imgdev->dev, status);
-		}
+		fpi_drvcb_enroll_started(imgdev->dev, status);
 		break;
 	case IMG_ACTION_VERIFY:
 		fpi_drvcb_verify_started(imgdev->dev, status);
@@ -375,19 +360,10 @@ void fpi_imgdev_activate_complete(struct fp_img_dev *imgdev, int status)
 
 void fpi_imgdev_deactivate_complete(struct fp_img_dev *imgdev)
 {
-	struct fp_img_driver *imgdrv = fpi_driver_to_img_driver(imgdev->dev->drv);
-
 	fp_dbg("");
 
 	switch (imgdev->action) {
 	case IMG_ACTION_ENROLL:
-		if ((imgdrv->flags & FP_IMGDRV_NEEDS_REACTIVATION_BETWEEN_ENROLLS) &&
-			imgdev->dev->state == DEV_STATE_ENROLLING) {
-			imgdev->action_state = IMG_ACQUIRE_STATE_ACTIVATING;
-			dev_activate(imgdev, IMGDEV_STATE_AWAIT_FINGER_ON);
-			return;
-		}
-
 		fpi_drvcb_enroll_stopped(imgdev->dev);
 		break;
 	case IMG_ACTION_VERIFY:
