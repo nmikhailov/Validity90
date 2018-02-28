@@ -24,7 +24,7 @@ Lenovo forums: [https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerpri
 
 |   Device  | Status |
 |-----------|--------|
-| 138a:0090 | Scan, Image output, Internal DB check works in prototype |
+| 138a:0090 | Scan, Image output, Internal DB check works in prototype. There is also a match-on-host [libfprint driver](https://github.com/3v1n0/libfprint) by @3v1n0 based on prototype source(138a:0090 only). You can use it untill proper unified driver is available. |
 | 138a:0097 | Scan, Internal DB check works in prototype |
 | 138a:0094 | Doesn't work yet, but looks promising. I will try to work on it after 90/97 |
 | 06cb:0081 | So far looks identical to 138a:0094 |
