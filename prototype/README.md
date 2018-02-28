@@ -9,7 +9,7 @@ Depending on distribution packages like nss(-devel), openssl(-devel), libpng, gn
 ### Dependencies for Ubuntu
 
 ```
-sudo apt-get install make gcc libgcrypt-dev libglib2.0-dev libnss3-dev libusb-1.0-0-dev libssl-dev libpng-dev libgnutls-dev
+sudo apt-get install make gcc libgcrypt-dev libglib2.0-dev libnss3-dev libusb-1.0-0-dev libssl-dev libpng-dev libgnutls28-dev
 ```
 
 
