@@ -28,7 +28,7 @@ Lenovo forums: [https://forums.lenovo.com/t5/Linux-Discussion/Validity-Fingerpri
 | 138a:0097 | Scan, Internal DB check works in prototype |
 | 138a:0094 | Doesn't work yet, but looks promising. I will try to work on it after 90/97 |
 | 06cb:0081 | So far looks identical to 138a:0094 |
-| 138a:0091 | Different protocol, out of scope for this project. |
+| 138a:0091 | Different protocol, out of scope for this project. Check out [Validity91](https://github.com/hmaarrfk/Validity91) which aims to reverse engineer it.|
 
 
 | 		      Task       			| Specification/Analysis  | Prototype   | Driver 	    |
