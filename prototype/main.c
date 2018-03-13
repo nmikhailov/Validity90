@@ -950,6 +950,7 @@ void fingerprint() {
             if (sizeof(scan_completed) == interrupt_len &&
                 memcmp(scan_completed, interrupt, interrupt_len) == 0) {
                 puts("Fingerprint scan completed...");
+                break;
             }
             if (sizeof(scan_failed_too_short_interrupt) == interrupt_len &&
                 memcmp(scan_failed_too_short_interrupt, interrupt, interrupt_len) == 0) {
