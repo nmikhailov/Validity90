@@ -988,20 +988,20 @@ void fingerprint() {
     byte image[144 * 144];
     int image_len = 0;
 
-    tls_write(data10, sizeof(data10));
-    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
-    memcpy(image, response + 0x12, response_len - 0x12);
-    image_len += response_len - 0x12;
+//    tls_write(data10, sizeof(data10));
+//    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+//    memcpy(image, response + 0x12, response_len - 0x12);
+//    image_len += response_len - 0x12;
 
-    tls_write(data10, sizeof(data10));
-    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
-    memcpy(image + image_len, response + 0x06, response_len - 0x06);
-    image_len += response_len - 0x06;
+//    tls_write(data10, sizeof(data10));
+//    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+//    memcpy(image + image_len, response + 0x06, response_len - 0x06);
+//    image_len += response_len - 0x06;
 
-    tls_write(data10, sizeof(data10));
-    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
-    memcpy(image + image_len, response + 0x06, response_len - 0x06);
-    image_len += response_len - 0x06;
+//    tls_write(data10, sizeof(data10));
+//    tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+//    memcpy(image + image_len, response + 0x06, response_len - 0x06);
+//    image_len += response_len - 0x06;
 
 
 
