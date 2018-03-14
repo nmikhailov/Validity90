@@ -907,8 +907,8 @@ void fingerprint() {
     tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);*/
 
     // Check DB
-    tls_write(scan_matrix1, sizeof(scan_matrix1));tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
-    //tls_write(v97_scan_matrix2, sizeof(v97_scan_matrix2)); tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+//    tls_write(scan_matrix1, sizeof(scan_matrix1));tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
+    tls_write(v97_scan_matrix2, sizeof(v97_scan_matrix2)); tls_read(response, &response_len);puts("READ:");print_hex(response, response_len);
 
     byte interrupt[0x100]; int interrupt_len;
 
