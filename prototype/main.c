@@ -62,6 +62,28 @@
 #define errb(x) res_errb(x, xstr(x))
 #define byte guint8
 
+typedef struct DeviceInfo {
+    guint16 vid;
+    guint16 pid;
+
+    guint hasLed;
+    guint hasBios;
+    guint requiresReset;
+    guint hasRawOutput;
+    gboolean unsupported;
+
+    gchar *description;
+} DeviceInfo;
+
+DeviceInfo all_devices[] = {
+    { .vid = 0x138a, .pid = 0x0090, .hasLed = 1, .hasBios = 1, .requiresReset = 0, .hasRawOutput = 1 },
+    { .vid = 0x138a, .pid = 0x0097, .hasLed = 1, .hasBios = 1, .requiresReset = 0, .hasRawOutput = 0 },
+    { .vid = 0x138a, .pid = 0x0094, .hasLed = 0, .hasBios = 0, .requiresReset = 1, .hasRawOutput = 1, .unsupported = 1, .description = "Support would be available soon" },
+    { .vid = 0x06cb, .pid = 0x0081, .hasLed = -1, .hasBios = -1, .requiresReset = 1, .hasRawOutput = -1, .unsupported = 1, .description = "Support would be available soon" },
+    { .vid = 0x06cb, .pid = 0x009a, .hasLed = 1, .hasBios = -1, .requiresReset = 0, .hasRawOutput = -1 },
+    { .vid = 0x138a, .pid = 0x0091, .unsupported = 1, .description = "Won't be supported, check README" },
+};
+
 static libusb_device_handle * dev;
 
 int idProduct = 0;
@@ -1145,30 +1167,26 @@ int main(int argc, char *argv[]) {
         struct libusb_device_descriptor descriptor;
         libusb_get_device_descriptor(dev_list[i], &descriptor);
 
-        if ((descriptor.idVendor == 0x06cb && descriptor.idProduct == 0x0081) ||
-                (descriptor.idVendor == 0x138a && descriptor.idProduct == 0x0094)) {
-            printf("Found device %04x:%04x\n", descriptor.idVendor, descriptor.idProduct);
+        for (int j = 0; j < sizeof(all_devices) / sizeof(DeviceInfo); j++) {
+            if (all_devices[j].vid == descriptor.idVendor && all_devices[j].pid == descriptor.idProduct) {
+                printf("Found device %04x:%04x\n", descriptor.idVendor, descriptor.idProduct);
 
-            printf("\nThis device won't work right now, but it seems like would be possible to support it the future\n");
-        } else if (descriptor.idVendor == 0x138a) {
-            printf("Found device %04x:%04x\n", descriptor.idVendor, descriptor.idProduct);
-            if (descriptor.idProduct == 0x0090) {
-                puts("This device is supported, it can also output fingerprint scan images");
-            } else if (descriptor.idProduct == 0x0097) {
-                puts("This device is supported");
-            } else if(descriptor.idProduct == 0x0091) {
-                puts("This device is UNsupported. This device has different protocol and is currently out of scope for this project\n");
-                puts("You can try reverse engineering it yourself, it should be much easier since it looks like traffic is not encrypted\n");
-                exit(EXIT_FAILURE);
-            } else {
-                puts("Unknown device, lets try anyway");
+                if (all_devices[j].description != NULL) {
+                    puts(all_devices[j].description);
+                }
+
+                if (all_devices[j].unsupported) {
+                    return -1;
+                }
+
+                idProduct = descriptor.idProduct;
+
+                err(libusb_get_device_descriptor(dev_list[i], &descr));
+                err(libusb_open(dev_list[i], &dev));
+                break;
             }
-            idProduct = descriptor.idProduct;
-
-            err(libusb_get_device_descriptor(dev_list[i], &descr));
-            err(libusb_open(dev_list[i], &dev));
-            break;
         }
+
     }
     if (dev == NULL) {
         puts("No devices found");
