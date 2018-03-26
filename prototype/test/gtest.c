@@ -21,17 +21,7 @@
 #include <gcrypt.h>
 #include <locale.h>
 
-void UTILS_TLS_PRF_TEST1();
-void UTILS_TLS_PRF_TEST2();
-void UTILS_TLS_PRF_TEST3();
-void UTILS_TLS_PRF_TEST4();
-void UTILS_TLS_PRF_TEST5();
-void UTILS_TLS_PRF_TEST6();
-
-void RSP6_VALID97();
-void RSP6_VALID94();
-void RSP6_VALID81();
-void RSP6_FAIL97();
+// @TEST_INSERT_DEFINITION@
 
 int main(int argc, char *argv[]) {
     setlocale (LC_ALL, "");
@@ -50,19 +40,7 @@ int main(int argc, char *argv[]) {
     /* Tell Libgcrypt that initialization has completed. */
     gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
 
-    // UTILS
-    g_test_add_func("/utils/tls_prf/test1", UTILS_TLS_PRF_TEST1);
-    g_test_add_func("/utils/tls_prf/test2", UTILS_TLS_PRF_TEST2);
-    g_test_add_func("/utils/tls_prf/test3", UTILS_TLS_PRF_TEST3);
-    g_test_add_func("/utils/tls_prf/test4", UTILS_TLS_PRF_TEST4);
-    g_test_add_func("/utils/tls_prf/test5", UTILS_TLS_PRF_TEST5);
-    g_test_add_func("/utils/tls_prf/test6", UTILS_TLS_PRF_TEST6);
-
-    // RSP6
-    g_test_add_func("/rsp6/valid97", RSP6_VALID97);
-//    g_test_add_func("/rsp6/valid94", RSP6_VALID94);
-//    g_test_add_func("/rsp6/valid81", RSP6_VALID81);
-    g_test_add_func("/rsp6/fail_serial97", RSP6_FAIL97);
+    // @TEST_INSERT_DECLARATION@
 
     return g_test_run();
 }

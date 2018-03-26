@@ -23,6 +23,7 @@
 #include "validity90/utils.h"
 #include "validity90/validity90.h"
 
+// @TEST_DEF /utils/tls_prf/test1
 void UTILS_TLS_PRF_TEST1() {
     guint8 secret[] = {
         0x71, 0x7c, 0xd7, 0x2d, 0x09, 0x62, 0xbc, 0x4a, 0x28, 0x46, 0x13, 0x8d, 0xbb, 0x2c, 0x24, 0x19,
@@ -45,6 +46,7 @@ void UTILS_TLS_PRF_TEST1() {
     g_assert_cmpmem(out, required_len, expected_result, G_N_ELEMENTS(expected_result));
 }
 
+// @TEST_DEF /utils/tls_prf/test2
 void UTILS_TLS_PRF_TEST2() {
     guint8 secret[] = {
         0x71, 0x7c, 0xd7, 0x2d, 0x09, 0x62, 0xbc, 0x4a, 0x28, 0x46, 0x13, 0x8d, 0xbb, 0x2c, 0x24, 0x19,
@@ -66,6 +68,7 @@ void UTILS_TLS_PRF_TEST2() {
     g_assert_cmpmem(out, required_len, expected_result, G_N_ELEMENTS(expected_result));
 }
 
+// @TEST_DEF /utils/tls_prf/test3
 void UTILS_TLS_PRF_TEST3() {
     guint8 secret[] = {
         0x30, 0xad, 0xd9, 0x09, 0xad, 0x08, 0x64, 0x53, 0xee, 0x1b, 0xaf, 0xc6, 0xbd, 0x4e, 0x4e, 0xce,
@@ -91,6 +94,7 @@ void UTILS_TLS_PRF_TEST3() {
     g_assert_cmpmem(out, required_len, expected_result, G_N_ELEMENTS(expected_result));
 }
 
+// @TEST_DEF  /utils/tls_prf/test4
 void UTILS_TLS_PRF_TEST4() {
     guint8 secret[] = {
         0x8d, 0x05, 0xb5, 0x1e, 0x85, 0x86, 0xd9, 0xce, 0xae, 0x2e, 0x60, 0x03, 0xff, 0x4f, 0x95, 0x63,
@@ -131,6 +135,7 @@ void UTILS_TLS_PRF_TEST4() {
     g_assert_cmpmem(out, required_len, expected_result, G_N_ELEMENTS(expected_result));
 }
 
+// @TEST_DEF  /utils/tls_prf/test5
 void UTILS_TLS_PRF_TEST5() {
     guint8 secret[] = {
         0x8d, 0x05, 0xb5, 0x1e, 0x85, 0x86, 0xd9, 0xce, 0xae, 0x2e, 0x60, 0x03, 0xff, 0x4f, 0x95, 0x63,
@@ -153,6 +158,7 @@ void UTILS_TLS_PRF_TEST5() {
     g_assert_cmpmem(out, required_len, expected_result, G_N_ELEMENTS(expected_result));
 }
 
+// @TEST_DEF  /utils/tls_prf/test6
 void UTILS_TLS_PRF_TEST6() {
     guint8 factory_key[] = {
         0x71, 0x7c, 0xd7, 0x2d, 0x09, 0x62, 0xbc, 0x4a,

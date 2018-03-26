@@ -75,3 +75,4 @@ Thumbs.db
 *.pro
 prototype
 test/gtest
+test/gtest.out.c

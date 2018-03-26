@@ -252,6 +252,7 @@ end:
         g_clear_pointer(&info->tls_client_privkey, g_byte_array_free_to_bytes);
         g_clear_pointer(&info->tls_server_pubkey, g_byte_array_free_to_bytes);
         g_clear_pointer(&info, g_free);
+        *info_out = NULL;
     }
     bstream_free(stream);
     g_clear_pointer(&ecdsa_d, g_byte_array_free_to_bytes);
