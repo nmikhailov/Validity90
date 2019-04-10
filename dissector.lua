@@ -34,7 +34,7 @@ local CONST_MAGIC_HEADER_TLS14 = ByteArray.new("14")
 
 local packetDb = {}
 local partialBuffer = nil
-local sslDissector = Dissector.get('ssl')
+local sslDissector = Dissector.get('tls')
 
 local function decode_aes(ivStr, dataStr)
     -- body
