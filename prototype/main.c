@@ -60,6 +60,7 @@
 
 #define err(x) res_err(x, xstr(x))
 #define errb(x) res_errb(x, xstr(x))
+#define errssl(x) openssl_res_err(x, xstr(x))
 #define byte guint8
 
 typedef struct DeviceInfo {
@@ -151,6 +152,13 @@ bool compare(byte * data1, int data_len, dword * expected, int exp_len) {
     }
 
     return data_len == exp_len;
+}
+
+void openssl_res_err(int result, char* where) {
+    if (result != 0) {
+        printf("Failed '%s': %d - %s\n", where, result, ERR_reason_error_string(ERR_get_error()));
+        exit(0);
+    }
 }
 
 void res_err(int result, char* where) {
@@ -421,7 +429,7 @@ EC_KEY * load_key(byte *data, bool is_private) {
             goto err;
         }
     }
-    err(EC_KEY_check_key(key) - 1);
+    errssl(EC_KEY_check_key(key) - 1);
 
     goto clean;
 
